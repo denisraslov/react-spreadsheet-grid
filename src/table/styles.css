@@ -3,6 +3,31 @@
     border-collapse: collapse;
     position: absolute;
     top: 0;
+    background-color: #827789;
+}
+
+.SpreadsheetTable thead {
+    background-color: #827789;
+}
+
+.SpreadsheetTable thead tr {
+    height: 40px;
+}
+
+.SpreadsheetTable thead tr th {
+    position: relative;
+    color: white;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: none;
+    padding: 10px 8px 8px 8px;
+    text-align: left;
+}
+
+.SpreadsheetTable thead tr th:not(last-child) {
+    border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetTable tbody tr {
