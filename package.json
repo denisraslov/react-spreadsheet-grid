@@ -2,7 +2,10 @@
   "name": "react-spreadsheet-table",
   "description": "A light Spreadsheet Table component for React",
   "version": "0.1",
-  "main": "lib/bundle.js",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",

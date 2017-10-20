@@ -32,7 +32,7 @@ class SpreadsheetCell extends React.PureComponent {
     }
 }
 
-ExcelWrapperCell.propTypes = {
+SpreadsheetCell.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     children: PropTypes.oneOfType([
@@ -47,4 +47,4 @@ ExcelWrapperCell.propTypes = {
     disabledCells: PropTypes.bool
 };
 
-export default ExcelWrapperCell;
+export default SpreadsheetCell;

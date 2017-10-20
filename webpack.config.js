@@ -50,7 +50,7 @@ const config = {
     output: {
         path: __dirname + '/lib',
         filename: 'bundle.js',
-        publicPath: '/'
+        libraryTarget: 'commonjs2'
     }
 };
 
