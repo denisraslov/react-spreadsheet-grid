@@ -8,13 +8,13 @@
 .SpreadsheetTable tbody tr {
     height: 48px;
     background-color: white;
-    border-bottom: 1px solid var(--gray30);
+    border-bottom: 1px solid #E6E1E8;
     user-select: none;
 }
 
 .SpreadsheetTable__cell {
     position: relative;
-    color: var(--gray80);
+    color: #565059;
     cursor: pointer;
     border-top: none;
     vertical-align: middle;
@@ -29,7 +29,7 @@
 }
 
 .SpreadsheetTable__cell:not(:last-child) {
-    border-right: 1px solid var(--gray30);
+    border-right: 1px solid #E6E1E8;
 }
 
 .SpreadsheetTable__cell:last-child {
