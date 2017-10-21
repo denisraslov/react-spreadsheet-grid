@@ -16,6 +16,9 @@ class SpreadsheetTable extends React.PureComponent {
         this.onCellClick = this.onCellClick.bind(this);
         this.onCellDoubleClick = this.onCellDoubleClick.bind(this);
         this.getCellClassName = this.getCellClassName.bind(this);
+        this.startColumnResize = this.startColumnResize.bind(this);
+        this.processColumnResize = this.processColumnResize.bind(this);
+        this.onWindowResize = this.onWindowResize.bind(this);
 
         this.state = {
             disabledCells: this.getDisabledCells(this.props.rows, this.props.checkDisabledCell)
@@ -27,6 +30,161 @@ class SpreadsheetTable extends React.PureComponent {
 
             this.skipGlobalClick = true;
         }
+
+        this.widthValues = {};
+    }
+
+    componentDidMount() {
+        if (this.props.columnsResize) {
+            this.freezeTable();
+
+            window.addEventListener('resize', this.onWindowResize, false);
+            document.addEventListener('mousemove', this.processColumnResize, false);
+            document.addEventListener('mouseup', () => {
+                this.th = null;
+            }, false);
+        }
+
+        document.addEventListener('keydown', this.onGlobalKeyDown, false);
+        document.addEventListener('click', this.onGlobalClick, false);
+    }
+
+    componentDidUpdate() {
+        this.freezeTable();
+
+        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
+        document.addEventListener('keydown', this.onGlobalKeyDown, false);
+    }
+
+    componentWillUnmount() {
+        if (this.props.columnsResize) {
+            window.removeEventListener('resize', this.onWindowResize, false);
+            document.removeEventListener('mousemove', this.processColumnResize, false);
+            document.removeEventListener('mouseup', () => {
+                this.th = null;
+            }, false);
+        }
+
+        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
+        document.removeEventListener('click', this.onGlobalClick, false);
+    }
+
+    onWindowResize() {
+        this.freezeTable();
+    }
+
+    freezeTable() {
+        const table = this.tableElement;
+        const cells = table.querySelectorAll('th');
+
+        // сбрасываем прописанную ширину колонок, чтобы они подстроились под ширину
+        // таблицы автоматически
+        cells.forEach((cell) => {
+            cell.style.width = 'auto';
+        });
+
+        table.style.width = '100%';
+
+        // фиксируем ширины в style
+        cells.forEach((cell) => {
+            if (this.widthValues[cell.cellIndex]) {
+                // если есть сохранённое значение, подстраиваем его под новую ширину таблицы
+                // в процентном соотношении
+                cell.style.width = Math.round(this.widthValues[cell.cellIndex] * table.offsetWidth
+                        / this.widthValues.tableWidth) + 'px';
+            } else {
+                cell.style.width = cell.offsetWidth + 'px';
+            }
+        });
+    }
+
+    startColumnResize(e) {
+        this.th = e.currentTarget.offsetParent;
+        this.th.startOffset = this.th.offsetWidth - e.pageX;
+        this.currentTh = this.th.nextSibling;
+        this.currentTh.startOffset = document.body.offsetWidth - this.currentTh.offsetWidth -
+            e.pageX;
+    }
+
+    processColumnResize(e, nextTh) {
+        let direction;
+        let sibling;
+        const table = this.tableElement;
+
+        if (this.currentCoords <= e.pageX) {
+            direction = 'toRight';
+        }
+
+        if (this.th) {
+            table.style.width = '100%';
+
+            if (direction === 'toRight') {
+                const diff = this.th.startOffset + e.pageX - parseInt(this.th.style.width, 10);
+
+                if (this.currentCoords) {
+                    sibling = nextTh || this.th.nextSibling;
+                }
+
+                if (parseInt(this.th.style.width, 10) + diff > 100 &&
+                    parseInt(sibling.style.width, 10) - diff > 100) {
+                    this.th.style.width = parseInt(this.th.style.width, 10) + diff + 'px';
+                    sibling.style.width = parseInt(sibling.style.width, 10) - diff + 'px';
+
+                    this.widthValues[this.th.cellIndex] = parseInt(this.th.style.width);
+                    this.widthValues[sibling.cellIndex] = parseInt(sibling.style.width);
+                } else {
+                    let cell;
+
+                    if (nextTh) {
+                        cell = nextTh.nextSibling;
+                    } else {
+                        cell = this.th.nextSibling.nextSibling;
+                    }
+
+                    if (cell) {
+                        this.processColumnResize(e, cell);
+                    }
+                }
+            } else {
+                if (this.currentCoords) {
+                    sibling = nextTh || this.th;
+                }
+
+                const diff = document.body.offsetWidth - e.pageX - this.currentTh.startOffset -
+                    this.currentTh.offsetWidth;
+
+                if (parseInt(sibling.style.width, 10) - diff > 100 &&
+                    parseInt(this.currentTh.style.width, 10) + diff > 100) {
+                    sibling.style.width = parseInt(sibling.style.width, 10) - diff + 'px';
+                    this.currentTh.style.width = parseInt(this.currentTh.style.width, 10) + diff + 'px';
+
+                    this.widthValues[this.currentTh.cellIndex] = parseInt(this.currentTh.style.width);
+                    this.widthValues[sibling.cellIndex] = parseInt(sibling.style.width);
+                } else {
+                    let cell;
+
+                    if (nextTh) {
+                        cell = nextTh.previousSibling;
+                    } else {
+                        cell = this.th.previousSibling;
+                    }
+
+                    if (cell) {
+                        this.processColumnResize(e, cell);
+                    }
+                }
+            }
+
+            if (this.widthValues) {
+                this.widthValues.tableWidth = table.offsetWidth;
+
+                if (this.props.onColumnResize) {
+                    this.props.onColumnResize(this.widthValues);
+                }
+            }
+        }
+
+        this.currentCoords = e.pageX;
     }
 
     getDisabledCells(rows, checkDisabledCell) {
@@ -77,21 +235,6 @@ class SpreadsheetTable extends React.PureComponent {
             });
             this.skipGlobalClick = true;
         }
-    }
-
-    componentDidUpdate() {
-        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
-        document.addEventListener('keydown', this.onGlobalKeyDown, false);
-    }
-
-    componentDidMount() {
-        document.addEventListener('keydown', this.onGlobalKeyDown, false);
-        document.addEventListener('click', this.onGlobalClick, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
-        document.removeEventListener('click', this.onGlobalClick, false);
     }
 
     onGlobalKeyDown(e) {
@@ -262,6 +405,15 @@ class SpreadsheetTable extends React.PureComponent {
         );
     }
 
+    renderResizer() {
+        return (
+            <div
+                className="SpreadsheetTable__resizer"
+                onMouseDown={this.startColumnResize}
+            />
+        );
+    }
+
     renderHeader() {
         const columns = this.props.columns;
 
@@ -277,6 +429,7 @@ class SpreadsheetTable extends React.PureComponent {
                                 key={i}
                             >
                                 {typeof column.title === 'string' ? column.title : column.title()}
+                                {this.props.columnsResize && this.renderResizer()}
                             </th>
                         );
                     })
@@ -328,6 +481,7 @@ class SpreadsheetTable extends React.PureComponent {
             <table
                 className="SpreadsheetTable"
                 style={{ transform: `translateY(${this.props.position})` }}
+                ref={(tableElement) => { this.tableElement = tableElement; }}
             >
                 {this.renderHeader()}
                 <tbody>
@@ -355,11 +509,14 @@ SpreadsheetTable.propTypes = {
     onCellClick: PropTypes.func,
     first: PropTypes.number,
     last: PropTypes.number,
-    position: PropTypes.string
+    position: PropTypes.string,
+    columnsResize: PropTypes.bool,
+    onColumnResize: PropTypes.func
 };
 
 SpreadsheetTable.defaultProps = {
-    rows: []
+    rows: [],
+    columnsResize: false
 };
 
 export default SpreadsheetTable;

@@ -77,3 +77,13 @@
 .SpreadsheetTable__placeholder {
     text-align: center;
 }
+
+.SpreadsheetTable__resizer {
+    width: 20px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: -10px;
+    cursor: col-resize;
+    z-index: 2;
+}
