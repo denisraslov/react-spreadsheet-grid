@@ -1,5 +1,11 @@
-# react-spreadsheet-table
-A light Spreadsheet Table component for React
+<h1 align="center">
+  React Spreadsheet Table
+  <br>
+    🔲
+  <br>
+  <br>
+</h1>
+<hr />
 
 ## The key features
 
@@ -117,7 +123,7 @@ This is an array of rows for the table. Every row will be passed to a `column.va
 This is a func that must return *unique* key for a row based on this row in a parameter.
 
 ### placeholder
-> `string` | defaults to `There are no rows`
+> `string` | defaults to `"There are no rows"`
 
 Used as a placeholder text when the `rows` array is empty.
 
