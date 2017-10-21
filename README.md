@@ -8,7 +8,7 @@
 
 This is an Excel-like Spreadsheet Table component that supports:
 
-✅  control by mouse & from keyboard (⬅️ ⬆️ ⬇️ ➡️)
+✅  control by mouse & from keyboard
 
 ✅  any other components as a content of the cells & column titles
 
@@ -153,3 +153,19 @@ The height of the header of the table in pixels.
 The height of a row of the table in pixels.
 
 ⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
+
+### columnsResize
+> `bool` | defaults to `false`
+
+Switch this on if you want the table has columns with resizable width.
+
+### onColumnResize
+> `func(widthValues: object)`
+
+A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` has values of width for all the columns and a width of the table itself.
+
+
+### columnWidth
+> `object`
+
+Pass this object if you want initialize width of columns. You can get it from `onColumnResize` resize.
