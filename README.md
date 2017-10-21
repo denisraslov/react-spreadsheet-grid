@@ -2,10 +2,7 @@
   React Spreadsheet Table
   <br>
     🔲
-  <br>
-  <br>
 </h1>
-<hr />
 
 ## The key features
 
