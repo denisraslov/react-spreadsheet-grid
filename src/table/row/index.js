@@ -30,7 +30,7 @@ class SpreadsheetRow extends React.PureComponent {
         } = this.props;
 
         return (
-            <tr>
+            <tr style={{ height: this.props.height }}>
                 {
                     columns.map((column, y) => {
                         const coords = { x, y };
@@ -72,7 +72,8 @@ SpreadsheetRow.propTypes = {
     focusedCell: PropTypes.object,
     getCellClassName: PropTypes.func,
     disabled: PropTypes.bool,
-    disabledCells: PropTypes.bool
+    disabledCells: PropTypes.bool,
+    height: PropTypes.number
 };
 
 export default SpreadsheetRow;

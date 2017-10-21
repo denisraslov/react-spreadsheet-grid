@@ -410,6 +410,9 @@ class SpreadsheetTable extends React.PureComponent {
             <div
                 className="SpreadsheetTable__resizer"
                 onMouseDown={this.startColumnResize}
+                style={{
+                    height: this.props.headerHeight + 'px'
+                }}
             />
         );
     }
@@ -419,7 +422,10 @@ class SpreadsheetTable extends React.PureComponent {
 
         return (
             <thead
-                style={{visibility: `${this.props.first > 0 ? 'hidden' : 'visible'}`}}
+                style={{
+                    visibility: `${this.props.first > 0 ? 'hidden' : 'visible'}`,
+                    height: this.props.headerHeight + 'px'
+                }}
             >
             <tr>
                 {
@@ -458,6 +464,7 @@ class SpreadsheetTable extends React.PureComponent {
                         activeCell={this.state.activeCell}
                         focusedCell={this.state.focusedCell}
                         disabledCells={this.state.disabledCells}
+                        height={this.props.cellHeight}
                     />
                 );
             });
@@ -492,7 +499,7 @@ class SpreadsheetTable extends React.PureComponent {
     }
 }
 
-SpreadsheetTable.propTypes = {
+export const propTypes = {
     columns: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
@@ -501,12 +508,14 @@ SpreadsheetTable.propTypes = {
         })
     ).isRequired,
     rows: PropTypes.arrayOf(PropTypes.object),
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     getRowKey: PropTypes.func.isRequired,
     getCellClassName: PropTypes.func,
     checkDisabledCell: PropTypes.func,
     isFirstCellFocused: PropTypes.bool,
     onCellClick: PropTypes.func,
+    headerHeight: PropTypes.number,
+    cellHeight: PropTypes.number,
     first: PropTypes.number,
     last: PropTypes.number,
     position: PropTypes.string,
@@ -514,9 +523,6 @@ SpreadsheetTable.propTypes = {
     onColumnResize: PropTypes.func
 };
 
-SpreadsheetTable.defaultProps = {
-    rows: [],
-    columnsResize: false
-};
+SpreadsheetTable.propTypes = propTypes;
 
 export default SpreadsheetTable;

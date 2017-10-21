@@ -10,10 +10,6 @@
     background-color: #827789;
 }
 
-.SpreadsheetTable thead tr {
-    height: 40px;
-}
-
 .SpreadsheetTable thead tr th {
     position: relative;
     color: white;
@@ -31,7 +27,6 @@
 }
 
 .SpreadsheetTable tbody tr {
-    height: 48px;
     background-color: white;
     border-bottom: 1px solid #E6E1E8;
     user-select: none;
@@ -80,7 +75,6 @@
 
 .SpreadsheetTable__resizer {
     width: 20px;
-    height: 40px;
     position: absolute;
     top: 0;
     right: -10px;

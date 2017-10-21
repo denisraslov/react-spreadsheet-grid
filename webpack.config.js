@@ -45,7 +45,7 @@ const config = {
       ]
     },
     entry: [
-        './src/table/index.js'
+        './src/scrollWrapper/index.js'
     ],
     output: {
         path: __dirname + '/lib',
