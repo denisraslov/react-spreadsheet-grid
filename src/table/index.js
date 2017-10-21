@@ -24,9 +24,9 @@ class SpreadsheetTable extends React.PureComponent {
             disabledCells: this.getDisabledCells(this.props.rows, this.props.checkDisabledCell)
         };
 
-        if (this.props.isFirstCellFocused) {
-            this.state.activeCell = { x: 0, y: 0 };
-            this.state.focusedCell = { x: 0, y: 0 };
+        if (this.props.focusedCell) {
+            this.state.activeCell = this.props.focusedCell;
+            this.state.focusedCell = this.props.focusedCell;
 
             this.skipGlobalClick = true;
         }
@@ -226,8 +226,8 @@ class SpreadsheetTable extends React.PureComponent {
             this.setState(newState);
         }
 
-        if (newProps.isFirstCellFocused) {
-            const newActiveCell = { x: 0, y: 0 };
+        if (newProps.focusedCell) {
+            const newActiveCell = newProps.focusedCell;
 
             this.setState({
                 activeCell: newActiveCell,
@@ -507,18 +507,24 @@ export const propTypes = {
             value: PropTypes.func.isRequired
         })
     ).isRequired,
-    rows: PropTypes.arrayOf(PropTypes.object),
-    placeholder: PropTypes.string,
+    rows: PropTypes.arrayOf(PropTypes.any),
     getRowKey: PropTypes.func.isRequired,
-    getCellClassName: PropTypes.func,
+    placeholder: PropTypes.string,
     checkDisabledCell: PropTypes.func,
-    isFirstCellFocused: PropTypes.bool,
+    focusedCell: PropTypes.shape({
+        x: PropTypes.number.isRequired,
+        y: PropTypes.number.isRequired
+    }),
     onCellClick: PropTypes.func,
+
+    // scroll
     headerHeight: PropTypes.number,
     cellHeight: PropTypes.number,
     first: PropTypes.number,
     last: PropTypes.number,
     position: PropTypes.string,
+
+    // resize
     columnsResize: PropTypes.bool,
     onColumnResize: PropTypes.func
 };

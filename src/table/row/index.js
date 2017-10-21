@@ -34,6 +34,9 @@ class SpreadsheetRow extends React.PureComponent {
                 {
                     columns.map((column, y) => {
                         const coords = { x, y };
+                        const disabled = !!this.props.disabledCells.find((cell) => {
+                            return cell.x === x && cell.y === y;
+                        });
 
                         return (
                             <SpreadsheetCell
@@ -50,7 +53,8 @@ class SpreadsheetRow extends React.PureComponent {
                                 {
                                     column.value(row, {
                                         active: _.isEqual(activeCell, coords),
-                                        focus: _.isEqual(focusedCell, coords)
+                                        focus: _.isEqual(focusedCell, coords),
+                                        disabled
                                     })
                                 }
                             </SpreadsheetCell>
