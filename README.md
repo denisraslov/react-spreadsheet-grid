@@ -8,17 +8,17 @@
 
 This is an Excel-like Spreadsheet Table component that supports:
 
-> ✅  control by mouse & from keyboard (⬅️ ⬆️ ⬇️ ➡️)
+✅  control by mouse & from keyboard (⬅️ ⬆️ ⬇️ ➡️)
 
-> ✅  any other components as a content of the cells & column titles
+✅  any other components as a content of the cells & column titles
 
-> ✅  flexible disabled cells
+✅  flexible disabled cells
 
-> ✅  smart (fast) render & scroll for as many rows as you need
+✅  smart (fast) render & scroll for as many rows as you need
 
-> ✅  columns width resize
+✅  columns width resize
 
-> ✅  custom CSS-styles
+✅  custom CSS-styles
 
 ## Installation
 
@@ -135,3 +135,21 @@ The cell with this `x, y` coordinates (starting from `0`) will be rendered as a 
 
 Use this func to define what cells are disabled in the table using their coordinates (starting from `0`) and should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
 
+### onCellClick
+> `func(row, columnId)`
+
+A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell.
+
+### headerHeight
+> `number`
+
+The height of the header of the table in pixels. 
+
+⚠️ Define it as a prop, not in CSS styles to not broke scroll ot the table. ⚠️
+
+### cellHeight
+> `number`
+
+The height of a row of the table in pixels.
+
+⚠️ Define it as a prop, not in CSS styles to not broke scroll ot the table. ⚠️
