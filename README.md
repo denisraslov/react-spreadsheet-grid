@@ -141,15 +141,15 @@ Use this func to define what cells are disabled in the table using their coordin
 A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell.
 
 ### headerHeight
-> `number`
+> `number` | defaults to `40`
 
 The height of the header of the table in pixels. 
 
-⚠️ Define it as a prop, not in CSS styles to not broke scroll ot the table. ⚠️
+⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
 
 ### cellHeight
-> `number`
+> `number` | defaults to `48`
 
 The height of a row of the table in pixels.
 
-⚠️ Define it as a prop, not in CSS styles to not broke scroll ot the table. ⚠️
+⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
