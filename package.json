@@ -1,16 +1,18 @@
 {
   "name": "react-spreadsheet-table",
   "description": "A light Spreadsheet Table component for React",
-  "version": "0.1",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
@@ -23,6 +25,7 @@
     "path": "^0.12.7",
     "postcss-loader": "^2.0.7",
     "style-loader": "^0.19.0",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "@storybook/react": "3.0.0-alpha.0"
   }
 }

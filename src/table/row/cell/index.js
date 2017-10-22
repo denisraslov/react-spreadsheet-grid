@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class SpreadsheetCell extends React.PureComponent {
+class SpreadsheetCell extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         return this.props.isActive !== nextProps.isActive

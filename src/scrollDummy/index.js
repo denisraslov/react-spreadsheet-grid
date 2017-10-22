@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.css';
 
-class SpreadsheetTableScrollDummy extends React.PureComponent {
+class SpreadsheetTableScrollDummy extends React.Component {
     constructor(props) {
         super(props);
 

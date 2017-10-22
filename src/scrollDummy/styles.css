@@ -1,4 +1,4 @@
 .SpreadsheetTableScrollDummy {
-    position: absolute;
+    position: relative;
     min-width: 100%;
 }

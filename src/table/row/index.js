@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import SpreadsheetCell from './cell';
 
-class SpreadsheetRow extends React.PureComponent {
+class SpreadsheetRow extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         const currentActiveCell = this.props.activeCell || this.props.focusedCell;
