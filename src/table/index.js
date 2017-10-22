@@ -526,7 +526,8 @@ export const propTypes = {
 
     // resize
     columnsResize: PropTypes.bool,
-    onColumnResize: PropTypes.func
+    onColumnResize: PropTypes.func,
+    columnsWidth: PropTypes.object
 };
 
 SpreadsheetTable.propTypes = propTypes;
