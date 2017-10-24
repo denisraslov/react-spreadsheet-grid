@@ -8,17 +8,19 @@
 
 This is an Excel-like Spreadsheet Table component that supports:
 
-✅  control by mouse & from keyboard
+✅  Usage as a Data Table & as a Excel-like Spreadsheet Table
 
-✅  any other components as a content of the cells & column titles
+✅  Control by mouse & from keyboard
 
-✅  flexible disabled cells
+✅  Customizable cells & header content (you can use any other components for that)
 
-✅  smart (fast) render & scroll for as many rows as you need
+✅  Flexible setting of disabled cells
 
-✅  columns width resize
+✅  Performant scrolling for as many rows as you need
 
-✅  custom CSS-styles
+✅  Column resizing
+
+✅  Customizable CSS styling
 
 ## Installation
 
