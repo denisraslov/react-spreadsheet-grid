@@ -7,6 +7,8 @@ import Row from './row';
 
 import './styles.css';
 
+const RESERVE_ROWS_COUNT = 5;
+
 class SpreadsheetTable extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -405,6 +407,10 @@ class SpreadsheetTable extends React.PureComponent {
         );
     }
 
+    calculatePosition() {
+        return this.props.first * this.props.cellHeight + 'px';
+    }
+
     renderResizer() {
         return (
             <div
@@ -423,7 +429,7 @@ class SpreadsheetTable extends React.PureComponent {
         return (
             <thead
                 style={{
-                    visibility: `${this.props.first > 0 ? 'hidden' : 'visible'}`,
+                    display: `${this.props.first > 0 ? 'none' : ''}`,
                     height: this.props.headerHeight + 'px'
                 }}
             >
@@ -446,7 +452,11 @@ class SpreadsheetTable extends React.PureComponent {
     }
 
     renderBody() {
-        const rows = [].concat(_.slice(this.props.rows, this.props.first, this.props.last));
+        const rows = [].concat(_.slice(
+            this.props.rows,
+            Math.max(0, this.props.first - RESERVE_ROWS_COUNT),
+            Math.min(this.props.rows.length - 1, this.props.last + RESERVE_ROWS_COUNT)
+        ));
         const columns = this.props.columns;
         let body;
 
@@ -487,7 +497,7 @@ class SpreadsheetTable extends React.PureComponent {
         return (
             <table
                 className="SpreadsheetTable"
-                style={{ transform: `translateY(${this.props.position})` }}
+                style={{ top: this.calculatePosition() }}
                 ref={(tableElement) => { this.tableElement = tableElement; }}
             >
                 {this.renderHeader()}

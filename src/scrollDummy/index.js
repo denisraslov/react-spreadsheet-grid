@@ -6,34 +6,30 @@ class SpreadsheetTableScrollDummy extends React.Component {
     constructor(props) {
         super(props);
 
-        this.calculateContainerHeight = this.calculateContainerHeight.bind(this);
-
         this.state = {
             rows: this.props.rows
         };
-    }
 
-    calculateContainerHeight(rows = this.state.rows) {
-        this.containerHeight = rows.length * this.props.cellHeight + this.props.headerHeight + 'px';
-    }
-
-    componentWillMount() {
-        this.calculateContainerHeight();
+        this.calculateHeight();
     }
 
     componentWillReceiveProps(newProps) {
-        this.calculateContainerHeight(newProps.rows);
+        this.calculateHeight(newProps.rows);
     }
 
     shouldComponentUpdate(nextProps) {
         return nextProps.rows !== this.state.rows;
     }
 
+    calculateHeight(rows = this.state.rows) {
+        this.height = rows.length * this.props.cellHeight + this.props.headerHeight + 'px';
+    }
+
     render() {
         return (
             <div
                 className="SpreadsheetTableScrollDummy"
-                style={{ height: this.containerHeight }}
+                style={{ height: this.height }}
             >
             </div>
         );

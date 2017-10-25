@@ -37,20 +37,14 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
 
     scrollCalculations() {
         const scrollTop = this.scrollWrapperElement.scrollTop;
-        const first = Math.floor(scrollTop / this.props.cellHeight) - 1 < 0
-            ? 0
-            : Math.floor(scrollTop / this.props.cellHeight) - 1;
-
+        const first = Math.max(0, Math.floor(scrollTop / this.props.cellHeight) - 1);
         const visibleHeight = this.scrollWrapperElement.parentNode.offsetHeight;
 
         const last = Math.ceil((scrollTop + visibleHeight) / this.props.cellHeight);
 
-        const position = first * 49 + 'px';
-
         this.setState({
             first,
-            last,
-            position
+            last
         });
     }
 
@@ -81,7 +75,6 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
                         {...this.props}
                         first={this.state.first}
                         last={this.state.last}
-                        position={this.state.position}
                     />
                 }
             </div>
