@@ -33,34 +33,45 @@ npm install --save react-spreadsheet-table
 ## Basic usage
 
 ```jsx
-import SpreadsheetTable from 'react-spreadsheet-table'
+import { Table, Input } from 'react-spreadsheet-table'
 
 class MySpreadsheetTable extends React.Component {
 
   render() {
     return (
-      <SpreadsheetTable 
-     
+      <Table 
         /* Define columns of the table and how they get values */
         columns={[
           {
-            title: 'Name',
-            value: row => row.name 
-          }, {
-            title: 'Photo',
-            value: (row) => {
-              return (
-                /* Use any other components as content of cells */
-                <Image src={row.photo} />
-              );
-            }
-          }, {
-            title: 'Comment',
+            title: 'Name', 
             /* Define the props of components based on { active, focus } of the cell state */
             value: (row, { active, focus }) => {
               return (
+                /* You can use the built-in Input */
                 <Input  
-                  value={row.comment}
+                  value={row.name}
+                  active={active}
+                  focus={focus}
+                />
+              );
+            }
+          }, {
+            title: 'Position',
+            value: (row) => {
+                /* Also, you can use the built-in Select */
+                <Select  
+                  value={row.positionId}
+                  isOpen={focus}
+                  items={positions}
+                />
+            }
+          }, {
+            title: 'Manager',
+            value: (row, { active, focus }) => {
+              return (
+                /* Also, you can use ANY OTHER components as a content for the cells */
+                <Autocomplete  
+                  value={row.managerId}
                   active={active}
                   focus={focus}
                 />
@@ -162,7 +173,7 @@ The height of a row of the table in pixels.
 Switch this on if you want the table has columns with resizable width.
 
 ### onColumnResize
-> `func(widthValues: object)`
+> `func(widthValues: array)`
 
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` has values of width for all the columns and a width of the table itself.
 
@@ -170,4 +181,4 @@ A callback called every time the width of a column was resized. Gets `widthValue
 ### columnWidth
 > `arrayOf(number)`
 
-Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render.
+Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
