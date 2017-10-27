@@ -20,6 +20,14 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Customizable CSS styling
 
+## Table of contents
+
+-   [Installation](#installation)
+-   [Basic usage](#basic-usage)
+-   [Props](#props)
+-   [How to customize CSS styles](#how-to-customize-css-styles)
+-   [Customizable cells & header content](#customizable-cells--header-content)
+
 ## Installation
 
 This module is distributed via [npm][npm] and should be installed as one of your project's `dependencies`:
