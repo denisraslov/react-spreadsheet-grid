@@ -84,13 +84,13 @@ class MySpreadsheetTable extends React.Component {
         rows=[{
           id: 'user1',
           name: 'John Doe',
-          photo: 'photo1',
-          comment: ''
+          positionId: 'position1',
+          managerId: 'manager1'
         }, {
           id: 'user2',
           name: 'Doe John',
-          photo: 'photo2',
-          comment: ''
+          positionId: 'position2',
+          managerId: 'manager2'
         }]
         
         /* Define a unique key getter for a row */
