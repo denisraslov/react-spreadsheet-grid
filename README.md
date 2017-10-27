@@ -94,7 +94,7 @@ class MySpreadsheetTable extends React.Component {
 
 ### columns
 
-```
+```jsx
 arrayOf({ 
     id: string / number, 
     title: string / func, 
@@ -133,9 +133,9 @@ The cell with this `x, y` coordinates (starting from `0`) will be rendered as a 
 
 
 ### checkDisabledCell
-> `func({ x: number, y: number }): bool`
+> `func(row, columnId): bool`
 
-Use this func to define what cells are disabled in the table using their coordinates (starting from `0`) and should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
+Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
 
 ### onCellClick
 > `func(row, columnId)`
@@ -168,6 +168,6 @@ A callback called every time the width of a column was resized. Gets `widthValue
 
 
 ### columnWidth
-> `object`
+> `arrayOf(number)`
 
-Pass this object if you want initialize width of columns. You can get it from `onColumnResize` resize.
+Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render.
