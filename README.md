@@ -1,7 +1,9 @@
 <h1 align="center">
   React Spreadsheet Grid
   <br>
-    🔲
+  <span style="font-size:20px;">
+    🔲 
+  </span>
 </h1>
 
 ## The key features
