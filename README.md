@@ -44,8 +44,8 @@ class MySpreadsheetTable extends React.Component {
         columns={[
           {
             title: 'Name', 
-            /* Define the props of components based on { active, focus } of the cell state */
-            value: (row, { active, focus }) => {
+            /* Define the props of components based on { active, focus, disabled } of the cell state */
+            value: (row, { active, focus, disabled }) => {
               return (
                 /* You can use the built-in Input */
                 <Input  
@@ -57,7 +57,7 @@ class MySpreadsheetTable extends React.Component {
             }
           }, {
             title: 'Position',
-            value: (row) => {
+            value: (row, { active, focus, disabled }) => {
                 /* Also, you can use the built-in Select */
                 <Select  
                   value={row.positionId}
@@ -67,7 +67,7 @@ class MySpreadsheetTable extends React.Component {
             }
           }, {
             title: 'Manager',
-            value: (row, { active, focus }) => {
+            value: (row, { active, focus, disabled }) => {
               return (
                 /* Also, you can use ANY OTHER components as a content for the cells */
                 <Autocomplete  
@@ -182,3 +182,10 @@ A callback called every time the width of a column was resized. Gets `widthValue
 > `arrayOf(number)`
 
 Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+
+
+## How to customize CSS styles
+
+DOM-elements of the Table, Input and Select use static BEM-notation class names for the styles. You can redefine styles for these class names and customize styles of the components. 
+
+The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
