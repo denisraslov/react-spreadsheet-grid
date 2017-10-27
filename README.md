@@ -189,3 +189,35 @@ Pass this array if you want initialize width of columns. A number value at every
 DOM-elements of the Table, Input and Select use static BEM-notation class names for the styles. You can redefine styles for these class names and customize styles of the components. 
 
 The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
+
+## Customizable cells & header content
+
+You can use any React component as a content of titles and cells, just pass it as a result of `title` and `value` functions of elements of the `columns` props. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
+
+For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`.
+
+An example of the usage:
+
+```jsx
+import { Table, Input, Select } from 'react-spreadsheet-table'
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Title</span>
+        }, 
+        value: (row, { active, focus, disabled }) => {
+          return (
+            <Input  
+              value={row.name}
+              active={active}
+              focus={focus}
+            />
+          );
+        }
+      },
+   ]}
+/>
+```
