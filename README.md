@@ -1,14 +1,12 @@
 <h1 align="center">
-  React Spreadsheet Table
+  React Spreadsheet Grid
   <br>
     🔲
 </h1>
 
 ## The key features
 
-This is an Excel-like Spreadsheet Table component that supports:
-
-✅  Usage as a Data Table & as a Excel-like Spreadsheet Table
+This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Control by mouse & from keyboard
 
