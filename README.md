@@ -33,14 +33,14 @@ npm install --save react-spreadsheet-table
 ## Basic usage
 
 ```jsx
-import { Table, Input } from 'react-spreadsheet-table'
+import { Table, Input, Select } from 'react-spreadsheet-table'
 
 class MySpreadsheetTable extends React.Component {
 
   render() {
     return (
       <Table 
-        /* Define columns of the table and how they get values */
+        /* Define columns of the table and how they get their values */
         columns={[
           {
             title: 'Name', 
