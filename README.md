@@ -28,7 +28,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Basic usage](#basic-usage)
 -   [Props](#props)
 -   [Customizing CSS styles](#customizing-css-styles)
--   [Customizable cells & header content](#customizable-cells--header-content)
+-   [Customizing cells & header content](#customizing-cells--header-content)
+-   [Performant scrolling](#performant-scrolling)
 
 ## Installation
 
@@ -207,7 +208,7 @@ This would override the color of borders for the table active cell.
 ⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
 
 
-## Customizable cells & header content
+## Customizing cells & header content
 
 You can use any React component as a content of titles and cells, just pass it as a result of `title` and `value` functions of elements of the `columns` props. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
 
@@ -237,3 +238,7 @@ import { Table, Input, Select } from 'react-spreadsheet-table'
    ]}
 />
 ```
+
+## Performant scrolling
+
+`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
