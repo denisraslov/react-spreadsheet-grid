@@ -29,6 +29,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Props](#props)
 -   [Customizing CSS styles](#customizing-css-styles)
 -   [Customizing cells & header content](#customizing-cells--header-content)
+    -   [Built-in Input](#built-in-input)
+    -   [Built-in Select](#built-in-select)
 -   [Performant scrolling](#performant-scrolling)
 
 ## Installation
@@ -238,6 +240,11 @@ import { Table, Input, Select } from 'react-spreadsheet-table'
    ]}
 />
 ```
+
+### Built-in Input
+
+### Built-in Select
+
 
 ## Performant scrolling
 
