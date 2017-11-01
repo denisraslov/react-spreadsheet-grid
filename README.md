@@ -27,7 +27,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Installation](#installation)
 -   [Basic usage](#basic-usage)
 -   [Props](#props)
--   [How to customize CSS styles](#how-to-customize-css-styles)
+-   [Customizing CSS styles](#customizing-css-styles)
 -   [Customizable cells & header content](#customizable-cells--header-content)
 
 ## Installation
@@ -192,11 +192,19 @@ A callback called every time the width of a column was resized. Gets `widthValue
 Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
 
-## How to customize CSS styles
+## Customizing CSS styles
 
-DOM-elements of the Table, Input and Select use static BEM-notation class names for the styles. You can redefine styles for these class names and customize styles of the components. 
+Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
 
-The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+```css
+.SpreadsheetTable__cell_active {
+    box-shadow: inset 0 0 0 2px green;
+}
+``` 
+
+This would override the color of borders for the table active cell.
+
+⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
 
 
 ## Customizable cells & header content
