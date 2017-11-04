@@ -460,6 +460,8 @@ class SpreadsheetTable extends React.PureComponent {
         const columns = this.props.columns;
         let body;
 
+        console.log('renderBody');
+
         if (rows.length) {
             body = rows.map((row) => {
                 return (

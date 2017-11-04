@@ -62,7 +62,7 @@
     z-index: 2;
 }
 
-.SpreadsheetTable__cell_focused > div {
+.SpreadsheetTable__cell_focused > * {
     pointer-events: auto;
 }
 
