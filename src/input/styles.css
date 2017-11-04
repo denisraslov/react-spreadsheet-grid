@@ -1,0 +1,9 @@
+.SpreadsheetTable__Input {
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 15px;
+    outline: none;
+}
