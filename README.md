@@ -1,14 +1,14 @@
 <h1 align="center">
-  React Spreadsheet Table
+  React Spreadsheet Grid
   <br>
-    🔲
+  <span style="font-size:20px;">
+    🔲 
+  </span>
 </h1>
 
 ## The key features
 
-This is an Excel-like Spreadsheet Table component that supports:
-
-✅  Usage as a Data Table & as a Excel-like Spreadsheet Table
+This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Control by mouse & from keyboard
 
@@ -22,6 +22,17 @@ This is an Excel-like Spreadsheet Table component that supports:
 
 ✅  Customizable CSS styling
 
+## Table of contents
+
+-   [Installation](#installation)
+-   [Basic usage](#basic-usage)
+-   [Props](#props)
+-   [Customizing CSS styles](#customizing-css-styles)
+-   [Customizing cells & header content](#customizing-cells--header-content)
+    -   [Built-in Input](#built-in-input)
+    -   [Built-in Select](#built-in-select)
+-   [Performant scrolling](#performant-scrolling)
+
 ## Installation
 
 This module is distributed via [npm][npm] and should be installed as one of your project's `dependencies`:
@@ -33,34 +44,45 @@ npm install --save react-spreadsheet-table
 ## Basic usage
 
 ```jsx
-import SpreadsheetTable from 'react-spreadsheet-table'
+import { Table, Input, Select } from 'react-spreadsheet-table'
 
 class MySpreadsheetTable extends React.Component {
 
   render() {
     return (
-      <SpreadsheetTable 
-     
-        /* Define columns of the table and how they get values */
+      <Table 
+        /* Define columns of the table and how they get their values */
         columns={[
           {
-            title: 'Name',
-            value: row => row.name 
-          }, {
-            title: 'Photo',
-            value: (row) => {
+            title: 'Name', 
+            /* Define the props of components based on { active, focus, disabled } of the cell state */
+            value: (row, { active, focus, disabled }) => {
               return (
-                /* Use any other components as content of cells */
-                <Image src={row.photo} />
+                /* You can use the built-in Input */
+                <Input  
+                  value={row.name}
+                  active={active}
+                  focus={focus}
+                />
               );
             }
           }, {
-            title: 'Comment',
-            /* Define the props of components based on { active, focus } of the cell state */
-            value: (row, { active, focus }) => {
+            title: 'Position',
+            value: (row, { active, focus, disabled }) => {
+                /* Also, you can use the built-in Select */
+                <Select  
+                  value={row.positionId}
+                  isOpen={focus}
+                  items={positions}
+                />
+            }
+          }, {
+            title: 'Manager',
+            value: (row, { active, focus, disabled }) => {
               return (
-                <Input  
-                  value={row.comment}
+                /* Also, you can use ANY OTHER components as a content for the cells */
+                <Autocomplete  
+                  value={row.managerId}
                   active={active}
                   focus={focus}
                 />
@@ -73,13 +95,13 @@ class MySpreadsheetTable extends React.Component {
         rows=[{
           id: 'user1',
           name: 'John Doe',
-          photo: 'photo1',
-          comment: ''
+          positionId: 'position1',
+          managerId: 'manager1'
         }, {
           id: 'user2',
           name: 'Doe John',
-          photo: 'photo2',
-          comment: ''
+          positionId: 'position2',
+          managerId: 'manager2'
         }]
         
         /* Define a unique key getter for a row */
@@ -94,7 +116,7 @@ class MySpreadsheetTable extends React.Component {
 
 ### columns
 
-```
+```jsx
 arrayOf({ 
     id: string / number, 
     title: string / func, 
@@ -133,9 +155,9 @@ The cell with this `x, y` coordinates (starting from `0`) will be rendered as a 
 
 
 ### checkDisabledCell
-> `func({ x: number, y: number }): bool`
+> `func(row, columnId): bool`
 
-Use this func to define what cells are disabled in the table using their coordinates (starting from `0`) and should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
+Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
 
 ### onCellClick
 > `func(row, columnId)`
@@ -162,12 +184,68 @@ The height of a row of the table in pixels.
 Switch this on if you want the table has columns with resizable width.
 
 ### onColumnResize
-> `func(widthValues: object)`
+> `func(widthValues: array)`
 
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` has values of width for all the columns and a width of the table itself.
 
 
 ### columnWidth
-> `object`
+> `arrayOf(number)`
 
-Pass this object if you want initialize width of columns. You can get it from `onColumnResize` resize.
+Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+
+
+## Customizing CSS styles
+
+Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
+
+```css
+.SpreadsheetTable__cell_active {
+    box-shadow: inset 0 0 0 2px green;
+}
+``` 
+
+This would override the color of borders for the table active cell.
+
+⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
+
+## Customizing cells & header content
+
+You can use any React component as a content of titles and cells, just pass it as a result of `title` and `value` functions of elements of the `columns` props. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
+
+For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`.
+
+An example of the usage:
+
+```jsx
+import { Table, Input, Select } from 'react-spreadsheet-table'
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Title</span>
+        }, 
+        value: (row, { active, focus, disabled }) => {
+          return (
+            <Input  
+              value={row.name}
+              active={active}
+              focus={focus}
+            />
+          );
+        }
+      },
+   ]}
+/>
+```
+
+### Built-in Input
+
+### Built-in Select
+
+
+## Performant scrolling
+
+`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
