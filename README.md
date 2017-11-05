@@ -1,14 +1,8 @@
-<h1 align="center">
+<h1>
   React Spreadsheet Grid
-  <br>
-  <span style="font-size:20px;">
-    🔲 
-  </span>
 </h1>
 
-<h1 align="center">
-  <img src="https://giant.gfycat.com/EnviousPinkGoosefish.gif" width="640">
-</h1>
+![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/example.gif)
 
 ## The key features
 
