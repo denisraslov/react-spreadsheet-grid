@@ -6,6 +6,10 @@
   </span>
 </h1>
 
+<h1 align="center">
+  <img src="https://giant.gfycat.com/EnviousPinkGoosefish.gif" width="640">
+</h1>
+
 ## The key features
 
 This is an Excel-like Spreadsheet Grid component that supports:
@@ -16,7 +20,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Flexible setting of disabled cells
 
-✅  Performant scrolling for as many rows as you need
+✅  Performant scroll for as many rows as you need
 
 ✅  Column resizing
 
