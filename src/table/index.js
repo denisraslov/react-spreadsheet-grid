@@ -7,8 +7,6 @@ import Row from './row';
 
 import './styles.css';
 
-const RESERVE_ROWS_COUNT = 5;
-
 class SpreadsheetTable extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -49,6 +47,40 @@ class SpreadsheetTable extends React.PureComponent {
 
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
         document.addEventListener('click', this.onGlobalClick, false);
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (this.props.rows !== newProps.rows && newProps.checkDisabledCell) {
+            const disabledCells = this.getDisabledCells(newProps.rows, newProps.checkDisabledCell);
+            const newState = {
+                disabledCells
+            };
+
+            if (_.find(disabledCells, this.state.activeCell)) {
+                newState.activeCell = null;
+            }
+            if (_.find(disabledCells, this.state.focusedCell)) {
+                newState.focusedCell = null;
+            }
+
+            this.setState(newState);
+        }
+
+        if (newProps.focusedCell) {
+            const newActiveCell = newProps.focusedCell;
+
+            this.setState({
+                activeCell: newActiveCell,
+                focusedCell: newActiveCell
+            });
+            this.skipGlobalClick = true;
+        }
+
+        if (newProps.blurFocus) {
+            this.setState({
+                focusedCell: null
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -205,158 +237,122 @@ class SpreadsheetTable extends React.PureComponent {
         return disabledCells;
     }
 
-    componentWillReceiveProps(newProps) {
-        if (!newProps.focus) {
-            this.setState({
-                focusedCell: null
-            });
-        }
+    onGlobalKeyDown(e) {
+        const block = this;
+        const columnsCount = this.props.columns.length;
+        const rowsCount = this.props.rows.length;
 
-        if (this.props.rows !== newProps.rows && newProps.checkDisabledCell) {
-            const disabledCells = this.getDisabledCells(newProps.rows, newProps.checkDisabledCell);
-            const newState = {
-                disabledCells
-            };
+        let newActiveCell = this.state.activeCell;
+        let newFocusedCell = this.state.focusedCell;
 
-            if (_.find(disabledCells, this.state.activeCell)) {
-                newState.activeCell = null;
+        if (this.state.activeCell) {
+            const { x, y } = this.state.activeCell;
+
+            newFocusedCell = this.state.activeCell;
+
+            function moveRight({ x, y }) {
+                if (y < columnsCount - 1) {
+                    newActiveCell = { x, y: y + 1 };
+                } else if (x < rowsCount - 1) {
+                    newActiveCell = { x: x + 1, y: 0 };
+                }
+                newFocusedCell = null;
+
+                if (_.find(block.state.disabledCells, newActiveCell)) {
+                    moveRight(newActiveCell);
+                }
             }
-            if (_.find(disabledCells, this.state.focusedCell)) {
-                newState.focusedCell = null;
+
+            function moveDown({ x, y }) {
+                if (x < rowsCount - 1) {
+                    newActiveCell = { x: x + 1, y };
+                }
+                newFocusedCell = null;
+
+                if (_.find(block.state.disabledCells, newActiveCell)) {
+                    moveDown(newActiveCell);
+                }
             }
 
-            this.setState(newState);
-        }
+            function moveUp({ x, y }) {
+                if (x > 0) {
+                    newActiveCell = { x: x - 1, y };
+                }
+                newFocusedCell = null;
 
-        if (newProps.focusedCell) {
-            const newActiveCell = newProps.focusedCell;
+                if (_.find(block.state.disabledCells, newActiveCell)) {
+                    moveUp(newActiveCell);
+                }
+            }
+
+            function moveLeft({ x, y }) {
+                if (y > 0) {
+                    newActiveCell = { x, y: y - 1 };
+                } else if (x > 0) {
+                    newActiveCell = { x: x - 1, y: columnsCount - 1 };
+                }
+                newFocusedCell = null;
+
+                if (_.find(block.state.disabledCells, newActiveCell)) {
+                    moveLeft(newActiveCell);
+                }
+            }
+
+            if (!this.state.focusedCell) {
+                if (e.keyCode === keys.RIGHT) {
+                    moveRight({ x, y });
+                }
+
+                if (e.keyCode === keys.LEFT) {
+                    moveLeft({ x, y });
+                }
+
+                if (e.keyCode === keys.UP) {
+                    e.preventDefault();
+                    moveUp({ x, y });
+                }
+
+                if (e.keyCode === keys.DOWN) {
+                    e.preventDefault();
+                    moveDown({ x, y });
+                }
+
+                if (e.keyCode === keys.ALT) {
+                    newFocusedCell = null;
+                }
+            }
+
+            if (e.keyCode === keys.ENTER) {
+                if (this.state.focusedCell) {
+                    moveDown({ x, y });
+                    e.target.blur();
+                } else {
+                    newFocusedCell = this.state.activeCell;
+                }
+            }
+
+            if (e.keyCode === keys.TAB) {
+                if (this.state.focusedCell) {
+                    moveRight({ x, y });
+                    e.target.blur();
+                } else {
+                    newFocusedCell = this.state.activeCell;
+                }
+
+                e.preventDefault();
+            }
+
+            if (e.keyCode === keys.ESC) {
+                if (this.state.focusedCell) {
+                    e.target.blur();
+                    newFocusedCell = null;
+                }
+            }
 
             this.setState({
                 activeCell: newActiveCell,
-                focusedCell: newActiveCell
+                focusedCell: newFocusedCell
             });
-            this.skipGlobalClick = true;
-        }
-    }
-
-    onGlobalKeyDown(e) {
-        if (!e.skipExcelGlobalKeyDown) {
-            const block = this;
-            const columnsCount = this.props.columns.length;
-            const rowsCount = this.props.rows.length;
-
-            let newActiveCell = this.state.activeCell;
-            let newFocusedCell = this.state.focusedCell;
-
-            if (this.state.activeCell) {
-                const { x, y } = this.state.activeCell;
-
-                newFocusedCell = this.state.activeCell;
-
-                function moveRight({ x, y }) {
-                    if (y < columnsCount - 1) {
-                        newActiveCell = { x, y: y + 1 };
-                    } else if (x < rowsCount - 1) {
-                        newActiveCell = { x: x + 1, y: 0 };
-                    }
-                    newFocusedCell = null;
-
-                    if (_.find(block.state.disabledCells, newActiveCell)) {
-                        moveRight(newActiveCell);
-                    }
-                }
-
-                function moveDown({ x, y }) {
-                    if (x < rowsCount - 1) {
-                        newActiveCell = { x: x + 1, y };
-                    }
-                    newFocusedCell = null;
-
-                    if (_.find(block.state.disabledCells, newActiveCell)) {
-                        moveDown(newActiveCell);
-                    }
-                }
-
-                function moveUp({ x, y }) {
-                    if (x > 0) {
-                        newActiveCell = { x: x - 1, y };
-                    }
-                    newFocusedCell = null;
-
-                    if (_.find(block.state.disabledCells, newActiveCell)) {
-                        moveUp(newActiveCell);
-                    }
-                }
-
-                function moveLeft({ x, y }) {
-                    if (y > 0) {
-                        newActiveCell = { x, y: y - 1 };
-                    } else if (x > 0) {
-                        newActiveCell = { x: x - 1, y: columnsCount - 1 };
-                    }
-                    newFocusedCell = null;
-
-                    if (_.find(block.state.disabledCells, newActiveCell)) {
-                        moveLeft(newActiveCell);
-                    }
-                }
-
-                if (!this.state.focusedCell) {
-                    if (e.keyCode === keys.RIGHT) {
-                        moveRight({ x, y });
-                    }
-
-                    if (e.keyCode === keys.LEFT) {
-                        moveLeft({ x, y });
-                    }
-
-                    if (e.keyCode === keys.UP) {
-                        e.preventDefault();
-                        moveUp({ x, y });
-                    }
-
-                    if (e.keyCode === keys.DOWN) {
-                        e.preventDefault();
-                        moveDown({ x, y });
-                    }
-
-                    if (e.keyCode === keys.ALT) {
-                        newFocusedCell = null;
-                    }
-                }
-
-                if (e.keyCode === keys.ENTER) {
-                    if (this.state.focusedCell) {
-                        moveDown({ x, y });
-                        e.target.blur();
-                    } else {
-                        newFocusedCell = this.state.activeCell;
-                    }
-                }
-
-                if (e.keyCode === keys.TAB) {
-                    if (this.state.focusedCell) {
-                        moveRight({ x, y });
-                        e.target.blur();
-                    } else {
-                        newFocusedCell = this.state.activeCell;
-                    }
-
-                    e.preventDefault();
-                }
-
-                if (e.keyCode === keys.ESC) {
-                    if (this.state.focusedCell) {
-                        e.target.blur();
-                        newFocusedCell = null;
-                    }
-                }
-
-                this.setState({
-                    activeCell: newActiveCell,
-                    focusedCell: newFocusedCell
-                });
-            }
         }
     }
 
@@ -408,7 +404,7 @@ class SpreadsheetTable extends React.PureComponent {
     }
 
     calculatePosition() {
-        return this.props.first * this.props.cellHeight + 'px';
+        return this.props.offset + (this.props.first > 0 ? this.props.headerHeight : 0) + 'px';
     }
 
     renderResizer() {
@@ -429,8 +425,8 @@ class SpreadsheetTable extends React.PureComponent {
         return (
             <thead
                 style={{
+                    height: this.props.headerHeight + 'px',
                     display: `${this.props.first > 0 ? 'none' : ''}`,
-                    height: this.props.headerHeight + 'px'
                 }}
             >
             <tr>
@@ -454,13 +450,11 @@ class SpreadsheetTable extends React.PureComponent {
     renderBody() {
         const rows = [].concat(_.slice(
             this.props.rows,
-            Math.max(0, this.props.first - RESERVE_ROWS_COUNT),
-            Math.min(this.props.rows.length - 1, this.props.last + RESERVE_ROWS_COUNT)
+            this.props.first,
+            this.props.last
         ));
         const columns = this.props.columns;
         let body;
-
-        console.log('renderBody');
 
         if (rows.length) {
             body = rows.map((row) => {
@@ -528,13 +522,14 @@ export const propTypes = {
         y: PropTypes.number.isRequired
     }),
     onCellClick: PropTypes.func,
+    blurFocus: PropTypes.bool,
 
     // scroll
     headerHeight: PropTypes.number,
     cellHeight: PropTypes.number,
     first: PropTypes.number,
     last: PropTypes.number,
-    position: PropTypes.string,
+    offset: PropTypes.string,
 
     // resize
     columnsResize: PropTypes.bool,

@@ -45,7 +45,7 @@
     text-overflow: ellipsis;
 }
 
-.SpreadsheetTable__cell > div {
+.SpreadsheetTable__cell > * {
     pointer-events: none;
 }
 
@@ -62,7 +62,7 @@
     z-index: 2;
 }
 
-.SpreadsheetTable__cell_focused > * {
+td.SpreadsheetTable__cell_focused > * {
     pointer-events: auto;
 }
 

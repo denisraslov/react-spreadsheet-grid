@@ -3,6 +3,8 @@ import Table, { propTypes as tablePropTypes } from './../table';
 import ScrollDummy from './../scrollDummy';
 import styles from './styles.css';
 
+const RESERVE_ROWS_COUNT = 10;
+
 class SpreadsheetTableScrollWrapper extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -14,20 +16,15 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
         this.state = {
             first: 0,
             last: this.props.rows.length,
-            position: 0
+            offset: 0
         };
     }
 
     componentDidMount() {
         window.addEventListener('resize', this.onResize, false);
 
-        const visibleHeight = this.scrollWrapperElement.parentNode.offsetHeight;
-        const last = Math.floor(visibleHeight / this.props.cellHeight);
-
         this.setState({
-            first: this.state.first,
-            last,
-            position: 0
+            last: this.calculateLast(this.state.first)
         });
     }
 
@@ -35,16 +32,23 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
         window.removeEventListener('resize', this.onResize, false);
     }
 
-    scrollCalculations() {
-        const scrollTop = this.scrollWrapperElement.scrollTop;
-        const first = Math.max(0, Math.floor(scrollTop / this.props.cellHeight) - 1);
-        const visibleHeight = this.scrollWrapperElement.parentNode.offsetHeight;
+    calculateLast(first) {
+        const visibleHeight = this.scrollWrapperElement.parentNode.offsetHeight + 200;
 
-        const last = Math.ceil((scrollTop + visibleHeight) / this.props.cellHeight);
+        return first + Math.ceil(visibleHeight / this.props.cellHeight);
+    }
+
+    scrollCalculations() {
+        const scrollTop = Math.max(
+            this.scrollWrapperElement.scrollTop - this.props.headerHeight,
+            0);
+        const first = Math.max(0, Math.floor(scrollTop / this.props.cellHeight) - RESERVE_ROWS_COUNT);
+        const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
         this.setState({
             first,
-            last
+            last,
+            offset: first * this.props.cellHeight
         });
     }
 
@@ -75,6 +79,7 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
                         {...this.props}
                         first={this.state.first}
                         last={this.state.last}
+                        offset={this.state.offset}
                     />
                 }
             </div>
