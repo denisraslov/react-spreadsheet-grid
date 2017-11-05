@@ -2,17 +2,25 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { Table, Input } from './../index';
+import { Table, Input, Select } from './../index';
 
 const rows = [];
+const positions = [];
 
 for (let i = 0; i < 130; i++) {
     rows.push({
         id: i,
         firstName: 'First name ' + i,
         secondName: 'Second name ' + i,
-        position: 'Position ' + i,
+        positionId: 3,
         age: i
+    });
+}
+
+for (let i = 1; i < 6; i++) {
+    positions.push({
+        id: i,
+        name: 'Position ' + i
     });
 }
 
@@ -30,7 +38,8 @@ class DataTable extends React.PureComponent {
         rows[rowId][field] = value;
 
         this.setState({
-            rows: [].concat(rows)
+            rows: [].concat(rows),
+            blurFocus: true
         });
     }
 
@@ -69,10 +78,11 @@ class DataTable extends React.PureComponent {
                             title: 'Position',
                             value: (row, {focus}) => {
                                 return (
-                                    <Input
-                                        value={row.position}
-                                        focus={focus}
-                                        onBlur={this.onFieldChange.bind(this, row.id, 'position')}
+                                    <Select
+                                        selectedId={row.positionId}
+                                        isOpen={focus}
+                                        items={positions}
+                                        onChange={this.onFieldChange.bind(this, row.id, 'positionId')}
                                     />
                                 );
                             },
@@ -93,6 +103,7 @@ class DataTable extends React.PureComponent {
                         }
                     ]}
                     rows={rows}
+                    blurFocus={this.state.blurFocus}
                     getRowKey={row => row.id}
                     cellHeight={50}
                 />
