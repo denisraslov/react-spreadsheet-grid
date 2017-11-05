@@ -7,7 +7,7 @@
 </h1>
 
 <h1 align="center">
-  <img src="https://thumbs.gfycat.com/CoolParallelAmericanalligator-size_restricted.gif" alt="Example gif" width="640" />
+  <img src="https://giant.gfycat.com/EnviousPinkGoosefish.gif" width="640">
 </h1>
 
 ## The key features
