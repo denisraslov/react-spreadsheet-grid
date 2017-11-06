@@ -210,14 +210,28 @@ This would override the color of borders for the table active cell.
 
 ## Customizing cells & header content
 
-You can use any React component as a content of titles and cells, just pass it as a result of `title` and `value` functions of elements of the `columns` props. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
+You can customize content of titles and cells using `title` and `value` keys of elements of the `columns` property. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
 
-For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`.
+`title` could be a string or a func returning any React element. 
 
-An example of the usage:
+`value` works the same way, but func receives current `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+
+For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`. Perhaps, they will be enough for you. However, you can use any other React components for that purpose: autocompletes, checkboxes, etc.
+
+### Built-in Input
+
+`Input` prop types: 
+
+Prop | Type | Mission
+--- | --- | ---
+`value` | string | The value of the input
+`focus` | bool | Should an the input has focus or not 
+`onBlur` | func | Blur callback. Use it to catch a changed value
+
+Usage:
 
 ```jsx
-import { Table, Input, Select } from 'react-spreadsheet-table'
+import { Table, Input } from 'react-spreadsheet-table'
 
  <Table 
     columns={[
@@ -225,21 +239,19 @@ import { Table, Input, Select } from 'react-spreadsheet-table'
         title: () => {
             return <span>Title</span>
         }, 
-        value: (row, { active, focus, disabled }) => {
+        value: (row, { focus }) => {
           return (
             <Input  
               value={row.name}
-              active={active}
               focus={focus}
+              onBlur={this.onInputBlur}
             />
           );
         }
-      },
+      }
    ]}
 />
 ```
-
-### Built-in Input
 
 ### Built-in Select
 
