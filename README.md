@@ -28,7 +28,9 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
+    -   [Another component](#another-component)
 -   [Performant scrolling](#performant-scrolling)
+-   [Disabled cells](#disabled-cells)
 
 ## Installation
 
@@ -301,6 +303,35 @@ const positions = [{
 
 ### Another component
 
+Let's suggest you need to use an autocomplete as a content of a cell. This is how it could be done:
+
+```jsx
+import { Table } from 'react-spreadsheet-table'
+import AwesomeAutocomplete from 'awesome-autocomplete'
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Manager</span>
+        }, 
+        value: (row, { focus }) => {
+          return (
+            <AwesomeAutocomplete
+              value={row.manager.name}
+              selectedId={row.positionId}
+              isOpen={focus}
+              onSelectItem={this.onFieldChange.bind(this, 'manager')}
+            />
+          );
+        }
+      }
+   ]}
+/>
+```
+
 ## Performant scrolling
 
 `react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+
+## Disabled cells
