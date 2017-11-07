@@ -9,7 +9,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Control by mouse & from keyboard
 
-✅  Customizable cells & header content (you can use any other components for that)
+✅  Customizable cells & header content (use built-in Input and Select, or any other components)
 
 ✅  Flexible setting of disabled cells
 
@@ -330,8 +330,7 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 />
 ```
 
-## Performant scrolling
+## Control by mouse & from keyboard
 
-`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
 
-## Disabled cells
