@@ -24,13 +24,13 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Installation](#installation)
 -   [Basic usage](#basic-usage)
 -   [Props](#props)
--   [Customizing CSS styles](#customizing-css-styles)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
     -   [Another component](#another-component)
+-   [Customizing CSS styles](#customizing-css-styles)
 -   [Performant scrolling](#performant-scrolling)
--   [Disabled cells](#disabled-cells)
+-   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
 
 ## Installation
 
@@ -194,21 +194,6 @@ A callback called every time the width of a column was resized. Gets `widthValue
 Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
 
-## Customizing CSS styles
-
-Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
-
-```css
-.SpreadsheetTable__cell_active {
-    box-shadow: inset 0 0 0 2px green;
-}
-``` 
-
-This would override the color of borders for the table active cell.
-
-⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
-
-
 ## Customizing cells & header content
 
 You can customize content of titles and cells using `title` and `value` keys of elements of the `columns` property. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
@@ -330,7 +315,20 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 />
 ```
 
+## Customizing CSS styles
+
+Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
+
+```css
+.SpreadsheetTable__cell_active {
+    box-shadow: inset 0 0 0 2px green;
+}
+``` 
+
+This would override the color of borders for the table active cell.
+
+⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
 ## Control by mouse & from keyboard
 
 A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
-
