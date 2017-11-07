@@ -224,7 +224,8 @@ For the basic usage, the library provide 2 default components that you can use o
 Prop | Type | Mission
 --- | --- | ---
 `value` | string | The value of the input
-`focus` | bool | Should an the input has focus or not 
+`placeholder` | string | Placeholder displaying when there is no value
+`focus` | bool | Should the input has focus or not 
 `onBlur` | func | Blur callback. Use it to catch a changed value
 
 Usage:
@@ -236,14 +237,14 @@ import { Table, Input } from 'react-spreadsheet-table'
     columns={[
       {
         title: () => {
-            return <span>Title</span>
+            return <span>Name</span>
         }, 
         value: (row, { focus }) => {
           return (
             <Input  
               value={row.name}
               focus={focus}
-              onBlur={this.onInputBlur}
+              onBlur={this.onFieldChange.bind(this, 'name')}
             />
           );
         }
@@ -254,6 +255,51 @@ import { Table, Input } from 'react-spreadsheet-table'
 
 ### Built-in Select
 
+`Select` prop types: 
+
+Prop | Type | Mission
+--- | --- | ---
+`items` | arrayOf({ id: string / number, name: string }) | Items for select
+`selectedId` | string / number | Id of a selected item
+`placeholder` | string | Placeholder displaying when there is no selected item
+`isOpen` | bool | Should the select be open or not
+`onChange` | func | Change item callback. Use it to catch a changed value
+
+Usage:
+
+```jsx
+import { Table, Select } from 'react-spreadsheet-table'
+
+const positions = [{
+    id: 1,
+    name: 'Frontend developer'
+}, {
+    id: 2,
+    name: 'Backend developer'
+}];
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Position</span>
+        }, 
+        value: (row, { focus }) => {
+          return (
+            <Select
+              items={positions}
+              selectedId={row.positionId}
+              isOpen={focus}
+              onChange={this.onFieldChange.bind(this, 'positionId')}
+            />
+          );
+        }
+      }
+   ]}
+/>
+```
+
+### Another component
 
 ## Performant scrolling
 
