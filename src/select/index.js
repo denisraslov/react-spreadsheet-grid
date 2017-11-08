@@ -184,10 +184,12 @@ const IdPropType = PropTypes.oneOfType([
 
 SpreadsheetGridSelect.propTypes = {
     selectedId: IdPropType,
-    items: PropTypes.shape({
-        id: IdPropType,
-        value: PropTypes.string
-    }),
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: IdPropType,
+            value: PropTypes.string
+        })
+    ),
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     isOpen: PropTypes.bool

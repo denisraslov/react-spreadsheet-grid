@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Closed dropdown 1`] = `
+<div
+  className="SpreadsheetTableDropdown"
+>
+  <div
+    onClick={[Function]}
+  >
+    <span>
+      Header
+    </span>
+  </div>
+  <div
+    className="SpreadsheetTableDropdown__body"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <span>
+      Body
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Opened dropdown 1`] = `
+<div
+  className="SpreadsheetTableDropdown"
+>
+  <div
+    onClick={[Function]}
+  >
+    <span>
+      Header
+    </span>
+  </div>
+  <div
+    className="SpreadsheetTableDropdown__body"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <span>
+      Body
+    </span>
+  </div>
+</div>
+`;

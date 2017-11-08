@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Closed select 1`] = `
+<div
+  className="SpreadsheetTableDropdown"
+>
+  <div
+    onClick={[Function]}
+  >
+    <div
+      className="SpreadsheetTableSelectHeader"
+    >
+      
+    </div>
+  </div>
+  <div
+    className="SpreadsheetTableDropdown__body"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <div>
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Closed select without a selected value 1`] = `
+<div
+  className="SpreadsheetTableDropdown"
+>
+  <div
+    onClick={[Function]}
+  >
+    <div
+      className="SpreadsheetTableSelectHeader"
+    >
+      Placeholder
+    </div>
+  </div>
+  <div
+    className="SpreadsheetTableDropdown__body"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <div>
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Opened select 1`] = `
+<div
+  className="SpreadsheetTableDropdown"
+>
+  <div
+    onClick={[Function]}
+  >
+    <div
+      className="SpreadsheetTableSelectHeader SpreadsheetTableSelectHeader_open"
+    >
+      
+    </div>
+  </div>
+  <div
+    className="SpreadsheetTableDropdown__body"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <div>
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+      <div
+        className="SpreadsheetTableSelectItem"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;
