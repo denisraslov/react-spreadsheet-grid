@@ -537,6 +537,10 @@ export const propTypes = {
     columnsWidth: PropTypes.object
 };
 
+SpreadsheetTable.defaultProps = {
+    blurFocus: false
+};
+
 SpreadsheetTable.propTypes = propTypes;
 
 export default SpreadsheetTable;
