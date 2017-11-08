@@ -1,14 +1,7 @@
-<h1 align="center">
-  React Spreadsheet Grid
-  <br>
-  <span style="font-size:20px;">
-    🔲 
-  </span>
-</h1>
+# React Spreadsheet Grid
+> A customizable, performant and powerful spreadsheet grid component for React
 
-<h1 align="center">
-  <img src="https://giant.gfycat.com/EnviousPinkGoosefish.gif" width="640">
-</h1>
+![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/example.gif)
 
 ## The key features
 
@@ -16,7 +9,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Control by mouse & from keyboard
 
-✅  Customizable cells & header content (you can use any other components for that)
+✅  Customizable cells & header content (use built-in Input and Select, or any other components)
 
 ✅  Flexible setting of disabled cells
 
@@ -31,11 +24,13 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Installation](#installation)
 -   [Basic usage](#basic-usage)
 -   [Props](#props)
--   [Customizing CSS styles](#customizing-css-styles)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
+    -   [Another component](#another-component)
+-   [Customizing CSS styles](#customizing-css-styles)
 -   [Performant scrolling](#performant-scrolling)
+-   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
 
 ## Installation
 
@@ -199,6 +194,127 @@ A callback called every time the width of a column was resized. Gets `widthValue
 Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
 
+## Customizing cells & header content
+
+You can customize content of titles and cells using `title` and `value` keys of elements of the `columns` property. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
+
+`title` could be a string or a func returning any React element. 
+
+`value` works the same way, but func receives current `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+
+For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`. Perhaps, they will be enough for you. However, you can use any other React components for that purpose: autocompletes, checkboxes, etc.
+
+### Built-in Input
+
+`Input` prop types: 
+
+Prop | Type | Mission
+--- | --- | ---
+`value` | string | The value of the input
+`placeholder` | string | Placeholder displaying when there is no value
+`focus` | bool | Should the input has focus or not 
+`onBlur` | func | Blur callback. Use it to catch a changed value
+
+Usage:
+
+```jsx
+import { Table, Input } from 'react-spreadsheet-table'
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Name</span>
+        }, 
+        value: (row, { focus }) => {
+          return (
+            <Input  
+              value={row.name}
+              focus={focus}
+              onBlur={this.onFieldChange.bind(this, 'name')}
+            />
+          );
+        }
+      }
+   ]}
+/>
+```
+
+### Built-in Select
+
+`Select` prop types: 
+
+Prop | Type | Mission
+--- | --- | ---
+`items` | arrayOf({ id: string / number, name: string }) | Items for select
+`selectedId` | string / number | Id of a selected item
+`placeholder` | string | Placeholder displaying when there is no selected item
+`isOpen` | bool | Should the select be open or not
+`onChange` | func | Change item callback. Use it to catch a changed value
+
+Usage:
+
+```jsx
+import { Table, Select } from 'react-spreadsheet-table'
+
+const positions = [{
+    id: 1,
+    name: 'Frontend developer'
+}, {
+    id: 2,
+    name: 'Backend developer'
+}];
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Position</span>
+        }, 
+        value: (row, { focus }) => {
+          return (
+            <Select
+              items={positions}
+              selectedId={row.positionId}
+              isOpen={focus}
+              onChange={this.onFieldChange.bind(this, 'positionId')}
+            />
+          );
+        }
+      }
+   ]}
+/>
+```
+
+### Another component
+
+Let's suggest you need to use an autocomplete as a content of a cell. This is how it could be done:
+
+```jsx
+import { Table } from 'react-spreadsheet-table'
+import AwesomeAutocomplete from 'awesome-autocomplete'
+
+ <Table 
+    columns={[
+      {
+        title: () => {
+            return <span>Manager</span>
+        }, 
+        value: (row, { focus }) => {
+          return (
+            <AwesomeAutocomplete
+              value={row.manager.name}
+              selectedId={row.positionId}
+              isOpen={focus}
+              onSelectItem={this.onFieldChange.bind(this, 'manager')}
+            />
+          );
+        }
+      }
+   ]}
+/>
+```
+
 ## Customizing CSS styles
 
 Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
@@ -213,43 +329,6 @@ This would override the color of borders for the table active cell.
 
 ⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
 
+## Control by mouse & from keyboard
 
-## Customizing cells & header content
-
-You can use any React component as a content of titles and cells, just pass it as a result of `title` and `value` functions of elements of the `columns` props. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
-
-For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`.
-
-An example of the usage:
-
-```jsx
-import { Table, Input, Select } from 'react-spreadsheet-table'
-
- <Table 
-    columns={[
-      {
-        title: () => {
-            return <span>Title</span>
-        }, 
-        value: (row, { active, focus, disabled }) => {
-          return (
-            <Input  
-              value={row.name}
-              active={active}
-              focus={focus}
-            />
-          );
-        }
-      },
-   ]}
-/>
-```
-
-### Built-in Input
-
-### Built-in Select
-
-
-## Performant scrolling
-
-`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
