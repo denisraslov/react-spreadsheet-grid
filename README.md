@@ -21,16 +21,26 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ## Table of contents
 
+-   [Live Playground](#live-playground)
 -   [Installation](#installation)
--   [Basic usage](#basic-usage)
+-   [The pattern of usage](#the-pattern-of-usage)
 -   [Props](#props)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
     -   [Another component](#another-component)
 -   [Customizing CSS styles](#customizing-css-styles)
--   [Performant scrolling](#performant-scrolling)
+-   [Performant scroll](#performant-scroll)
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
+
+## Live Playground
+
+For examples of the grid in action, you can run the demo on your own computer:
+
+* Clone this repository
+* `npm install`
+* `npm run storybook`
+* Visit http://localhost:6006/
 
 ## Installation
 
@@ -366,6 +376,10 @@ Right now, the easiest way to tweak `react-spreadsheet-table` is to create anoth
 This would override the color of borders for the table active cell.
 
 ⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
+## Performant scroll
+  
+`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
 
 ## Control by mouse & from keyboard
 
