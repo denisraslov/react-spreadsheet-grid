@@ -11,7 +11,7 @@ const items = [{
 },{
     id: 3,
     value: '3'
-},];
+}];
 
 test('Closed select', () => {
     const tree = renderer.create(

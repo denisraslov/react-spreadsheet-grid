@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input with a value 1`] = `
+<input
+  className="SpreadsheetTable__Input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  placeholder={undefined}
+  value="Value"
+/>
+`;
+
+exports[`Input without a value 1`] = `
+<input
+  className="SpreadsheetTable__Input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  placeholder="Placeholder"
+  value=""
+/>
+`;

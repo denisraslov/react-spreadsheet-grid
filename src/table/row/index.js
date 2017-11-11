@@ -75,8 +75,7 @@ SpreadsheetRow.propTypes = {
     activeCell: PropTypes.object,
     focusedCell: PropTypes.object,
     getCellClassName: PropTypes.func,
-    disabled: PropTypes.bool,
-    disabledCells: PropTypes.bool,
+    disabledCells: PropTypes.arrayOf(PropTypes.object),
     height: PropTypes.number
 };
 

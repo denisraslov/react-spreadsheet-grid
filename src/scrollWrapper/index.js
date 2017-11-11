@@ -33,7 +33,8 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
     }
 
     calculateLast(first) {
-        const visibleHeight = this.scrollWrapperElement.parentNode.offsetHeight + 200;
+        const wrapper = this.scrollWrapperElement;
+        const visibleHeight = wrapper ? wrapper.parentNode.offsetHeight + 200 : 0;
 
         return first + Math.ceil(visibleHeight / this.props.cellHeight);
     }

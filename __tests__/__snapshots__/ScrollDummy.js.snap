@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollDummy with rows 1`] = `
+<div
+  className="SpreadsheetTableScrollDummy"
+  style={
+    Object {
+      "height": "200px",
+    }
+  }
+/>
+`;
+
+exports[`ScrollDummy without rows 1`] = `
+<div
+  className="SpreadsheetTableScrollDummy"
+  style={
+    Object {
+      "height": "50px",
+    }
+  }
+/>
+`;

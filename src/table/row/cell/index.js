@@ -36,6 +36,8 @@ SpreadsheetCell.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     children: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
         PropTypes.element,
         PropTypes.arrayOf(PropTypes.element)
     ]).isRequired,
@@ -44,7 +46,7 @@ SpreadsheetCell.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
-    disabledCells: PropTypes.bool
+    disabledCells: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default SpreadsheetCell;

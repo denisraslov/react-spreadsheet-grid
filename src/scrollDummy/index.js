@@ -37,7 +37,7 @@ class SpreadsheetTableScrollDummy extends React.Component {
 }
 
 SpreadsheetTableScrollDummy.propTypes = {
-    rows: PropTypes.arrayOf(PropTypes.object),
+    rows: PropTypes.arrayOf(PropTypes.any),
     headerHeight: PropTypes.number.isRequired,
     cellHeight: PropTypes.number.isRequired
 };

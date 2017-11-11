@@ -109,27 +109,31 @@ class SpreadsheetTable extends React.PureComponent {
 
     freezeTable() {
         const table = this.tableElement;
-        const cells = table.querySelectorAll('th');
 
-        // сбрасываем прописанную ширину колонок, чтобы они подстроились под ширину
-        // таблицы автоматически
-        cells.forEach((cell) => {
-            cell.style.width = 'auto';
-        });
+        // There is no table when Jest is running tests
+        if (table) {
+            const cells = table.querySelectorAll('th');
 
-        table.style.width = '100%';
+            // сбрасываем прописанную ширину колонок, чтобы они подстроились под ширину
+            // таблицы автоматически
+            cells.forEach((cell) => {
+                cell.style.width = 'auto';
+            });
 
-        // фиксируем ширины в style
-        cells.forEach((cell) => {
-            if (this.widthValues[cell.cellIndex]) {
-                // если есть сохранённое значение, подстраиваем его под новую ширину таблицы
-                // в процентном соотношении
-                cell.style.width = Math.round(this.widthValues[cell.cellIndex] * table.offsetWidth
-                        / this.widthValues.tableWidth) + 'px';
-            } else {
-                cell.style.width = cell.offsetWidth + 'px';
-            }
-        });
+            table.style.width = '100%';
+
+            // фиксируем ширины в style
+            cells.forEach((cell) => {
+                if (this.widthValues[cell.cellIndex]) {
+                    // если есть сохранённое значение, подстраиваем его под новую ширину таблицы
+                    // в процентном соотношении
+                    cell.style.width = Math.round(this.widthValues[cell.cellIndex] * table.offsetWidth
+                            / this.widthValues.tableWidth) + 'px';
+                } else {
+                    cell.style.width = cell.offsetWidth + 'px';
+                }
+            });
+        }
     }
 
     startColumnResize(e) {
@@ -529,7 +533,7 @@ export const propTypes = {
     cellHeight: PropTypes.number,
     first: PropTypes.number,
     last: PropTypes.number,
-    offset: PropTypes.string,
+    offset: PropTypes.number,
 
     // resize
     columnsResize: PropTypes.bool,

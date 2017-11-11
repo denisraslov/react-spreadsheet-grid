@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollWrapper with columns with components 1`] = `
+<div
+  className="SpreadsheetTableScrollWrapper"
+  onScroll={[Function]}
+>
+  <div
+    className="SpreadsheetTableScrollDummy"
+    style={
+      Object {
+        "height": "184px",
+      }
+    }
+  />
+  <table
+    className="SpreadsheetTable"
+    style={
+      Object {
+        "top": "0px",
+      }
+    }
+  >
+    <thead
+      style={
+        Object {
+          "display": "",
+          "height": "40px",
+        }
+      }
+    >
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Second name
+        </th>
+        <th>
+          Position
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="SpreadsheetTable__placeholder"
+      >
+        <td
+          colSpan={3}
+        >
+          <div>
+            There are no rows
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`ScrollWrapper with columns with text values 1`] = `
+<div
+  className="SpreadsheetTableScrollWrapper"
+  onScroll={[Function]}
+>
+  <div
+    className="SpreadsheetTableScrollDummy"
+    style={
+      Object {
+        "height": "184px",
+      }
+    }
+  />
+  <table
+    className="SpreadsheetTable"
+    style={
+      Object {
+        "top": "0px",
+      }
+    }
+  >
+    <thead
+      style={
+        Object {
+          "display": "",
+          "height": "40px",
+        }
+      }
+    >
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Second name
+        </th>
+        <th>
+          Position
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="SpreadsheetTable__placeholder"
+      >
+        <td
+          colSpan={3}
+        >
+          <div>
+            There are no rows
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`ScrollWrapper without rows 1`] = `
+<div
+  className="SpreadsheetTableScrollWrapper"
+  onScroll={[Function]}
+>
+  <div
+    className="SpreadsheetTableScrollDummy"
+    style={
+      Object {
+        "height": "40px",
+      }
+    }
+  />
+  <table
+    className="SpreadsheetTable"
+    style={
+      Object {
+        "top": "0px",
+      }
+    }
+  >
+    <thead
+      style={
+        Object {
+          "display": "",
+          "height": "40px",
+        }
+      }
+    >
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Second name
+        </th>
+        <th>
+          Position
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="SpreadsheetTable__placeholder"
+      >
+        <td
+          colSpan={3}
+        >
+          <div>
+            There are no rows
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
