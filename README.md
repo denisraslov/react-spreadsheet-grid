@@ -1,7 +1,7 @@
 # React Spreadsheet Grid
 > A customizable, performant and powerful spreadsheet grid component for React
 
-![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/example.gif)
+![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/demo.gif)
 
 ## The key features
 
