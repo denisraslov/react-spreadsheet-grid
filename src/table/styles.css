@@ -4,7 +4,8 @@
     position: absolute;
     top: 0;
     background-color: #827789;
-    border: 1px solid #E6E1E8;
+    border-left: 1px solid #E6E1E8;
+    border-right: 1px solid #E6E1E8;
 }
 
 .SpreadsheetTable thead {
@@ -43,6 +44,7 @@
     font-size: 13px;
     line-height: 15px;
     text-overflow: ellipsis;
+    padding: 10px;
 }
 
 .SpreadsheetTable__cell > * {
