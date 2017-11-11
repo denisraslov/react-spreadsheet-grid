@@ -21,16 +21,26 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ## Table of contents
 
+-   [Live Playground](#live-playground)
 -   [Installation](#installation)
--   [Basic usage](#basic-usage)
+-   [The pattern of usage](#the-pattern-of-usage)
 -   [Props](#props)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
     -   [Another component](#another-component)
 -   [Customizing CSS styles](#customizing-css-styles)
--   [Performant scrolling](#performant-scrolling)
+-   [Performant scroll](#performant-scroll)
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
+
+## Live Playground
+
+For examples of the grid in action, you can run the demo on your own computer:
+
+* Clone this repository
+* `npm install`
+* `npm run storybook`
+* Visit http://localhost:6006/
 
 ## Installation
 
@@ -40,71 +50,109 @@ This module is distributed via [npm][npm] and should be installed as one of your
 npm install --save react-spreadsheet-table
 ```
 
-## Basic usage
+## The pattern of usage
+
+Take a closer look at 2 main thing: **a definition of columns** and **work with the state of a high-order component**.
+
+To get the correct behavior of the grid you should:
+
+* Store rows of the grid in the state of a high-order component.
+* Describe how the grid has render values of the cells. 
+* Have a callback that will change values of rows in the state.
+
+Let's see how it works:
 
 ```jsx
-import { Table, Input, Select } from 'react-spreadsheet-table'
+import { Grid, Input, Select } from 'react-spreadsheet-grid'
+import AwesomeAutocomplete from 'awesome-autocomplete'
 
-class MySpreadsheetTable extends React.Component {
+const rows=[{
+  id: 'user1',
+  name: 'John Doe',
+  positionId: 'position1',
+  managerId: 'manager1'
+}, {
+  id: 'user2',
+  name: 'Doe John',
+  positionId: 'position2',
+  managerId: 'manager2'
+}]
+
+class MyAwesomeSpreadsheetGrid extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        // Rows are stored in the state.
+        this.state = {
+            rows
+        };
+    }
+
+    // A callback called every time a value changed.
+    // Every time it save a new value to the state.
+    onFieldChange(rowId, field, value) {
+        rows[rowId][field] = value;
+
+        this.setState({
+            rows: [].concat(rows),
+            // Blurring focus from the current cell is necessary for a correct behavior of the Grid.
+            blurFocus: true
+        });
+    }
 
   render() {
     return (
-      <Table 
-        /* Define columns of the table and how they get their values */
+      <Grid 
         columns={[
           {
-            title: 'Name', 
-            /* Define the props of components based on { active, focus, disabled } of the cell state */
-            value: (row, { active, focus, disabled }) => {
+            title: () => 'Name', 
+            value: (row, { focus }) => {
+            
+              // You can use the built-in Input.
               return (
-                /* You can use the built-in Input */
                 <Input  
                   value={row.name}
-                  active={active}
                   focus={focus}
+                  onBlur={this.onFieldChange.bind(this, row.id, 'name')}
                 />
               );
             }
           }, {
-            title: 'Position',
-            value: (row, { active, focus, disabled }) => {
-                /* Also, you can use the built-in Select */
-                <Select  
-                  value={row.positionId}
-                  isOpen={focus}
-                  items={positions}
-                />
+            title: () => 'Position',
+            value: (row, { focus }) => {
+            
+                // You can use the built-in Select.
+                return (
+                    <Select  
+                      value={row.positionId}
+                      isOpen={focus}
+                      items={somePositions}
+                      onChange={this.onFieldChange.bind(this, row.id, 'positionId')}
+                    />
+                );
             }
           }, {
-            title: 'Manager',
-            value: (row, { active, focus, disabled }) => {
+            title: () => 'Manager',
+            value: (row, { active, focus }) => {
+            
+              // You can use whatever component you want to change a value.
               return (
-                /* Also, you can use ANY OTHER components as a content for the cells */
                 <Autocomplete  
                   value={row.managerId}
                   active={active}
                   focus={focus}
+                  onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
                 />
               );
             }
           }
         ]}
         
-        /* Define rows */
-        rows=[{
-          id: 'user1',
-          name: 'John Doe',
-          positionId: 'position1',
-          managerId: 'manager1'
-        }, {
-          id: 'user2',
-          name: 'Doe John',
-          positionId: 'position2',
-          managerId: 'manager2'
-        }]
-        
-        /* Define a unique key getter for a row */
         getRowKey={row => row.id}
+        
+        // Don't forget to blur focused cell after a value has been changed.
+        blurFocus={this.state.blurFocus}
       />
     )
   }
@@ -328,6 +376,10 @@ Right now, the easiest way to tweak `react-spreadsheet-table` is to create anoth
 This would override the color of borders for the table active cell.
 
 ⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
+## Performant scroll
+  
+`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
 
 ## Control by mouse & from keyboard
 
