@@ -47,7 +47,7 @@ Take a closer look at 2 main thing: **a definition of columns** and **work with 
 To get the correct behavior of the grid you should:
 
 * Store rows of the grid in the state of a high-order component.
-* Describe how the grid have render values of the cells. 
+* Describe how the grid has render values of the cells. 
 * Have a callback that will change values of rows in the state.
 
 Let's see how it works:
