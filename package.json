@@ -8,6 +8,9 @@
     "build-storybook": "build-storybook"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/jestSetup.js"
+    ],
     "moduleNameMapper": {
       "^.+\\.css$": "<rootDir>/jestCSSStub.js"
     }
