@@ -21,7 +21,8 @@ class SpreadsheetTable extends React.PureComponent {
         this.onWindowResize = this.onWindowResize.bind(this);
 
         this.state = {
-            disabledCells: this.getDisabledCells(this.props.rows, this.props.checkDisabledCell)
+            disabledCells: this.getDisabledCells(this.props.rows, this.props.checkDisabledCell),
+            widthValues: {}
         };
 
         if (this.props.focusedCell) {
@@ -30,18 +31,16 @@ class SpreadsheetTable extends React.PureComponent {
 
             this.skipGlobalClick = true;
         }
-
-        this.widthValues = {};
     }
 
     componentDidMount() {
         if (this.props.columnsResize) {
-            this.freezeTable();
+            this.freezeTable(this.props.widthValues);
 
             window.addEventListener('resize', this.onWindowResize, false);
             document.addEventListener('mousemove', this.processColumnResize, false);
             document.addEventListener('mouseup', () => {
-                this.th = null;
+                this.resizingCell = null;
             }, false);
         }
 
@@ -84,8 +83,6 @@ class SpreadsheetTable extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        this.freezeTable();
-
         document.removeEventListener('keydown', this.onGlobalKeyDown, false);
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
     }
@@ -95,7 +92,7 @@ class SpreadsheetTable extends React.PureComponent {
             window.removeEventListener('resize', this.onWindowResize, false);
             document.removeEventListener('mousemove', this.processColumnResize, false);
             document.removeEventListener('mouseup', () => {
-                this.th = null;
+                this.resizingCell = null;
             }, false);
         }
 
@@ -107,76 +104,106 @@ class SpreadsheetTable extends React.PureComponent {
         this.freezeTable();
     }
 
-    freezeTable() {
+    freezeTable(widthValues = {}) {
         const table = this.tableElement;
 
         // There is no table when Jest is running tests
         if (table) {
-            const cells = table.querySelectorAll('th');
+            const cells = table.querySelectorAll('.SpreadsheetTable__headCell');
+            const preparedWidthValues = {};
+            let sumOfWidth = 0;
 
-            // сбрасываем прописанную ширину колонок, чтобы они подстроились под ширину
-            // таблицы автоматически
-            cells.forEach((cell) => {
-                cell.style.width = 'auto';
+            Object.keys(widthValues).forEach((id) => {
+                sumOfWidth += widthValues[id];
             });
 
-            table.style.width = '100%';
+            if (sumOfWidth > 100) {
+                console.error('react-spreadsheet-grid ERROR: The sum of column width values in ' +
+                    'the "widthValues" property is more then 100 percents! ' +
+                    'The values are not being used in this condition!');
+                widthValues = {};
+            }
 
-            // фиксируем ширины в style
-            cells.forEach((cell) => {
-                if (this.widthValues[cell.cellIndex]) {
-                    // если есть сохранённое значение, подстраиваем его под новую ширину таблицы
-                    // в процентном соотношении
-                    cell.style.width = Math.round(this.widthValues[cell.cellIndex] * table.offsetWidth
-                            / this.widthValues.tableWidth) + 'px';
+            let restTableWidth = 100;
+            let restColumnsCount = cells.length;
+
+            cells.forEach((cell, i) => {
+                const id = this.props.columns[i].id;
+
+                if (widthValues[id]) {
+                    preparedWidthValues[id] = widthValues[id];
+                    restTableWidth -= widthValues[id];
+                    restColumnsCount--;
                 } else {
-                    cell.style.width = cell.offsetWidth + 'px';
+                    preparedWidthValues[id] = (restTableWidth / cells.length);
                 }
+            });
+
+            cells.forEach((cell, i) => {
+                const id = this.props.columns[i].id;
+
+                if (!widthValues[id]) {
+                    preparedWidthValues[id] = (restTableWidth / cells.length);
+                }
+            });
+
+            this.setState({
+                widthValues: preparedWidthValues
             });
         }
     }
 
     startColumnResize(e) {
-        this.th = e.currentTarget.offsetParent;
-        this.th.startOffset = this.th.offsetWidth - e.pageX;
-        this.currentTh = this.th.nextSibling;
-        this.currentTh.startOffset = document.body.offsetWidth - this.currentTh.offsetWidth -
+        this.resizingCell = e.currentTarget.offsetParent;
+        this.resizingCell.startOffset = this.resizingCell.offsetWidth - e.pageX;
+
+        this.nextResizingCell = this.resizingCell.nextSibling;
+        this.nextResizingCell.startOffset =
+            document.body.offsetWidth -
+            this.nextResizingCell.offsetWidth -
             e.pageX;
     }
 
-    processColumnResize(e, nextTh) {
+    processColumnResize(e, nextCell) {
         let direction;
         let sibling;
         const table = this.tableElement;
+        const tableWidth = table.offsetWidth;
+        const columns = this.props.columns;
 
         if (this.currentCoords <= e.pageX) {
             direction = 'toRight';
         }
 
-        if (this.th) {
-            table.style.width = '100%';
+        if (this.resizingCell) {
+            const widthValues = Object.assign({}, this.state.widthValues);
 
             if (direction === 'toRight') {
-                const diff = this.th.startOffset + e.pageX - parseInt(this.th.style.width, 10);
+                const diff = this.resizingCell.startOffset + e.pageX - this.resizingCell.offsetWidth;
 
                 if (this.currentCoords) {
-                    sibling = nextTh || this.th.nextSibling;
+                    sibling = nextCell || this.resizingCell.nextSibling;
                 }
 
-                if (parseInt(this.th.style.width, 10) + diff > 100 &&
-                    parseInt(sibling.style.width, 10) - diff > 100) {
-                    this.th.style.width = parseInt(this.th.style.width, 10) + diff + 'px';
-                    sibling.style.width = parseInt(sibling.style.width, 10) - diff + 'px';
+                if (this.resizingCell.offsetWidth + diff > 100 &&
+                    sibling.offsetWidth - diff > 100) {
 
-                    this.widthValues[this.th.cellIndex] = parseInt(this.th.style.width);
-                    this.widthValues[sibling.cellIndex] = parseInt(sibling.style.width);
+                    const prevValue1 = widthValues[columns[this.resizingCell.dataset.index].id];
+                    const newValue1 = (this.resizingCell.offsetWidth + diff) * 100 / tableWidth;
+
+                    widthValues[columns[this.resizingCell.dataset.index].id] = newValue1;
+                    widthValues[columns[sibling.dataset.index].id] -= newValue1 - prevValue1;
+
+                    this.setState({
+                        widthValues
+                    });
                 } else {
                     let cell;
 
-                    if (nextTh) {
-                        cell = nextTh.nextSibling;
+                    if (nextCell) {
+                        cell = nextCell.nextSibling;
                     } else {
-                        cell = this.th.nextSibling.nextSibling;
+                        cell = this.resizingCell.nextSibling.nextSibling;
                     }
 
                     if (cell) {
@@ -185,26 +212,34 @@ class SpreadsheetTable extends React.PureComponent {
                 }
             } else {
                 if (this.currentCoords) {
-                    sibling = nextTh || this.th;
+                    sibling = nextCell || this.resizingCell;
                 }
 
-                const diff = document.body.offsetWidth - e.pageX - this.currentTh.startOffset -
-                    this.currentTh.offsetWidth;
+                const diff = document.body.offsetWidth -
+                    e.pageX -
+                    this.nextResizingCell.startOffset -
+                    this.nextResizingCell.offsetWidth;
 
-                if (parseInt(sibling.style.width, 10) - diff > 100 &&
-                    parseInt(this.currentTh.style.width, 10) + diff > 100) {
-                    sibling.style.width = parseInt(sibling.style.width, 10) - diff + 'px';
-                    this.currentTh.style.width = parseInt(this.currentTh.style.width, 10) + diff + 'px';
+                if (sibling.offsetWidth - diff > 100 &&
+                    this.nextResizingCell.offsetWidth + diff > 100) {
 
-                    this.widthValues[this.currentTh.cellIndex] = parseInt(this.currentTh.style.width);
-                    this.widthValues[sibling.cellIndex] = parseInt(sibling.style.width);
+                    const prevValue1 = widthValues[columns[sibling.dataset.index].id];
+                    const newValue1 = (parseInt(sibling.offsetWidth, 10) - diff) * 100 / tableWidth;
+
+                    widthValues[columns[sibling.dataset.index].id] = newValue1;
+                    widthValues[columns[this.nextResizingCell.dataset.index].id] -= newValue1 - prevValue1;
+
+                    this.setState({
+                        widthValues
+                    });
+
                 } else {
                     let cell;
 
-                    if (nextTh) {
-                        cell = nextTh.previousSibling;
+                    if (nextCell) {
+                        cell = nextCell.previousSibling;
                     } else {
-                        cell = this.th.previousSibling;
+                        cell = this.resizingCell.previousSibling;
                     }
 
                     if (cell) {
@@ -213,12 +248,8 @@ class SpreadsheetTable extends React.PureComponent {
                 }
             }
 
-            if (this.widthValues) {
-                this.widthValues.tableWidth = table.offsetWidth;
-
-                if (this.props.onColumnResize) {
-                    this.props.onColumnResize(this.widthValues);
-                }
+            if (this.props.onColumnResize) {
+                this.props.onColumnResize(widthValues);
             }
         }
 
@@ -425,29 +456,35 @@ class SpreadsheetTable extends React.PureComponent {
 
     renderHeader() {
         const columns = this.props.columns;
+        const { widthValues } = this.state;
 
         return (
-            <thead
+            <div
+                className="SpreadsheetTable__headed"
                 style={{
-                    height: this.props.headerHeight + 'px',
                     display: `${this.props.first > 0 ? 'none' : ''}`,
                 }}
             >
-            <tr>
                 {
                     columns.map((column, i) => {
                         return (
-                            <th
-                                key={i}
+                            <div
+                                className="SpreadsheetTable__headCell"
+                                data-index={i}
+                                style={{
+                                    height: this.props.headerHeight + 'px',
+                                    width: widthValues
+                                        ? widthValues[columns[i].id] + '%'
+                                        : 'auto'
+                                }}
                             >
                                 {typeof column.title === 'string' ? column.title : column.title()}
                                 {this.props.columnsResize && this.renderResizer()}
-                            </th>
+                            </div>
                         );
                     })
                 }
-            </tr>
-            </thead>
+            </div>
         );
     }
 
@@ -475,18 +512,15 @@ class SpreadsheetTable extends React.PureComponent {
                         focusedCell={this.state.focusedCell}
                         disabledCells={this.state.disabledCells}
                         height={this.props.cellHeight}
+                        widthValues={this.state.widthValues}
                     />
                 );
             });
         } else {
             body = (
-                <tr className="SpreadsheetTable__placeholder">
-                    <td colSpan={columns.length}>
-                        <div>
-                            {this.props.placeholder}
-                        </div>
-                    </td>
-                </tr>
+                <div className="SpreadsheetTable__placeholder">
+                    {this.props.placeholder}
+                </div>
             );
         }
 
@@ -495,16 +529,18 @@ class SpreadsheetTable extends React.PureComponent {
 
     render() {
         return (
-            <table
+            <div
                 className="SpreadsheetTable"
-                style={{ top: this.calculatePosition() }}
+                style={{
+                    top: this.calculatePosition()
+                }}
                 ref={(tableElement) => { this.tableElement = tableElement; }}
             >
                 {this.renderHeader()}
-                <tbody>
+                <div>
                     {this.renderBody()}
-                </tbody>
-            </table>
+                </div>
+            </div>
         );
     }
 }
@@ -538,7 +574,7 @@ export const propTypes = {
     // resize
     columnsResize: PropTypes.bool,
     onColumnResize: PropTypes.func,
-    columnsWidth: PropTypes.object
+    widthValues: PropTypes.object
 };
 
 SpreadsheetTable.defaultProps = {

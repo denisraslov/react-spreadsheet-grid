@@ -13,7 +13,8 @@ class SpreadsheetRow extends React.Component {
         return this.props.x !== nextProps.x
             || (currentActiveCell && currentActiveCell.x === this.props.x)
             || (nextActiveCell && nextActiveCell.x === this.props.x)
-            || this.props.disabledCells !== nextProps.disabledCells;
+            || this.props.disabledCells !== nextProps.disabledCells
+            || this.props.widthValues !== nextProps.widthValues;
     }
 
     render() {
@@ -26,11 +27,13 @@ class SpreadsheetRow extends React.Component {
             getCellClassName,
             activeCell,
             focusedCell,
-            disabled
+            widthValues
         } = this.props;
 
         return (
-            <tr style={{ height: this.props.height }}>
+            <div
+                className="SpreadsheetTable__row"
+            >
                 {
                     columns.map((column, y) => {
                         const coords = { x, y };
@@ -49,6 +52,8 @@ class SpreadsheetRow extends React.Component {
                                 isActive={_.isEqual(activeCell, coords)}
                                 isFocused={_.isEqual(focusedCell, coords)}
                                 disabledCells={this.props.disabledCells}
+                                width={widthValues[column.id]}
+                                height={this.props.height}
                             >
                                 {
                                     column.value(row, {
@@ -61,7 +66,7 @@ class SpreadsheetRow extends React.Component {
                         );
                     })
                 }
-            </tr>
+            </div>
         );
     }
 }
@@ -76,7 +81,8 @@ SpreadsheetRow.propTypes = {
     focusedCell: PropTypes.object,
     getCellClassName: PropTypes.func,
     disabledCells: PropTypes.arrayOf(PropTypes.object),
-    height: PropTypes.number
+    height: PropTypes.number,
+    widthValues: PropTypes.object
 };
 
 export default SpreadsheetRow;

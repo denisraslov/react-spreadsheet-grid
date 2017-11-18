@@ -66,9 +66,11 @@ class SpreadsheetGridDropdown extends React.PureComponent {
     render() {
         return (
             <div className="SpreadsheetTableDropdown">
-                <div onClick={this.onHeaderClick}>
-                    {this.props.header}
-                </div>
+                {
+                    React.cloneElement(this.props.header, {
+                        onClick: this.onHeaderClick
+                    })
+                }
                 <div
                     ref={node => this.body = node}
                     className="SpreadsheetTableDropdown__body"

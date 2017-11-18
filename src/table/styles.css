@@ -6,13 +6,20 @@
     background-color: #827789;
     border-left: 1px solid #E6E1E8;
     border-right: 1px solid #E6E1E8;
+    box-sizing: border-box;
 }
 
-.SpreadsheetTable thead {
-    background-color: #827789;
+.SpreadsheetTable div,
+.SpreadsheetTable input {
+    box-sizing: border-box;
 }
 
-.SpreadsheetTable thead tr th {
+.SpreadsheetTable__headed {
+    white-space: nowrap;
+}
+
+.SpreadsheetTable__headCell {
+    display: inline-flex;
     position: relative;
     color: white;
     font-size: 12px;
@@ -22,19 +29,23 @@
     border-bottom: none;
     padding: 10px 8px 8px 8px;
     text-align: left;
+    background-color: #827789;
+    align-items: center;
 }
 
-.SpreadsheetTable thead tr th:not(last-child) {
+.SpreadsheetTable__headCell:not(last-child) {
     border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
-.SpreadsheetTable tbody tr {
+.SpreadsheetTable__row {
     background-color: white;
     border-bottom: 1px solid #E6E1E8;
     user-select: none;
+    white-space: nowrap;
 }
 
 .SpreadsheetTable__cell {
+    display: inline-block;
     position: relative;
     color: #565059;
     cursor: pointer;

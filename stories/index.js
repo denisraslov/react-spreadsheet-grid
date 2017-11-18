@@ -106,6 +106,7 @@ class DataTable extends React.PureComponent {
                     blurFocus={this.state.blurFocus}
                     getRowKey={row => row.id}
                     cellHeight={50}
+                    columnsResize
                 />
             </div>
         )

@@ -7,7 +7,8 @@ class SpreadsheetCell extends React.Component {
         return this.props.isActive !== nextProps.isActive
             || this.props.isFocused !== nextProps.isFocused
             || this.props.x !== nextProps.x
-            || this.props.disabledCells !== nextProps.disabledCells;
+            || this.props.disabledCells !== nextProps.disabledCells
+            || this.props.width !== nextProps.width;
     }
 
     render() {
@@ -16,18 +17,24 @@ class SpreadsheetCell extends React.Component {
             className,
             onClick,
             onDoubleClick,
-            children
+            children,
+            width,
+            height
         } = this.props;
 
         return (
-            <td
+            <div
                 key={y}
                 className={className}
                 onClick={onClick}
                 onDoubleClick={onDoubleClick}
+                style={{
+                    width: width + '%',
+                    height: height + 'px'
+                }}
             >
                 {children}
-            </td>
+            </div>
         );
     }
 }
@@ -46,7 +53,9 @@ SpreadsheetCell.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
-    disabledCells: PropTypes.arrayOf(PropTypes.object)
+    disabledCells: PropTypes.arrayOf(PropTypes.object),
+    width: PropTypes.number,
+    height: PropTypes.number
 };
 
 export default SpreadsheetCell;
