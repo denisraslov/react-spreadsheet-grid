@@ -31,6 +31,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
     -   [Another component](#another-component)
 -   [Customizing CSS styles](#customizing-css-styles)
 -   [Performant scroll](#performant-scroll)
+-   [Column resizing](#column-resizing)
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
 
 ## Live Playground
@@ -228,18 +229,28 @@ The height of a row of the table in pixels.
 ### columnsResize
 > `bool` | defaults to `false`
 
-Switch this on if you want the table has columns with resizable width.
+Switch this on if you want the table provides an oppotunity to resize column width.
 
 ### onColumnResize
-> `func(widthValues: array)`
+> `func(widthValues: object)`
 
-A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` has values of width for all the columns and a width of the table itself.
+A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` is a map of values of width for all the columns in percents (`columnId` - `value`).
 
 
-### columnWidth
-> `arrayOf(number)`
+### widthValues
+> `object`
 
-Pass this array if you want initialize width of columns. A number value at every index should be a percent value of width for the column with the same index. For example, it could be `[ 50, 25, 25 ]`. Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between upspecified columns.
+
+Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+
+
+### blurFocus
+> `boolean`
+
+> defaults to `false`
+
+**It's important!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-usage).
 
 
 ## Customizing cells & header content
@@ -379,7 +390,11 @@ This would override the color of borders for the table active cell.
 
 ## Performant scroll
   
-`react-spreadsheet-table` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+`react-spreadsheet-grid` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+
+## Column resizing
+
+`react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `widthValues`, `columnsResize` and `onColumnResize` properties for that purpose.
 
 ## Control by mouse & from keyboard
 
