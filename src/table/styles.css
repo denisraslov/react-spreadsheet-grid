@@ -4,17 +4,10 @@
     position: absolute;
     top: 0;
     background-color: #827789;
-    border-left: 1px solid #E6E1E8;
-    border-right: 1px solid #E6E1E8;
     box-sizing: border-box;
 }
 
-.SpreadsheetTable div,
-.SpreadsheetTable input {
-    box-sizing: border-box;
-}
-
-.SpreadsheetTable__headed {
+.SpreadsheetTable__header {
     white-space: nowrap;
 }
 
@@ -31,6 +24,10 @@
     text-align: left;
     background-color: #827789;
     align-items: center;
+}
+
+.SpreadsheetTable__headCell:first-child {
+    border-left: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetTable__headCell:not(last-child) {

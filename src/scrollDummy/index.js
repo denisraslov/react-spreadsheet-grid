@@ -22,7 +22,7 @@ class SpreadsheetTableScrollDummy extends React.Component {
     }
 
     calculateHeight(rows = this.state.rows) {
-        this.height = rows.length * this.props.cellHeight + this.props.headerHeight + 'px';
+        this.height = rows.length * this.props.cellHeight + 'px';
     }
 
     render() {
