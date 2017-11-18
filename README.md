@@ -1,7 +1,7 @@
 # React Spreadsheet Grid
 > A customizable, performant and powerful spreadsheet grid component for React
 
-![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/demo.gif)
+![react-spreadsheet-grid in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-grid/master/demo.gif)
 
 ## The key features
 
@@ -277,11 +277,12 @@ Prop | Type | Mission
 Usage:
 
 ```jsx
-import { Table, Input } from 'react-spreadsheet-table'
+import { Grid, Input } from 'react-spreadsheet-grid'
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'name',
         title: () => {
             return <span>Name</span>
         }, 
@@ -314,7 +315,7 @@ Prop | Type | Mission
 Usage:
 
 ```jsx
-import { Table, Select } from 'react-spreadsheet-table'
+import { Grid, Select } from 'react-spreadsheet-grid'
 
 const positions = [{
     id: 1,
@@ -324,9 +325,10 @@ const positions = [{
     name: 'Backend developer'
 }];
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'position',
         title: () => {
             return <span>Position</span>
         }, 
@@ -350,12 +352,13 @@ const positions = [{
 Let's suggest you need to use an autocomplete as a content of a cell. This is how it could be done:
 
 ```jsx
-import { Table } from 'react-spreadsheet-table'
+import { Grid } from 'react-spreadsheet-grid'
 import AwesomeAutocomplete from 'awesome-autocomplete'
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'manager',
         title: () => {
             return <span>Manager</span>
         }, 
@@ -376,10 +379,10 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 
 ## Customizing CSS styles
 
-Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
+Right now, the easiest way to tweak `react-spreadsheet-grid` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_grid_overrides.css` with the following contents:
 
 ```css
-.SpreadsheetTable__cell_active {
+.SpreadsheetGrid__cell_active {
     box-shadow: inset 0 0 0 2px green;
 }
 ``` 
