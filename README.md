@@ -21,7 +21,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ## Table of contents
 
--   [Live Playground](#live-playground)
+-   [Live playground](#live-playground)
 -   [Installation](#installation)
 -   [The primitive example](#the-primitive-example)
 -   [The pattern of regular usage](#the-pattern-of-regular-usage)
@@ -35,7 +35,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
 -   [Customizing CSS styles](#customizing-css-styles)
 
-## Live Playground
+## Live playground
 
 For examples of the grid in action, you can run the demo on your own computer:
 
