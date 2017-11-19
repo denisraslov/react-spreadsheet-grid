@@ -332,7 +332,7 @@ export const propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     getRowKey: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    disableCellChecker: PropTypes.func, // disableCellChecker
+    disableCellChecker: PropTypes.func,
     focusedCell: PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired
@@ -348,9 +348,9 @@ export const propTypes = {
     offset: PropTypes.number,
 
     // resize
-    isColumnsResizable: PropTypes.bool, // isColumnsResizable
+    isColumnsResizable: PropTypes.bool,
     onColumnResize: PropTypes.func,
-    columnWidthValues: PropTypes.object // columncolumnWidthValues
+    columnWidthValues: PropTypes.object
 };
 
 SpreadsheetGrid.defaultProps = {
