@@ -22,7 +22,7 @@ class SpreadsheetGridScrollDummy extends React.Component {
     }
 
     calculateHeight(rows = this.state.rows) {
-        this.height = rows.length * this.props.cellHeight + 'px';
+        this.height = rows.length * this.props.rowHeight + 'px';
     }
 
     render() {
@@ -39,7 +39,7 @@ class SpreadsheetGridScrollDummy extends React.Component {
 SpreadsheetGridScrollDummy.propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     headerHeight: PropTypes.number.isRequired,
-    cellHeight: PropTypes.number.isRequired
+    rowHeight: PropTypes.number.isRequired
 };
 
 export default SpreadsheetGridScrollDummy;

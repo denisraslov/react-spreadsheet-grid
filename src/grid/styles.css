@@ -87,8 +87,13 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
+.SpreadsheetGrid__cell_disabled {
+    cursor: default;
+    background: rgba(239, 236, 236, 0.67);
+}
+
 .SpreadsheetGrid__cell_disabled > * {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .SpreadsheetGrid__placeholder {

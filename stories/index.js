@@ -103,10 +103,13 @@ class DataTable extends React.PureComponent {
                         }
                     ]}
                     rows={rows}
-                    blurFocus={this.state.blurFocus}
+                    blurCurrentFocus={this.state.blurFocus}
                     getRowKey={row => row.id}
-                    cellHeight={50}
-                    columnsResize
+                    rowHeight={50}
+                    isColumnsResizable
+                    disableCellChecker={(row, columnId) => {
+                        return columnId === 'age';
+                    }}
                 />
             </div>
         )

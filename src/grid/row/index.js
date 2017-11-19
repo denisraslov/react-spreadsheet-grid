@@ -14,7 +14,7 @@ class SpreadsheetRow extends React.Component {
             || (currentActiveCell && currentActiveCell.x === this.props.x)
             || (nextActiveCell && nextActiveCell.x === this.props.x)
             || this.props.disabledCells !== nextProps.disabledCells
-            || this.props.widthValues !== nextProps.widthValues;
+            || this.props.columnWidthValues !== nextProps.columnWidthValues;
     }
 
     render() {
@@ -27,7 +27,7 @@ class SpreadsheetRow extends React.Component {
             getCellClassName,
             activeCell,
             focusedCell,
-            widthValues
+            columnWidthValues
         } = this.props;
 
         return (
@@ -47,12 +47,12 @@ class SpreadsheetRow extends React.Component {
                                 y={y}
                                 key={y}
                                 className={getCellClassName(column, row, x, y)}
-                                onClick={!disabled && onCellClick.bind(this, x, y, row, column.id)}
-                                onDoubleClick={!disabled && onCellDoubleClick.bind(this, x, y)}
+                                onClick={!disabled ? onCellClick.bind(this, x, y, row, column.id) : null}
+                                onDoubleClick={!disabled ? onCellDoubleClick.bind(this, x, y) : null}
                                 isActive={isEqual(activeCell, coords)}
                                 isFocused={isEqual(focusedCell, coords)}
                                 disabledCells={this.props.disabledCells}
-                                width={widthValues[column.id]}
+                                width={columnWidthValues[column.id]}
                                 height={this.props.height}
                             >
                                 {
@@ -82,7 +82,7 @@ SpreadsheetRow.propTypes = {
     getCellClassName: PropTypes.func,
     disabledCells: PropTypes.arrayOf(PropTypes.object),
     height: PropTypes.number,
-    widthValues: PropTypes.object
+    columnWidthValues: PropTypes.object
 };
 
 export default SpreadsheetRow;

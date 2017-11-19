@@ -19,13 +19,13 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             first: 0,
             last: this.props.rows.length,
             offset: 0,
-            widthValues: {}
+            columnWidthValues: {}
         };
     }
 
     componentDidMount() {
-        if (this.props.columnsResize) {
-            this.freezeTable(this.props.widthValues);
+        if (this.props.isColumnsResizable) {
+            this.freezeTable(this.props.columnWidthValues);
 
             document.addEventListener('mousemove', this.processColumnResize, false);
             document.addEventListener('mouseup', () => {
@@ -41,7 +41,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        if (this.props.columnsResize) {
+        if (this.props.isColumnsResizable) {
             window.removeEventListener('resize', this.onWindowResize, false);
             document.removeEventListener('mousemove', this.processColumnResize, false);
             document.removeEventListener('mouseup', () => {
@@ -52,24 +52,24 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         window.removeEventListener('resize', this.onResize, false);
     }
 
-    freezeTable(widthValues = {}) {
+    freezeTable(columnWidthValues = {}) {
         const table = this.tableElement;
 
         // There is no grid when Jest is running tests
         if (table) {
             const cells = table.querySelectorAll('.SpreadsheetGrid__headCell');
-            const preparedWidthValues = {};
+            const preparedcolumnWidthValues = {};
             let sumOfWidth = 0;
 
-            Object.keys(widthValues).forEach((id) => {
-                sumOfWidth += widthValues[id];
+            Object.keys(columnWidthValues).forEach((id) => {
+                sumOfWidth += columnWidthValues[id];
             });
 
             if (sumOfWidth > 100) {
                 console.error('react-spreadsheet-grid ERROR: The sum of column width values in ' +
-                    'the "widthValues" property is more then 100 percents! ' +
+                    'the "columnWidthValues" property is more then 100 percents! ' +
                     'The values are not being used in this condition!');
-                widthValues = {};
+                columnWidthValues = {};
             }
 
             let restTableWidth = 100;
@@ -78,25 +78,25 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             cells.forEach((cell, i) => {
                 const id = this.props.columns[i].id;
 
-                if (widthValues[id]) {
-                    preparedWidthValues[id] = widthValues[id];
-                    restTableWidth -= widthValues[id];
+                if (columnWidthValues[id]) {
+                    preparedcolumnWidthValues[id] = columnWidthValues[id];
+                    restTableWidth -= columnWidthValues[id];
                     restColumnsCount--;
                 } else {
-                    preparedWidthValues[id] = (restTableWidth / cells.length);
+                    preparedcolumnWidthValues[id] = (restTableWidth / cells.length);
                 }
             });
 
             cells.forEach((cell, i) => {
                 const id = this.props.columns[i].id;
 
-                if (!widthValues[id]) {
-                    preparedWidthValues[id] = (restTableWidth / cells.length);
+                if (!columnWidthValues[id]) {
+                    preparedcolumnWidthValues[id] = (restTableWidth / cells.length);
                 }
             });
 
             this.setState({
-                widthValues: preparedWidthValues
+                columnWidthValues: preparedcolumnWidthValues
             });
         }
     }
@@ -124,7 +124,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         if (this.resizingCell) {
-            const widthValues = Object.assign({}, this.state.widthValues);
+            const columnWidthValues = Object.assign({}, this.state.columnWidthValues);
 
             if (direction === 'toRight') {
                 const diff = this.resizingCell.startOffset + e.pageX - this.resizingCell.offsetWidth;
@@ -136,14 +136,14 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 if (this.resizingCell.offsetWidth + diff > 100 &&
                     sibling.offsetWidth - diff > 100) {
 
-                    const prevValue1 = widthValues[columns[this.resizingCell.dataset.index].id];
+                    const prevValue1 = columnWidthValues[columns[this.resizingCell.dataset.index].id];
                     const newValue1 = (this.resizingCell.offsetWidth + diff) * 100 / tableWidth;
 
-                    widthValues[columns[this.resizingCell.dataset.index].id] = newValue1;
-                    widthValues[columns[sibling.dataset.index].id] -= newValue1 - prevValue1;
+                    columnWidthValues[columns[this.resizingCell.dataset.index].id] = newValue1;
+                    columnWidthValues[columns[sibling.dataset.index].id] -= newValue1 - prevValue1;
 
                     this.setState({
-                        widthValues
+                        columnWidthValues
                     });
                 } else {
                     let cell;
@@ -171,14 +171,14 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 if (sibling.offsetWidth - diff > 100 &&
                     this.nextResizingCell.offsetWidth + diff > 100) {
 
-                    const prevValue1 = widthValues[columns[sibling.dataset.index].id];
+                    const prevValue1 = columnWidthValues[columns[sibling.dataset.index].id];
                     const newValue1 = (parseInt(sibling.offsetWidth, 10) - diff) * 100 / tableWidth;
 
-                    widthValues[columns[sibling.dataset.index].id] = newValue1;
-                    widthValues[columns[this.nextResizingCell.dataset.index].id] -= newValue1 - prevValue1;
+                    columnWidthValues[columns[sibling.dataset.index].id] = newValue1;
+                    columnWidthValues[columns[this.nextResizingCell.dataset.index].id] -= newValue1 - prevValue1;
 
                     this.setState({
-                        widthValues
+                        columnWidthValues
                     });
 
                 } else {
@@ -197,7 +197,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             }
 
             if (this.props.onColumnResize) {
-                this.props.onColumnResize(widthValues);
+                this.props.onColumnResize(columnWidthValues);
             }
         }
 
@@ -210,20 +210,20 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             ? wrapper.parentNode.offsetHeight + 200
             : 0;
 
-        return first + Math.ceil(visibleHeight / this.props.cellHeight);
+        return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
     scrollCalculations() {
         const scrollTop = Math.max(
             this.scrollWrapperElement.scrollTop,
             0);
-        const first = Math.max(0, Math.floor(scrollTop / this.props.cellHeight) - RESERVE_ROWS_COUNT);
+        const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
         this.setState({
             first,
             last,
-            offset: first * this.props.cellHeight
+            offset: first * this.props.rowHeight
         });
     }
 
@@ -251,7 +251,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
     renderHeader() {
         const columns = this.props.columns;
-        const { widthValues } = this.state;
+        const { columnWidthValues } = this.state;
 
         return (
             <div className="SpreadsheetGrid__header">
@@ -264,13 +264,13 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                                 data-index={i}
                                 style={{
                                     height: this.props.headerHeight + 'px',
-                                    width: widthValues
-                                        ? widthValues[columns[i].id] + '%'
+                                    width: columnWidthValues
+                                        ? columnWidthValues[columns[i].id] + '%'
                                         : 'auto'
                                 }}
                             >
                                 {typeof column.title === 'string' ? column.title : column.title()}
-                                {this.props.columnsResize && this.renderResizer()}
+                                {this.props.isColumnsResizable && this.renderResizer()}
                             </div>
                         );
                     })
@@ -297,7 +297,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     <ScrollDummy
                         rows={this.props.rows}
                         headerHeight={this.props.headerHeight}
-                        cellHeight={this.props.cellHeight}
+                        rowHeight={this.props.rowHeight}
                     />
                     {
                         <Grid
@@ -305,7 +305,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                             first={this.state.first}
                             last={this.state.last}
                             offset={this.state.offset}
-                            widthValues={this.state.widthValues}
+                            columnWidthValues={this.state.columnWidthValues}
                         />
                     }
                 </div>
@@ -318,10 +318,10 @@ SpreadsheetGridScrollWrapper.propTypes = gridPropTypes;
 
 SpreadsheetGridScrollWrapper.defaultProps = {
     rows: [],
-    columnsResize: false,
+    isColumnsResizable: false,
     placeholder: 'There are no rows',
     headerHeight: 40,
-    cellHeight: 48
+    rowHeight: 48
 };
 
 export default SpreadsheetGridScrollWrapper;

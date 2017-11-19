@@ -20,7 +20,7 @@ class SpreadsheetGrid extends React.PureComponent {
         this.getCellClassName = this.getCellClassName.bind(this);
 
         this.state = {
-            disabledCells: this.getDisabledCells(this.props.rows, this.props.checkDisabledCell)
+            disabledCells: this.getDisabledCells(this.props.rows, this.props.disableCellChecker)
         };
 
         if (this.props.focusedCell) {
@@ -37,8 +37,8 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.props.rows !== newProps.rows && newProps.checkDisabledCell) {
-            const disabledCells = this.getDisabledCells(newProps.rows, newProps.checkDisabledCell);
+        if (this.props.rows !== newProps.rows && newProps.disableCellChecker) {
+            const disabledCells = this.getDisabledCells(newProps.rows, newProps.disableCellChecker);
             const newState = {
                 disabledCells
             };
@@ -63,7 +63,7 @@ class SpreadsheetGrid extends React.PureComponent {
             this.skipGlobalClick = true;
         }
 
-        if (newProps.blurFocus) {
+        if (newProps.blurCurrentFocus) {
             this.setState({
                 focusedCell: null
             });
@@ -80,13 +80,13 @@ class SpreadsheetGrid extends React.PureComponent {
         document.removeEventListener('click', this.onGlobalClick, false);
     }
 
-    getDisabledCells(rows, checkDisabledCell) {
+    getDisabledCells(rows, disableCellChecker) {
         const disabledCells = [];
 
-        if (checkDisabledCell) {
+        if (disableCellChecker) {
             rows.forEach((row, x) => {
                 this.props.columns.forEach((column, y) => {
-                    if (checkDisabledCell(row, column.id)) {
+                    if (disableCellChecker(row, column.id)) {
                         disabledCells.push({ x, y });
                     }
                 });
@@ -256,7 +256,7 @@ class SpreadsheetGrid extends React.PureComponent {
         return 'SpreadsheetGrid__cell' +
             (isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
             (isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
-            (this.props.checkDisabledCell && this.props.checkDisabledCell(row, column.id)
+            (this.props.disableCellChecker && this.props.disableCellChecker(row, column.id)
                 ? ' SpreadsheetGrid__cell_disabled'
                 : '');
     }
@@ -288,8 +288,8 @@ class SpreadsheetGrid extends React.PureComponent {
                         activeCell={this.state.activeCell}
                         focusedCell={this.state.focusedCell}
                         disabledCells={this.state.disabledCells}
-                        height={this.props.cellHeight}
-                        widthValues={this.props.widthValues}
+                        height={this.props.rowHeight}
+                        columnWidthValues={this.props.columnWidthValues}
                     />
                 );
             });
@@ -332,29 +332,29 @@ export const propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     getRowKey: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    checkDisabledCell: PropTypes.func,
+    disableCellChecker: PropTypes.func, // disableCellChecker
     focusedCell: PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired
     }),
     onCellClick: PropTypes.func,
-    blurFocus: PropTypes.bool,
+    blurCurrentFocus: PropTypes.bool,
 
     // scroll
     headerHeight: PropTypes.number,
-    cellHeight: PropTypes.number,
+    rowHeight: PropTypes.number,
     first: PropTypes.number,
     last: PropTypes.number,
     offset: PropTypes.number,
 
     // resize
-    columnsResize: PropTypes.bool,
+    isColumnsResizable: PropTypes.bool, // isColumnsResizable
     onColumnResize: PropTypes.func,
-    widthValues: PropTypes.object
+    columnWidthValues: PropTypes.object // columncolumnWidthValues
 };
 
 SpreadsheetGrid.defaultProps = {
-    blurFocus: false
+    blurCurrentFocus: false
 };
 
 SpreadsheetGrid.propTypes = propTypes;
