@@ -20,7 +20,7 @@ class SpreadsheetGrid extends React.PureComponent {
         this.getCellClassName = this.getCellClassName.bind(this);
 
         this.state = {
-            disabledCells: this.getDisabledCells(this.props.rows, this.props.disableCellChecker)
+            disabledCells: this.getDisabledCells(this.props.rows, this.props.disabledCellChecker)
         };
 
         if (this.props.focusedCell) {
@@ -37,8 +37,8 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.props.rows !== newProps.rows && newProps.disableCellChecker) {
-            const disabledCells = this.getDisabledCells(newProps.rows, newProps.disableCellChecker);
+        if (this.props.rows !== newProps.rows && newProps.disabledCellChecker) {
+            const disabledCells = this.getDisabledCells(newProps.rows, newProps.disabledCellChecker);
             const newState = {
                 disabledCells
             };
@@ -80,13 +80,13 @@ class SpreadsheetGrid extends React.PureComponent {
         document.removeEventListener('click', this.onGlobalClick, false);
     }
 
-    getDisabledCells(rows, disableCellChecker) {
+    getDisabledCells(rows, disabledCellChecker) {
         const disabledCells = [];
 
-        if (disableCellChecker) {
+        if (disabledCellChecker) {
             rows.forEach((row, x) => {
                 this.props.columns.forEach((column, y) => {
-                    if (disableCellChecker(row, column.id)) {
+                    if (disabledCellChecker(row, column.id)) {
                         disabledCells.push({ x, y });
                     }
                 });
@@ -256,7 +256,7 @@ class SpreadsheetGrid extends React.PureComponent {
         return 'SpreadsheetGrid__cell' +
             (isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
             (isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
-            (this.props.disableCellChecker && this.props.disableCellChecker(row, column.id)
+            (this.props.disabledCellChecker && this.props.disabledCellChecker(row, column.id)
                 ? ' SpreadsheetGrid__cell_disabled'
                 : '');
     }
@@ -332,7 +332,7 @@ export const propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     getRowKey: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    disableCellChecker: PropTypes.func,
+    disabledCellChecker: PropTypes.func,
     focusedCell: PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired

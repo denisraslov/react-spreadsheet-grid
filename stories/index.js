@@ -107,7 +107,7 @@ class DataTable extends React.PureComponent {
                     getRowKey={row => row.id}
                     rowHeight={50}
                     isColumnsResizable
-                    disableCellChecker={(row, columnId) => {
+                    disabledCellChecker={(row, columnId) => {
                         return columnId === 'age';
                     }}
                 />

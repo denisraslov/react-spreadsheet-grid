@@ -244,7 +244,7 @@ Used as a placeholder text when the `rows` array is empty.
 The cell with this `x, y` coordinates (starting from `0`) will be rendered as a focused cell initially.
 
 
-### disableCellChecker
+### disabledCellChecker
 > `func(row, columnId): bool`
 
 Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
