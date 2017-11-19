@@ -72,12 +72,12 @@ class MyAwesomeGrid extends React.Component {
           {
             title: () => 'Name', 
             value: (row, { focus }) => {
-              return (
-                <Input  
-                  value={row.name}
-                  focus={focus}
-                />
-              );
+                return (
+                    <Input  
+                      value={row.name}
+                      focus={focus}
+                    />
+                );
             }
           }, {
             title: () => 'Position',
