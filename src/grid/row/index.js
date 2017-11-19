@@ -57,8 +57,8 @@ class SpreadsheetRow extends React.Component {
                             >
                                 {
                                     column.value(row, {
-                                        active: _.isEqual(activeCell, coords),
-                                        focus: _.isEqual(focusedCell, coords),
+                                        active: isEqual(activeCell, coords),
+                                        focus: isEqual(focusedCell, coords),
                                         disabled
                                     })
                                 }
