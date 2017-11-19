@@ -2,19 +2,16 @@
 
 exports[`Closed select 1`] = `
 <div
-  className="SpreadsheetTableDropdown"
+  className="SpreadsheetGridDropdown"
 >
   <div
+    className="SpreadsheetGridSelectHeader"
     onClick={[Function]}
   >
-    <div
-      className="SpreadsheetTableSelectHeader"
-    >
-      
-    </div>
+    
   </div>
   <div
-    className="SpreadsheetTableDropdown__body"
+    className="SpreadsheetGridDropdown__body"
     style={
       Object {
         "display": "none",
@@ -23,19 +20,19 @@ exports[`Closed select 1`] = `
   >
     <div>
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -47,19 +44,16 @@ exports[`Closed select 1`] = `
 
 exports[`Closed select without a selected value 1`] = `
 <div
-  className="SpreadsheetTableDropdown"
+  className="SpreadsheetGridDropdown"
 >
   <div
+    className="SpreadsheetGridSelectHeader"
     onClick={[Function]}
   >
-    <div
-      className="SpreadsheetTableSelectHeader"
-    >
-      Placeholder
-    </div>
+    Placeholder
   </div>
   <div
-    className="SpreadsheetTableDropdown__body"
+    className="SpreadsheetGridDropdown__body"
     style={
       Object {
         "display": "none",
@@ -68,19 +62,19 @@ exports[`Closed select without a selected value 1`] = `
   >
     <div>
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -92,19 +86,16 @@ exports[`Closed select without a selected value 1`] = `
 
 exports[`Opened select 1`] = `
 <div
-  className="SpreadsheetTableDropdown"
+  className="SpreadsheetGridDropdown"
 >
   <div
+    className="SpreadsheetGridSelectHeader SpreadsheetGridSelectHeader_open"
     onClick={[Function]}
   >
-    <div
-      className="SpreadsheetTableSelectHeader SpreadsheetTableSelectHeader_open"
-    >
-      
-    </div>
+    
   </div>
   <div
-    className="SpreadsheetTableDropdown__body"
+    className="SpreadsheetGridDropdown__body"
     style={
       Object {
         "display": "block",
@@ -113,19 +104,19 @@ exports[`Opened select 1`] = `
   >
     <div>
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       />
       <div
-        className="SpreadsheetTableSelectItem"
+        className="SpreadsheetGridSelectItem"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}

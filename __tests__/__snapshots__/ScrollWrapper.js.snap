@@ -2,174 +2,237 @@
 
 exports[`ScrollWrapper with columns with components 1`] = `
 <div
-  className="SpreadsheetTableScrollWrapper"
-  onScroll={[Function]}
+  className="SpreadsheetGridContainer"
 >
   <div
-    className="SpreadsheetTableScrollDummy"
-    style={
-      Object {
-        "height": "184px",
-      }
-    }
-  />
-  <table
-    className="SpreadsheetTable"
-    style={
-      Object {
-        "top": "0px",
-      }
-    }
+    className="SpreadsheetGrid__header"
   >
-    <thead
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={0}
       style={
         Object {
-          "display": "",
           "height": "40px",
+          "width": "undefined%",
         }
       }
     >
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Second name
-        </th>
-        <th>
-          Position
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="SpreadsheetTable__placeholder"
+      Name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={1}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Second name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={2}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Position
+    </div>
+  </div>
+  <div
+    className="SpreadsheetGridScrollWrapper"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": "calc(100% - 40px)",
+      }
+    }
+  >
+    <div
+      className="SpreadsheetGridScrollDummy"
+      style={
+        Object {
+          "height": "144px",
+        }
+      }
+    />
+    <div
+      className="SpreadsheetGrid"
+      style={
+        Object {
+          "top": "0px",
+        }
+      }
+    >
+      <div
+        className="SpreadsheetGrid__placeholder"
       >
-        <td
-          colSpan={3}
-        >
-          <div>
-            There are no rows
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        There are no rows
+      </div>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`ScrollWrapper with columns with text values 1`] = `
 <div
-  className="SpreadsheetTableScrollWrapper"
-  onScroll={[Function]}
+  className="SpreadsheetGridContainer"
 >
   <div
-    className="SpreadsheetTableScrollDummy"
-    style={
-      Object {
-        "height": "184px",
-      }
-    }
-  />
-  <table
-    className="SpreadsheetTable"
-    style={
-      Object {
-        "top": "0px",
-      }
-    }
+    className="SpreadsheetGrid__header"
   >
-    <thead
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={0}
       style={
         Object {
-          "display": "",
           "height": "40px",
+          "width": "undefined%",
         }
       }
     >
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Second name
-        </th>
-        <th>
-          Position
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="SpreadsheetTable__placeholder"
+      Name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={1}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Second name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={2}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Position
+    </div>
+  </div>
+  <div
+    className="SpreadsheetGridScrollWrapper"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": "calc(100% - 40px)",
+      }
+    }
+  >
+    <div
+      className="SpreadsheetGridScrollDummy"
+      style={
+        Object {
+          "height": "144px",
+        }
+      }
+    />
+    <div
+      className="SpreadsheetGrid"
+      style={
+        Object {
+          "top": "0px",
+        }
+      }
+    >
+      <div
+        className="SpreadsheetGrid__placeholder"
       >
-        <td
-          colSpan={3}
-        >
-          <div>
-            There are no rows
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        There are no rows
+      </div>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`ScrollWrapper without rows 1`] = `
 <div
-  className="SpreadsheetTableScrollWrapper"
-  onScroll={[Function]}
+  className="SpreadsheetGridContainer"
 >
   <div
-    className="SpreadsheetTableScrollDummy"
-    style={
-      Object {
-        "height": "40px",
-      }
-    }
-  />
-  <table
-    className="SpreadsheetTable"
-    style={
-      Object {
-        "top": "0px",
-      }
-    }
+    className="SpreadsheetGrid__header"
   >
-    <thead
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={0}
       style={
         Object {
-          "display": "",
           "height": "40px",
+          "width": "undefined%",
         }
       }
     >
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Second name
-        </th>
-        <th>
-          Position
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="SpreadsheetTable__placeholder"
+      Name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={1}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Second name
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={2}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Position
+    </div>
+  </div>
+  <div
+    className="SpreadsheetGridScrollWrapper"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": "calc(100% - 40px)",
+      }
+    }
+  >
+    <div
+      className="SpreadsheetGridScrollDummy"
+      style={
+        Object {
+          "height": "0px",
+        }
+      }
+    />
+    <div
+      className="SpreadsheetGrid"
+      style={
+        Object {
+          "top": "0px",
+        }
+      }
+    >
+      <div
+        className="SpreadsheetGrid__placeholder"
       >
-        <td
-          colSpan={3}
-        >
-          <div>
-            There are no rows
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        There are no rows
+      </div>
+    </div>
+  </div>
 </div>
 `;

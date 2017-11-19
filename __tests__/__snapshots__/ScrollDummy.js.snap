@@ -2,10 +2,10 @@
 
 exports[`ScrollDummy with rows 1`] = `
 <div
-  className="SpreadsheetTableScrollDummy"
+  className="SpreadsheetGridScrollDummy"
   style={
     Object {
-      "height": "200px",
+      "height": "150px",
     }
   }
 />
@@ -13,10 +13,10 @@ exports[`ScrollDummy with rows 1`] = `
 
 exports[`ScrollDummy without rows 1`] = `
 <div
-  className="SpreadsheetTableScrollDummy"
+  className="SpreadsheetGridScrollDummy"
   style={
     Object {
-      "height": "50px",
+      "height": "0px",
     }
   }
 />

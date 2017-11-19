@@ -2,7 +2,7 @@
 
 exports[`Input with a value 1`] = `
 <input
-  className="SpreadsheetTable__Input"
+  className="SpreadsheetGridInput"
   onBlur={[Function]}
   onChange={[Function]}
   placeholder={undefined}
@@ -12,7 +12,7 @@ exports[`Input with a value 1`] = `
 
 exports[`Input without a value 1`] = `
 <input
-  className="SpreadsheetTable__Input"
+  className="SpreadsheetGridInput"
   onBlur={[Function]}
   onChange={[Function]}
   placeholder="Placeholder"

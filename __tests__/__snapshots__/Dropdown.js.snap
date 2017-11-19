@@ -2,17 +2,15 @@
 
 exports[`Closed dropdown 1`] = `
 <div
-  className="SpreadsheetTableDropdown"
+  className="SpreadsheetGridDropdown"
 >
-  <div
+  <span
     onClick={[Function]}
   >
-    <span>
-      Header
-    </span>
-  </div>
+    Header
+  </span>
   <div
-    className="SpreadsheetTableDropdown__body"
+    className="SpreadsheetGridDropdown__body"
     style={
       Object {
         "display": "none",
@@ -28,17 +26,15 @@ exports[`Closed dropdown 1`] = `
 
 exports[`Opened dropdown 1`] = `
 <div
-  className="SpreadsheetTableDropdown"
+  className="SpreadsheetGridDropdown"
 >
-  <div
+  <span
     onClick={[Function]}
   >
-    <span>
-      Header
-    </span>
-  </div>
+    Header
+  </span>
   <div
-    className="SpreadsheetTableDropdown__body"
+    className="SpreadsheetGridDropdown__body"
     style={
       Object {
         "display": "block",
