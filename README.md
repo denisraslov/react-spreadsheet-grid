@@ -48,8 +48,10 @@ For examples of the grid in action, you can run the demo on your own computer:
 This module is distributed via [npm][npm] and should be installed as one of your project's `dependencies`:
 
 ```
-npm install --save react-spreadsheet-table
+npm install --save react-spreadsheet-grid
 ```
+
+> ⚠️ **IMPORTANT!** This package also depends on `react`, `react-dom` and `prop-types`. Please make sure you have those installed as well.
 
 ## The pattern of usage
 
