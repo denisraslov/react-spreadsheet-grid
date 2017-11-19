@@ -210,26 +210,34 @@ class MyAwesomeGrid extends React.Component {
 arrayOf({ 
     id: string / number, 
     title: string / func, 
-    value: string / func(row, { active, focused, disabled }) 
+    value: string / func(row, { active, focused, disabled }),
+    getCellClassName: func(row)
 }) 
 ``` 
 > defaults to `[]`
 
-> `isRequired`
+> `required`
 
-This is the most important prop that defines columns of the table. Every item of the array is responsible for the corresponding column. `title` is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element. `value` works the same way, but func receives `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+This is the most important prop that defines columns of the table. Every item of the array is responsible for the corresponding column. 
+
+key | Required | Mission 
+--- | --- | ---
+`id` | yes | An identifier of a row.
+`title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
+`value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+`getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
 > `arrayOf(any)` | defaults to `[]`
 
-> `isRequired`
+> `required`
 
 This is an array of rows for the table. Every row will be passed to a `column.value` func (if you use it).
 
 ### getRowKey
 > `func(row)`
 
-> `isRequired`
+> `required`
 
 This is a func that must return *unique* key for a row based on this row in a parameter.
 
