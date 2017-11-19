@@ -100,7 +100,7 @@ class MyAwesomeSpreadsheetGrid extends React.Component {
         this.setState({
             rows: [].concat(rows),
             // Blurring focus from the current cell is necessary for a correct behavior of the Grid.
-            blurFocus: true
+            blurCurrentFocus: true
         });
     }
 
@@ -155,7 +155,7 @@ class MyAwesomeSpreadsheetGrid extends React.Component {
         getRowKey={row => row.id}
         
         // Don't forget to blur focused cell after a value has been changed.
-        blurFocus={this.state.blurFocus}
+        blurCurrentFocus={this.state.blurCurrentFocus}
       />
     )
   }
@@ -204,7 +204,7 @@ Used as a placeholder text when the `rows` array is empty.
 The cell with this `x, y` coordinates (starting from `0`) will be rendered as a focused cell initially.
 
 
-### checkDisabledCell
+### disableCellChecker
 > `func(row, columnId): bool`
 
 Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
@@ -221,14 +221,14 @@ The height of the header of the table in pixels.
 
 ⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
 
-### cellHeight
+### rowHeight
 > `number` | defaults to `48`
 
 The height of a row of the table in pixels.
 
 ⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
 
-### columnsResize
+### isColumnsResizable
 > `bool` | defaults to `false`
 
 Switch this on if you want the table provides an oppotunity to resize column width.
@@ -239,7 +239,7 @@ Switch this on if you want the table provides an oppotunity to resize column wid
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` is a map of values of width for all the columns in percents (`columnId` - `value`).
 
 
-### widthValues
+### columnWidthValues
 > `object`
 
 Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between upspecified columns.
@@ -247,12 +247,12 @@ Pass this object if you want initialize width of columns. It should be a map of 
 Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
 
-### blurFocus
+### blurCurrentFocus
 > `boolean`
 
 > defaults to `false`
 
-**It's important!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-usage).
+⚠️ **IMPORTANT!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-usage).
 
 
 ## Customizing cells & header content
@@ -385,7 +385,7 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 
 ## Resizable columns
 
-`react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `widthValues`, `columnsResize` and `onColumnResize` properties for that purpose.
+`react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `columnWidthValues`, `isColumnsResizable` and `onColumnResize` properties for that purpose.
 
 ## Control by mouse & from keyboard
 
@@ -404,4 +404,4 @@ Right now, the easiest way to tweak `react-spreadsheet-grid` is to create anothe
 
 This would override the color of borders for the table active cell.
 
-⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+⚠️ The only exception, that you have to use `headerHeight` and `rowHeight` props to redefine height of the header and rows to not broke the scroll of the table.
