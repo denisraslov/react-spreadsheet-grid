@@ -1,9 +1,9 @@
-import Table from './src/scrollWrapper';
+import Grid from './src/scrollWrapper';
 import Input from './src/input';
 import Select from './src/select';
 
 export {
-    Table,
+    Grid,
     Input,
     Select
 };

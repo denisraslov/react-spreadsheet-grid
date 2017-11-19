@@ -1,4 +1,4 @@
-.SpreadsheetTable {
+.SpreadsheetGrid {
     width: 100%;
     border-collapse: collapse;
     position: absolute;
@@ -7,11 +7,11 @@
     box-sizing: border-box;
 }
 
-.SpreadsheetTable__header {
+.SpreadsheetGrid__header {
     white-space: nowrap;
 }
 
-.SpreadsheetTable__headCell {
+.SpreadsheetGrid__headCell {
     display: inline-flex;
     position: relative;
     color: white;
@@ -26,22 +26,22 @@
     align-items: center;
 }
 
-.SpreadsheetTable__headCell:first-child {
+.SpreadsheetGrid__headCell:first-child {
     border-left: 1px solid rgba(37, 33, 40, 0.12);
 }
 
-.SpreadsheetTable__headCell:not(last-child) {
+.SpreadsheetGrid__headCell:not(last-child) {
     border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
-.SpreadsheetTable__row {
+.SpreadsheetGrid__row {
     background-color: white;
     border-bottom: 1px solid #E6E1E8;
     user-select: none;
     white-space: nowrap;
 }
 
-.SpreadsheetTable__cell {
+.SpreadsheetGrid__cell {
     display: inline-block;
     position: relative;
     color: #565059;
@@ -55,29 +55,29 @@
     padding: 10px;
 }
 
-.SpreadsheetTable__cell > * {
+.SpreadsheetGrid__cell > * {
     pointer-events: none;
 }
 
-.SpreadsheetTable__cell:not(:last-child) {
+.SpreadsheetGrid__cell:not(:last-child) {
     border-right: 1px solid #E6E1E8;
 }
 
-.SpreadsheetTable__cell:last-child {
+.SpreadsheetGrid__cell:last-child {
     text-align: right;
 }
 
-.SpreadsheetTable__cell_active {
+.SpreadsheetGrid__cell_active {
     box-shadow: inset 0 0 0 2px #ff7a00;
     z-index: 2;
 }
 
-.SpreadsheetTable__cell_focused > * {
+.SpreadsheetGrid__cell_focused > * {
     pointer-events: auto;
     position: relative;
 }
 
-.SpreadsheetTable__cell_focused::after {
+.SpreadsheetGrid__cell_focused::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -87,15 +87,15 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
-.SpreadsheetTable__cell_disabled > * {
+.SpreadsheetGrid__cell_disabled > * {
     opacity: 0.5;
 }
 
-.SpreadsheetTable__placeholder {
+.SpreadsheetGrid__placeholder {
     text-align: center;
 }
 
-.SpreadsheetTable__resizer {
+.SpreadsheetGrid__resizer {
     width: 20px;
     position: absolute;
     top: 0;

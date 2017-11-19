@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.css';
 
-class SpreadsheetTableInput extends React.PureComponent {
+class SpreadsheetGridInput extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -60,7 +60,7 @@ class SpreadsheetTableInput extends React.PureComponent {
     render() {
         return (
             <input
-                className="SpreadsheetTable__Input"
+                className="SpreadsheetGridInput"
                 onChange={this.onChange}
                 onBlur={this.onBlur}
                 value={this.state.value}
@@ -71,14 +71,17 @@ class SpreadsheetTableInput extends React.PureComponent {
     }
 }
 
-SpreadsheetTableInput.propTypes = {
-    value: PropTypes.string,
+SpreadsheetGridInput.propTypes = {
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
     onBlur: PropTypes.func,
     placeholder: PropTypes.string
 };
 
-SpreadsheetTableInput.defaultProps = {
+SpreadsheetGridInput.defaultProps = {
     value: ''
 };
 
-export default SpreadsheetTableInput;
+export default SpreadsheetGridInput;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.css';
 
-class SpreadsheetTableScrollDummy extends React.Component {
+class SpreadsheetGridScrollDummy extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,7 +28,7 @@ class SpreadsheetTableScrollDummy extends React.Component {
     render() {
         return (
             <div
-                className="SpreadsheetTableScrollDummy"
+                className="SpreadsheetGridScrollDummy"
                 style={{ height: this.height }}
             >
             </div>
@@ -36,10 +36,10 @@ class SpreadsheetTableScrollDummy extends React.Component {
     }
 }
 
-SpreadsheetTableScrollDummy.propTypes = {
+SpreadsheetGridScrollDummy.propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     headerHeight: PropTypes.number.isRequired,
     cellHeight: PropTypes.number.isRequired
 };
 
-export default SpreadsheetTableScrollDummy;
+export default SpreadsheetGridScrollDummy;

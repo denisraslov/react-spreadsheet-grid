@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { Table, Input, Select } from './../index';
+import { Grid, Input, Select } from './../index';
 
 const rows = [];
 const positions = [];
@@ -46,7 +46,7 @@ class DataTable extends React.PureComponent {
     render() {
         return (
             <div className="DataTable">
-                <Table
+                <Grid
                     columns={[
                         {
                             title: 'First name',
@@ -114,4 +114,4 @@ class DataTable extends React.PureComponent {
 }
 
 storiesOf('Examples 1', module)
-    .add('Data table', () => <DataTable />);
+    .add('Data grid', () => <DataTable />);

@@ -1,18 +1,18 @@
-.SpreadsheetTableContainer {
+.SpreadsheetGridContainer {
     position: relative;
     height: 100%;
 }
 
-.SpreadsheetTableScrollWrapper {
+.SpreadsheetGridContainer div,
+.SpreadsheetGridContainer input {
+    box-sizing: border-box;
+}
+
+.SpreadsheetGridScrollWrapper {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
     transition: height 0.3s;
     border-top: 1px solid #E6E1E8;
     border-bottom: 1px solid #E6E1E8;
-}
-
-.SpreadsheetTableContainer div,
-.SpreadsheetTableContainer input {
-    box-sizing: border-box;
 }

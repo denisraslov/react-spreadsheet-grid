@@ -1,11 +1,11 @@
 import React from 'react';
-import Table, { propTypes as tablePropTypes } from './../table';
+import Grid, { propTypes as gridPropTypes } from '../grid';
 import ScrollDummy from './../scrollDummy';
 import styles from './styles.css';
 
 const RESERVE_ROWS_COUNT = 10;
 
-class SpreadsheetTableScrollWrapper extends React.PureComponent {
+class SpreadsheetGridScrollWrapper extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -55,9 +55,9 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
     freezeTable(widthValues = {}) {
         const table = this.tableElement;
 
-        // There is no table when Jest is running tests
+        // There is no grid when Jest is running tests
         if (table) {
-            const cells = table.querySelectorAll('.SpreadsheetTable__headCell');
+            const cells = table.querySelectorAll('.SpreadsheetGrid__headCell');
             const preparedWidthValues = {};
             let sumOfWidth = 0;
 
@@ -240,7 +240,7 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
     renderResizer() {
         return (
             <div
-                className="SpreadsheetTable__resizer"
+                className="SpreadsheetGrid__resizer"
                 onMouseDown={this.startColumnResize}
                 style={{
                     height: this.props.headerHeight + 'px'
@@ -254,12 +254,13 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
         const { widthValues } = this.state;
 
         return (
-            <div className="SpreadsheetTable__header">
+            <div className="SpreadsheetGrid__header">
                 {
                     columns.map((column, i) => {
                         return (
                             <div
-                                className="SpreadsheetTable__headCell"
+                                key={i}
+                                className="SpreadsheetGrid__headCell"
                                 data-index={i}
                                 style={{
                                     height: this.props.headerHeight + 'px',
@@ -281,12 +282,12 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
     render() {
         return (
             <div
-                className="SpreadsheetTableContainer"
+                className="SpreadsheetGridContainer"
                 ref={(tableElement) => { this.tableElement = tableElement; }}
             >
                 {this.renderHeader()}
                 <div
-                    className="SpreadsheetTableScrollWrapper"
+                    className="SpreadsheetGridScrollWrapper"
                     onScroll={this.onScroll}
                     ref={node => this.scrollWrapperElement = node}
                     style={{
@@ -299,7 +300,7 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
                         cellHeight={this.props.cellHeight}
                     />
                     {
-                        <Table
+                        <Grid
                             {...this.props}
                             first={this.state.first}
                             last={this.state.last}
@@ -313,9 +314,9 @@ class SpreadsheetTableScrollWrapper extends React.PureComponent {
     }
 }
 
-SpreadsheetTableScrollWrapper.propTypes = tablePropTypes;
+SpreadsheetGridScrollWrapper.propTypes = gridPropTypes;
 
-SpreadsheetTableScrollWrapper.defaultProps = {
+SpreadsheetGridScrollWrapper.defaultProps = {
     rows: [],
     columnsResize: false,
     placeholder: 'There are no rows',
@@ -323,4 +324,4 @@ SpreadsheetTableScrollWrapper.defaultProps = {
     cellHeight: 48
 };
 
-export default SpreadsheetTableScrollWrapper;
+export default SpreadsheetGridScrollWrapper;

@@ -32,7 +32,7 @@ class SpreadsheetRow extends React.Component {
 
         return (
             <div
-                className="SpreadsheetTable__row"
+                className="SpreadsheetGrid__row"
             >
                 {
                     columns.map((column, y) => {

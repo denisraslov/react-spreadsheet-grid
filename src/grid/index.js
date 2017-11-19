@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import _ from 'lodash';
 import keys from './../kit/keymap';
 import Row from './row';
 
 import './styles.css';
 
-class SpreadsheetTable extends React.PureComponent {
+class SpreadsheetGrid extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -251,13 +250,12 @@ class SpreadsheetTable extends React.PureComponent {
     }
 
     getCellClassName(column, row, x, y) {
-        return classnames(
-            'SpreadsheetTable__cell',
-            _.isEqual(this.state.activeCell, { x, y }) && 'SpreadsheetTable__cell_active',
-            _.isEqual(this.state.focusedCell, { x, y }) && 'SpreadsheetTable__cell_focused',
-            this.props.checkDisabledCell && this.props.checkDisabledCell(row, column.id)
-                && 'SpreadsheetTable__cell_disabled'
-        );
+        return 'SpreadsheetGrid__cell' +
+            (_.isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
+            (_.isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
+            (this.props.checkDisabledCell && this.props.checkDisabledCell(row, column.id)
+                ? ' SpreadsheetGrid__cell_disabled'
+                : '');
     }
 
     calculatePosition() {
@@ -294,7 +292,7 @@ class SpreadsheetTable extends React.PureComponent {
             });
         } else {
             body = (
-                <div className="SpreadsheetTable__placeholder">
+                <div className="SpreadsheetGrid__placeholder">
                     {this.props.placeholder}
                 </div>
             );
@@ -306,7 +304,7 @@ class SpreadsheetTable extends React.PureComponent {
     render() {
         return (
             <div
-                className="SpreadsheetTable"
+                className="SpreadsheetGrid"
                 style={{
                     top: this.calculatePosition()
                 }}
@@ -321,7 +319,10 @@ export const propTypes = {
     columns: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
-            title: PropTypes.func.isRequired,
+            title: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
             value: PropTypes.func.isRequired
         })
     ).isRequired,
@@ -349,10 +350,10 @@ export const propTypes = {
     widthValues: PropTypes.object
 };
 
-SpreadsheetTable.defaultProps = {
+SpreadsheetGrid.defaultProps = {
     blurFocus: false
 };
 
-SpreadsheetTable.propTypes = propTypes;
+SpreadsheetGrid.propTypes = propTypes;
 
-export default SpreadsheetTable;
+export default SpreadsheetGrid;

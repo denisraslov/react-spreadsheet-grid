@@ -1,11 +1,11 @@
-.SpreadsheetTableDropdown {
+.SpreadsheetGridDropdown {
   display: inline-block;
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-div.SpreadsheetTableDropdown__body {
+div.SpreadsheetGridDropdown__body {
   position: absolute;
   top: calc(100% + 12px);
   left: -10px;
@@ -22,6 +22,6 @@ div.SpreadsheetTableDropdown__body {
   font-family: Arial;
 }
 
-div.SpreadsheetTableDropdown__body {
+div.SpreadsheetGridDropdown__body {
   box-sizing: content-box;
 }

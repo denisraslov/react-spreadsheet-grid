@@ -106,8 +106,8 @@ class SpreadsheetGridSelect extends React.PureComponent {
     }
 
     getItemClassName(isSelected) {
-        return 'SpreadsheetTableSelectItem' +
-            (isSelected ? ' SpreadsheetTableSelectItem_selected' : '');
+        return 'SpreadsheetGridSelectItem' +
+            (isSelected ? ' SpreadsheetGridSelectItem_selected' : '');
     }
 
     isHasValue() {
@@ -130,8 +130,8 @@ class SpreadsheetGridSelect extends React.PureComponent {
     }
 
     getHeaderClassName() {
-        return 'SpreadsheetTableSelectHeader' +
-            (this.state.isOpen ? ' SpreadsheetTableSelectHeader_open' : '');
+        return 'SpreadsheetGridSelectHeader' +
+            (this.state.isOpen ? ' SpreadsheetGridSelectHeader_open' : '');
     }
 
     renderHeader() {

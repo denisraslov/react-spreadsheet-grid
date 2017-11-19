@@ -1,4 +1,4 @@
-.SpreadsheetTableSelectHeader {
+.SpreadsheetGridSelectHeader {
     position: relative;
     font-size: 13px;
     line-height: 15px;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.SpreadsheetTableSelectHeader:after {
+.SpreadsheetGridSelectHeader:after {
     position: absolute;
     content: "";
     width: 0;
@@ -22,11 +22,11 @@
     right: 5px;
 }
 
-.SpreadsheetTableSelectHeader_open:after {
+.SpreadsheetGridSelectHeader_open:after {
     border-top-color: #ff5d00;
 }
 
-.SpreadsheetTableSelectItem {
+.SpreadsheetGridSelectItem {
     font-weight: 400;
     font-size: 14px;
     padding: 7px 14px;
@@ -36,7 +36,7 @@
     white-space: nowrap;
 }
 
-.SpreadsheetTableSelectItem_selected {
+.SpreadsheetGridSelectItem_selected {
     background-color: #F0EEF3;
     color: #ff5d00;
     border-radius: 3px;
