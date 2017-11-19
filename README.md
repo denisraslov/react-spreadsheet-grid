@@ -300,7 +300,7 @@ Also, you can get it from `onColumnResize` callback to store somewhere and use f
 
 > defaults to `false`
 
-⚠️ **IMPORTANT!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-usage).
+⚠️ **IMPORTANT!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-regular-usage).
 
 
 ## Customizing cells & header content
