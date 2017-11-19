@@ -23,7 +23,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 -   [Live Playground](#live-playground)
 -   [Installation](#installation)
--   [The pattern of usage](#the-pattern-of-usage)
+-   [The primitive example](#the-primitive-example)
+-   [The pattern of regular usage](#the-pattern-of-regular-usage)
 -   [Props](#props)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
@@ -53,7 +54,53 @@ npm install --save react-spreadsheet-grid
 
 > ⚠️ **IMPORTANT!** This package also depends on `react`, `react-dom` and `prop-types`. Please make sure you have those installed as well.
 
-## The pattern of usage
+## The primitive example
+
+```jsx
+import { Grid, Input, Select } from 'react-spreadsheet-grid'
+
+const rows=[
+    { id: 'user1', name: 'John Doe', positionId: 'position1' },
+    // and so on...
+];
+
+class MyAwesomeGrid extends React.Component {
+  render() {
+    return (
+      <Grid 
+        columns={[
+          {
+            title: () => 'Name', 
+            value: (row, { focus }) => {
+              return (
+                <Input  
+                  value={row.name}
+                  focus={focus}
+                />
+              );
+            }
+          }, {
+            title: () => 'Position',
+            value: (row, { focus }) => {
+                return (
+                    <Select  
+                      value={row.positionId}
+                      isOpen={focus}
+                      items={somePositions}
+                    />
+                );
+            }
+          }
+        ]}
+        
+        getRowKey={row => row.id}
+      />
+    )
+  }
+}
+```
+
+## The pattern of regular usage
 
 Take a closer look at 2 main thing: **a definition of columns** and **work with the state of a high-order component**.
 
@@ -69,19 +116,12 @@ Let's see how it works:
 import { Grid, Input, Select } from 'react-spreadsheet-grid'
 import AwesomeAutocomplete from 'awesome-autocomplete'
 
-const rows=[{
-  id: 'user1',
-  name: 'John Doe',
-  positionId: 'position1',
-  managerId: 'manager1'
-}, {
-  id: 'user2',
-  name: 'Doe John',
-  positionId: 'position2',
-  managerId: 'manager2'
-}]
+const rows=[
+    { id: 'user1', name: 'John Doe', positionId: 'position1', managerId: 'manager1' },
+    // and so on...
+];
 
-class MyAwesomeSpreadsheetGrid extends React.Component {
+class MyAwesomeGrid extends React.Component {
 
     constructor(props) {
         super(props);
