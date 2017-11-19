@@ -1,6 +1,7 @@
 {
-  "name": "react-spreadsheet-table",
-  "description": "A light Spreadsheet Table component for React",
+  "name": "react-spreadsheet-grid",
+  "version": "0.0.1",
+  "description": "Excel-like grid component for React with custom cell editors, performant scroll & resizable columns",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -8,6 +9,28 @@
     "build-storybook": "build-storybook",
     "test": "jest"
   },
+  "keywords": [
+    "react",
+    "react-component",
+    "grid",
+    "spreadsheet",
+    "table",
+    "data-table",
+    "columns",
+    "cells",
+    "scroll",
+    "resizable"
+  ],
+  "author": "Denis Raslov <denis.raslov@yandex.ru>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denisraslov/react-spreadsheet-grid.git"
+  },
+  "bugs": {
+    "url": "https://github.com/denisraslov/react-spreadsheet-grid/issues"
+  },
+  "homepage": "https://github.com/denisraslov/react-spreadsheet-grid#readme",
   "jest": {
     "setupFiles": [
       "<rootDir>/jestSetup.js"
