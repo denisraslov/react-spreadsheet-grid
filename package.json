@@ -20,12 +20,17 @@
     "lodash.find": "^4.6.0",
     "lodash.findindex": "^4.6.0",
     "lodash.isequal": "^4.5.0",
-    "lodash.slice": "^4.2.0",
+    "lodash.slice": "^4.2.0"
+  },
+  "peerDependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
   "devDependencies": {
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "@storybook/react": "3.0.0-alpha.0",
     "autoprefixer": "^7.1.5",
     "babel-core": "^6.26.0",
