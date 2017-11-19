@@ -24,9 +24,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentDidMount() {
-        if (this.props.isColumnsResizable) {
-            this.freezeTable(this.props.columnWidthValues);
+        this.freezeTable(this.props.columnWidthValues);
 
+        if (this.props.isColumnsResizable) {
             document.addEventListener('mousemove', this.processColumnResize, false);
             document.addEventListener('mouseup', () => {
                 this.resizingCell = null;
@@ -58,7 +58,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         // There is no grid when Jest is running tests
         if (table) {
             const cells = table.querySelectorAll('.SpreadsheetGrid__headCell');
-            const preparedcolumnWidthValues = {};
+            const preparedColumnWidthValues = {};
             let sumOfWidth = 0;
 
             Object.keys(columnWidthValues).forEach((id) => {
@@ -79,11 +79,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 const id = this.props.columns[i].id;
 
                 if (columnWidthValues[id]) {
-                    preparedcolumnWidthValues[id] = columnWidthValues[id];
+                    preparedColumnWidthValues[id] = columnWidthValues[id];
                     restTableWidth -= columnWidthValues[id];
                     restColumnsCount--;
                 } else {
-                    preparedcolumnWidthValues[id] = (restTableWidth / cells.length);
+                    preparedColumnWidthValues[id] = (restTableWidth / cells.length);
                 }
             });
 
@@ -91,12 +91,12 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 const id = this.props.columns[i].id;
 
                 if (!columnWidthValues[id]) {
-                    preparedcolumnWidthValues[id] = (restTableWidth / cells.length);
+                    preparedColumnWidthValues[id] = (restTableWidth / cells.length);
                 }
             });
 
             this.setState({
-                columnWidthValues: preparedcolumnWidthValues
+                columnWidthValues: preparedColumnWidthValues
             });
         }
     }
