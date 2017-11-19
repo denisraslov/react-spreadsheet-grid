@@ -1,21 +1,21 @@
 # React Spreadsheet Grid
-> A customizable, performant and powerful spreadsheet grid component for React
+> Excel-like grid component for React with custom cell editors, performant scroll & resizable columns
 
-![react-spreadsheet-table in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-table/master/demo.gif)
+![react-spreadsheet-grid in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-grid/master/demo.gif)
 
 ## The key features
 
 This is an Excel-like Spreadsheet Grid component that supports:
 
-✅  Control by mouse & from keyboard
-
-✅  Customizable cells & header content (use built-in Input and Select, or any other components)
-
-✅  Flexible setting of disabled cells
+✅  Custom cell editors (use built-in Input and Select, or any other components) & header content 
 
 ✅  Performant scroll for as many rows as you need
 
-✅  Column resizing
+✅  Resizable columns
+
+✅  Control by mouse & from keyboard
+
+✅  Flexible setting of disabled cells
 
 ✅  Customizable CSS styling
 
@@ -29,10 +29,10 @@ This is an Excel-like Spreadsheet Grid component that supports:
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
     -   [Another component](#another-component)
--   [Customizing CSS styles](#customizing-css-styles)
 -   [Performant scroll](#performant-scroll)
--   [Column resizing](#column-resizing)
+-   [Resizable columns](#resizable-columns)
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
+-   [Customizing CSS styles](#customizing-css-styles)
 
 ## Live Playground
 
@@ -277,11 +277,12 @@ Prop | Type | Mission
 Usage:
 
 ```jsx
-import { Table, Input } from 'react-spreadsheet-table'
+import { Grid, Input } from 'react-spreadsheet-grid'
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'name',
         title: () => {
             return <span>Name</span>
         }, 
@@ -314,7 +315,7 @@ Prop | Type | Mission
 Usage:
 
 ```jsx
-import { Table, Select } from 'react-spreadsheet-table'
+import { Grid, Select } from 'react-spreadsheet-grid'
 
 const positions = [{
     id: 1,
@@ -324,9 +325,10 @@ const positions = [{
     name: 'Backend developer'
 }];
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'position',
         title: () => {
             return <span>Position</span>
         }, 
@@ -350,12 +352,13 @@ const positions = [{
 Let's suggest you need to use an autocomplete as a content of a cell. This is how it could be done:
 
 ```jsx
-import { Table } from 'react-spreadsheet-table'
+import { Grid } from 'react-spreadsheet-grid'
 import AwesomeAutocomplete from 'awesome-autocomplete'
 
- <Table 
+ <Grid 
     columns={[
       {
+        id: 'manager',
         title: () => {
             return <span>Manager</span>
         }, 
@@ -374,12 +377,25 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 />
 ```
 
+## Performant scroll
+  
+`react-spreadsheet-grid` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+
+## Resizable columns
+
+`react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `widthValues`, `columnsResize` and `onColumnResize` properties for that purpose.
+
+## Control by mouse & from keyboard
+
+A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
+
+
 ## Customizing CSS styles
 
-Right now, the easiest way to tweak `react-spreadsheet-table` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_table_overrides.css` with the following contents:
+Right now, the easiest way to tweak `react-spreadsheet-grid` is to create another stylesheet to override the default styles. For example, you could create a file named `react_spreadsheet_grid_overrides.css` with the following contents:
 
 ```css
-.SpreadsheetTable__cell_active {
+.SpreadsheetGrid__cell_active {
     box-shadow: inset 0 0 0 2px green;
 }
 ``` 
@@ -387,15 +403,3 @@ Right now, the easiest way to tweak `react-spreadsheet-table` is to create anoth
 This would override the color of borders for the table active cell.
 
 ⚠️ The only exception, that you have to use `headerHeight` and `cellHeight` props to redefine height of the header and rows to not broke the scroll of the table.
-
-## Performant scroll
-  
-`react-spreadsheet-grid` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
-
-## Column resizing
-
-`react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `widthValues`, `columnsResize` and `onColumnResize` properties for that purpose.
-
-## Control by mouse & from keyboard
-
-A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
