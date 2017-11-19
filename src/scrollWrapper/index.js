@@ -42,7 +42,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
     componentWillUnmount() {
         if (this.props.isColumnsResizable) {
-            window.removeEventListener('resize', this.onWindowResize, false);
             document.removeEventListener('mousemove', this.processColumnResize, false);
             document.removeEventListener('mouseup', () => {
                 this.resizingCell = null;

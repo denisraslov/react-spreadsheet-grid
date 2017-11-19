@@ -8,4 +8,5 @@
     outline: none;
     font-family: Arial;
     background: transparent;
+    text-overflow: ellipsis;
 }
