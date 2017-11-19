@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import find from 'lodash.find';
+import findIndex from 'lodash.findindex';
+import slice from 'lodash.slice';
+import isEqual from 'lodash.isequal';
 import keys from './../kit/keymap';
 import Row from './row';
 
@@ -40,10 +43,10 @@ class SpreadsheetGrid extends React.PureComponent {
                 disabledCells
             };
 
-            if (_.find(disabledCells, this.state.activeCell)) {
+            if (find(disabledCells, this.state.activeCell)) {
                 newState.activeCell = null;
             }
-            if (_.find(disabledCells, this.state.focusedCell)) {
+            if (find(disabledCells, this.state.focusedCell)) {
                 newState.focusedCell = null;
             }
 
@@ -114,7 +117,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (_.find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.state.disabledCells, newActiveCell)) {
                     moveRight(newActiveCell);
                 }
             }
@@ -125,7 +128,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (_.find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.state.disabledCells, newActiveCell)) {
                     moveDown(newActiveCell);
                 }
             }
@@ -136,7 +139,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (_.find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.state.disabledCells, newActiveCell)) {
                     moveUp(newActiveCell);
                 }
             }
@@ -149,7 +152,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (_.find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.state.disabledCells, newActiveCell)) {
                     moveLeft(newActiveCell);
                 }
             }
@@ -224,8 +227,8 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     onCellClick(x, y, row, columnId, e) {
-        if (!_.find(this.state.disabledCells, { x, y })) {
-            if (!e.skipCellClick && !_.isEqual(this.state.focusedCell, { x, y })) {
+        if (!find(this.state.disabledCells, { x, y })) {
+            if (!e.skipCellClick && !isEqual(this.state.focusedCell, { x, y })) {
                 this.setState({
                     focusedCell: e.target !== e.currentTarget ? { x, y } : null,
                     activeCell: { x, y }
@@ -241,7 +244,7 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     onCellDoubleClick(x, y) {
-        if (!_.find(this.state.disabledCells, { x, y })) {
+        if (!find(this.state.disabledCells, { x, y })) {
             this.setState({
                 activeCell: { x, y },
                 focusedCell: { x, y }
@@ -251,8 +254,8 @@ class SpreadsheetGrid extends React.PureComponent {
 
     getCellClassName(column, row, x, y) {
         return 'SpreadsheetGrid__cell' +
-            (_.isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
-            (_.isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
+            (isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
+            (isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
             (this.props.checkDisabledCell && this.props.checkDisabledCell(row, column.id)
                 ? ' SpreadsheetGrid__cell_disabled'
                 : '');
@@ -263,7 +266,7 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     renderBody() {
-        const rows = [].concat(_.slice(
+        const rows = [].concat(slice(
             this.props.rows,
             this.props.first,
             this.props.last
@@ -275,7 +278,7 @@ class SpreadsheetGrid extends React.PureComponent {
             body = rows.map((row) => {
                 return (
                     <Row
-                        x={_.findIndex(this.props.rows, row)}
+                        x={findIndex(this.props.rows, row)}
                         key={this.props.getRowKey(row)}
                         columns={columns}
                         row={row}

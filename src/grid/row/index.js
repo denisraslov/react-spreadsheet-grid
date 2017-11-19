@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import isEqual from 'lodash.isequal';
 
 import SpreadsheetCell from './cell';
 
@@ -49,8 +49,8 @@ class SpreadsheetRow extends React.Component {
                                 className={getCellClassName(column, row, x, y)}
                                 onClick={!disabled && onCellClick.bind(this, x, y, row, column.id)}
                                 onDoubleClick={!disabled && onCellDoubleClick.bind(this, x, y)}
-                                isActive={_.isEqual(activeCell, coords)}
-                                isFocused={_.isEqual(focusedCell, coords)}
+                                isActive={isEqual(activeCell, coords)}
+                                isFocused={isEqual(focusedCell, coords)}
                                 disabledCells={this.props.disabledCells}
                                 width={widthValues[column.id]}
                                 height={this.props.height}

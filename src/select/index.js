@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from './../dropdown';
 import keys from './../kit/keymap';
-import _ from 'lodash';
+import find from 'lodash.find';
 
 import styles from './styles.css';
 
@@ -10,6 +10,7 @@ class SpreadsheetGridSelect extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.onGlobalKeyDown = this.onGlobalKeyDown.bind(this);
         this.onGlobalKeyDown = this.onGlobalKeyDown.bind(this);
         this.onItemMouseLeave = this.onItemMouseLeave.bind(this);
 
@@ -118,7 +119,7 @@ class SpreadsheetGridSelect extends React.PureComponent {
         let value;
 
         if (this.isHasValue()) {
-            value = _.find(this.props.items, {
+            value = find(this.props.items, {
                 id: this.state.selectedId
             });
             value = value ? value.name : value;
