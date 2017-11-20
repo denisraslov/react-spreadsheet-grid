@@ -138,7 +138,9 @@ class SpreadsheetGridSelect extends React.PureComponent {
     renderHeader() {
         return (
             <div className={this.getHeaderClassName()}>
-                {this.getHeaderValue()}
+                <div className="SpreadsheetGridSelectValue">
+                    {this.getHeaderValue()}
+                </div>
             </div>
         );
     }

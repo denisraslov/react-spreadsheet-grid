@@ -81,8 +81,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     preparedColumnWidthValues[id] = columnWidthValues[id];
                     restTableWidth -= columnWidthValues[id];
                     restColumnsCount--;
-                } else {
-                    preparedColumnWidthValues[id] = (restTableWidth / cells.length);
                 }
             });
 
@@ -90,7 +88,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 const id = this.props.columns[i].id;
 
                 if (!columnWidthValues[id]) {
-                    preparedColumnWidthValues[id] = (restTableWidth / cells.length);
+                    preparedColumnWidthValues[id] = restTableWidth / restColumnsCount;
                 }
             });
 

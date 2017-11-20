@@ -10,6 +10,13 @@
     align-items: center;
 }
 
+.SpreadsheetGridSelectValue {
+    width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .SpreadsheetGridSelectHeader:after {
     position: absolute;
     content: "";
