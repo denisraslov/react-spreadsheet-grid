@@ -203,7 +203,9 @@ class SpreadsheetGrid extends React.PureComponent {
 
             if (e.keyCode === keys.ESC) {
                 if (this.state.focusedCell) {
-                    e.target.blur();
+                    newFocusedCell = null;
+                } else if (this.state.activeCell) {
+                    newActiveCell = null;
                     newFocusedCell = null;
                 }
             }
