@@ -46,7 +46,7 @@ For examples of the grid in action, you can run the demo on your own computer:
 
 ## Installation
 
-This module is distributed via [npm][npm] and should be installed as one of your project's `dependencies`:
+This module is distributed via [npm](https://www.npmjs.com/) and should be installed as one of your project's `dependencies`:
 
 ```
 npm install --save react-spreadsheet-grid
