@@ -8,7 +8,11 @@ exports[`Closed select 1`] = `
     className="SpreadsheetGridSelectHeader"
     onClick={[Function]}
   >
-    
+    <div
+      className="SpreadsheetGridSelectValue"
+    >
+      
+    </div>
   </div>
   <div
     className="SpreadsheetGridDropdown__body"
@@ -50,7 +54,11 @@ exports[`Closed select without a selected value 1`] = `
     className="SpreadsheetGridSelectHeader"
     onClick={[Function]}
   >
-    Placeholder
+    <div
+      className="SpreadsheetGridSelectValue"
+    >
+      Placeholder
+    </div>
   </div>
   <div
     className="SpreadsheetGridDropdown__body"
@@ -92,7 +100,11 @@ exports[`Opened select 1`] = `
     className="SpreadsheetGridSelectHeader SpreadsheetGridSelectHeader_open"
     onClick={[Function]}
   >
-    
+    <div
+      className="SpreadsheetGridSelectValue"
+    >
+      
+    </div>
   </div>
   <div
     className="SpreadsheetGridDropdown__body"

@@ -6,7 +6,7 @@ test('ScrollDummy with rows', () => {
     const tree = renderer.create(
         <ScrollDummy
             headerHeight={50}
-            cellHeight={50}
+            rowHeight={50}
             rows={[1, 2, 3]}
         />
     ).toJSON();
@@ -18,7 +18,7 @@ test('ScrollDummy without rows', () => {
     const tree = renderer.create(
         <ScrollDummy
             headerHeight={50}
-            cellHeight={50}
+            rowHeight={50}
             rows={[]}
         />
     ).toJSON();
