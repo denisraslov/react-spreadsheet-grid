@@ -1,9 +1,10 @@
 import React from 'react';
 import Grid, { propTypes as gridPropTypes } from '../grid';
 import ScrollDummy from './../scrollDummy';
+import throttleWithRAF from './../kit/throttleWithRAF';
 import styles from './styles.css';
 
-const RESERVE_ROWS_COUNT = 10;
+const RESERVE_ROWS_COUNT = 3;
 
 class SpreadsheetGridScrollWrapper extends React.PureComponent {
     constructor(props) {
@@ -11,7 +12,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         this.onScroll = this.onScroll.bind(this);
         this.onResize = this.onResize.bind(this);
-        this.scrollCalculations = this.scrollCalculations.bind(this);
+        this.calculateScrollState = this.calculateScrollState.bind(this);
         this.startColumnResize = this.startColumnResize.bind(this);
         this.processColumnResize = this.processColumnResize.bind(this);
 
@@ -21,6 +22,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             offset: 0,
             columnWidthValues: {}
         };
+
+        // if requestAnimationFrame is available, use it to throttle refreshState
+        if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
+            this.calculateScrollState = throttleWithRAF(this.calculateScrollState);
+        }
     }
 
     componentDidMount() {
@@ -210,28 +216,28 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    scrollCalculations() {
+    calculateScrollState() {
         const scrollTop = Math.max(
             this.scrollWrapperElement.scrollTop,
             0);
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
-        this.setState({
-            first,
-            last,
-            offset: first * this.props.rowHeight
-        });
+        if (first !== this.state.first || last !== this.state.last) {
+            this.setState({
+                first,
+                last,
+                offset: first * this.props.rowHeight
+            });
+        }
     }
 
     onResize() {
-        this.scrollCalculations();
+        this.calculateScrollState();
     }
 
-    onScroll(e) {
-        if (e.target === this.scrollWrapperElement) {
-            this.scrollCalculations();
-        }
+    onScroll() {
+        this.calculateScrollState();
     }
 
     renderResizer() {
