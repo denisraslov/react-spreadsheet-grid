@@ -21,11 +21,6 @@
     "scroll",
     "resizable"
   ],
-  "files": [
-    "index.js",
-    "src",
-    "lib"
-  ],
   "author": "Denis Raslov <denis.raslov@yandex.ru>",
   "license": "MIT",
   "repository": {
