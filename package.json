@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "Excel-like grid component for React with custom cell editors, performant scroll & resizable columns",
   "main": "lib/bundle.js",
+  "module": "index.js",
   "scripts": {
     "build": "webpack",
     "storybook": "start-storybook -p 6006",
@@ -20,6 +21,11 @@
     "cells",
     "scroll",
     "resizable"
+  ],
+  "files": [
+    "index.js",
+    "src",
+    "lib"
   ],
   "author": "Denis Raslov <denis.raslov@yandex.ru>",
   "license": "MIT",
