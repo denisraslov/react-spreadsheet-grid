@@ -285,7 +285,8 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                                 }}
                             >
                                 {typeof column.title === 'string' ? column.title : column.title()}
-                                {this.props.isColumnsResizable && this.renderResizer()}
+                                {this.props.isColumnsResizable && i !== columns.length - 1 &&
+                                    this.renderResizer()}
                             </div>
                         );
                     })

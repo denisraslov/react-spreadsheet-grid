@@ -40,3 +40,17 @@ test('ScrollWrapper with columns with components', () => {
     expect(tree).toMatchSnapshot();
 });
 
+test('ScrollWrapper with resizable columns', () => {
+    const tree = renderer.create(
+        <ScrollWrapper
+            columns={columnsWithComponents}
+            rows={rows}
+            getRowKey={row => row.id}
+            isColumnsResizable
+        />
+    ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+});
+
+

@@ -158,6 +158,103 @@ exports[`ScrollWrapper with columns with text values 1`] = `
 </div>
 `;
 
+exports[`ScrollWrapper with resizable columns 1`] = `
+<div
+  className="SpreadsheetGridContainer"
+>
+  <div
+    className="SpreadsheetGrid__header"
+  >
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={0}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Name
+      <div
+        className="SpreadsheetGrid__resizer"
+        onMouseDown={[Function]}
+        style={
+          Object {
+            "height": "40px",
+          }
+        }
+      />
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={1}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Second name
+      <div
+        className="SpreadsheetGrid__resizer"
+        onMouseDown={[Function]}
+        style={
+          Object {
+            "height": "40px",
+          }
+        }
+      />
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={2}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Position
+    </div>
+  </div>
+  <div
+    className="SpreadsheetGridScrollWrapper"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": "calc(100% - 40px)",
+      }
+    }
+  >
+    <div
+      className="SpreadsheetGridScrollDummy"
+      style={
+        Object {
+          "height": "144px",
+        }
+      }
+    />
+    <div
+      className="SpreadsheetGrid"
+      style={
+        Object {
+          "top": "0px",
+        }
+      }
+    >
+      <div
+        className="SpreadsheetGrid__placeholder"
+      >
+        There are no rows
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`ScrollWrapper without rows 1`] = `
 <div
   className="SpreadsheetGridContainer"
