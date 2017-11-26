@@ -217,8 +217,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     calculateScrollState() {
+        const scrollWrapperElement = this.scrollWrapperElement;
         const scrollTop = Math.max(
-            this.scrollWrapperElement.scrollTop,
+            scrollWrapperElement.scrollTop,
             0);
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
@@ -229,6 +230,15 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 last,
                 offset: first * this.props.rowHeight
             });
+        }
+
+        if (this.props.onScroll) {
+            this.props.onScroll(scrollTop);
+        }
+
+        if (this.props.onScrollReachesBottom &&
+            scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
+            this.props.onScrollReachesBottom();
         }
     }
 

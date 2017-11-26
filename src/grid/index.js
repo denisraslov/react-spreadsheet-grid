@@ -349,6 +349,8 @@ export const propTypes = {
     first: PropTypes.number,
     last: PropTypes.number,
     offset: PropTypes.number,
+    onScroll: PropTypes.func,
+    onScrollReachesBottom: PropTypes.func,
 
     // resize
     isColumnsResizable: PropTypes.bool,
