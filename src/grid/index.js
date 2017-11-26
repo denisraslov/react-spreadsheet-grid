@@ -5,6 +5,7 @@ import findIndex from 'lodash.findindex';
 import slice from 'lodash.slice';
 import isEqual from 'lodash.isequal';
 import keys from './../kit/keymap';
+import tablePropTypes from './../kit/tablePropTypes';
 import Row from './row';
 
 import './styles.css';
@@ -321,47 +322,14 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 }
 
-export const propTypes = {
-    columns: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string,
-            title: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.func
-            ]),
-            value: PropTypes.func.isRequired
-        })
-    ).isRequired,
-    rows: PropTypes.arrayOf(PropTypes.any),
-    getRowKey: PropTypes.func.isRequired,
-    placeholder: PropTypes.string,
-    disabledCellChecker: PropTypes.func,
-    focusedCell: PropTypes.shape({
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
-    }),
-    onCellClick: PropTypes.func,
-    blurCurrentFocus: PropTypes.bool,
-
-    // scroll
-    headerHeight: PropTypes.number,
-    rowHeight: PropTypes.number,
-    first: PropTypes.number,
-    last: PropTypes.number,
-    offset: PropTypes.number,
-    onScroll: PropTypes.func,
-    onScrollReachesBottom: PropTypes.func,
-
-    // resize
-    isColumnsResizable: PropTypes.bool,
-    onColumnResize: PropTypes.func,
-    columnWidthValues: PropTypes.object
-};
+SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
+    first: PropTypes.number.isRequired,
+    last: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired
+});
 
 SpreadsheetGrid.defaultProps = {
     blurCurrentFocus: false
 };
-
-SpreadsheetGrid.propTypes = propTypes;
 
 export default SpreadsheetGrid;

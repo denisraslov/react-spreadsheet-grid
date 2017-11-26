@@ -1,7 +1,9 @@
 import React from 'react';
-import Grid, { propTypes as gridPropTypes } from '../grid';
+import PropTypes from 'prop-types';
+import Grid from '../grid';
 import ScrollDummy from './../scrollDummy';
 import throttleWithRAF from './../kit/throttleWithRAF';
+import tablePropTypes from './../kit/tablePropTypes';
 import styles from './styles.css';
 
 const RESERVE_ROWS_COUNT = 3;
@@ -327,7 +329,14 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 }
 
-SpreadsheetGridScrollWrapper.propTypes = gridPropTypes;
+SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
+    // scroll
+    onScroll: PropTypes.func,
+    onScrollReachesBottom: PropTypes.func,
+    // resize
+    isColumnsResizable: PropTypes.bool,
+    onColumnResize: PropTypes.func
+});
 
 SpreadsheetGridScrollWrapper.defaultProps = {
     rows: [],
