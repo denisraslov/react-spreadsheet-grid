@@ -17,6 +17,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Flexible setting of disabled cells
 
+✅  Lazy loading support
+
 ✅  Customizable CSS styling
 
 ## Table of contents
@@ -33,6 +35,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [Performant scroll](#performant-scroll)
 -   [Resizable columns](#resizable-columns)
 -   [Control by mouse & from keyboard](#control-by-mouse--from-keyboard)
+-   [Lazy loading support](#lazy-loading-support)
 -   [Customizing CSS styles](#customizing-css-styles)
 
 ## Live playground
@@ -181,7 +184,7 @@ class MyAwesomeGrid extends React.Component {
             
               // You can use whatever component you want to change a value.
               return (
-                <Autocomplete  
+                <AwesomeAutocomplete  
                   value={row.managerId}
                   active={active}
                   focus={focus}
@@ -251,7 +254,6 @@ Used as a placeholder text when the `rows` array is empty.
 
 The cell with this `x, y` coordinates (starting from `0`) will be rendered as a focused cell initially.
 
-
 ### disabledCellChecker
 > `func(row, columnId): bool`
 
@@ -260,7 +262,7 @@ Use this func to define what cells are disabled in the table. It gets `row` and 
 ### onCellClick
 > `func(row, columnId)`
 
-A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell.
+A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in the `columns` array) as parameters and identifiers of a cell.
 
 ### headerHeight
 > `number` | defaults to `40`
@@ -286,7 +288,6 @@ Switch this on if you want the table provides an oppotunity to resize column wid
 
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` is a map of values of width for all the columns in percents (`columnId` - `value`).
 
-
 ### columnWidthValues
 > `object`
 
@@ -294,6 +295,15 @@ Pass this object if you want initialize width of columns. It should be a map of 
 
 Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
+### onScroll
+> `func(scrollPosition: number)`
+
+A callback called every time the position of the scroll of the grid was changed.
+
+### onScrollReachesBottom
+> `func()` 
+
+A callback called when the scroll of the grid reaches its bottom value. Usually, it could be used to implement the lazy loading feature in your grid (see the [Lazy loading support](#the-pattern-of-regular-usage) section for details).
 
 ### blurCurrentFocus
 > `boolean`
@@ -412,13 +422,13 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
         title: () => {
             return <span>Manager</span>
         }, 
-        value: (row, { focus }) => {
+        value: (row, { focus, active }) => {
           return (
             <AwesomeAutocomplete
-              value={row.manager.name}
-              selectedId={row.positionId}
-              isOpen={focus}
-              onSelectItem={this.onFieldChange.bind(this, 'manager')}
+              value={row.managerId}
+              active={active}
+              focus={focus}
+              onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
             />
           );
         }
@@ -437,8 +447,7 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 
 ## Control by mouse & from keyboard
 
-A grid could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
-
+`react-spreadsheet-grid` could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
 
 ## Customizing CSS styles
 
@@ -453,3 +462,39 @@ Right now, the easiest way to tweak `react-spreadsheet-grid` is to create anothe
 This would override the color of borders for the table active cell.
 
 ⚠️ The only exception, that you have to use `headerHeight` and `rowHeight` props to redefine height of the header and rows to not broke the scroll of the table.
+
+## Lazy loading support
+
+`react-spreadsheet-grid` provides the opportunity to implement the lazy loading feature in your grid. Use the `onScrollReachesBottom` callback to handle a situation when the scroll position reaches its bottom. Load a new portion of the rows and put them in the state of a high-order component.
+
+This is how it could be done:
+
+```jsx
+import { Grid } from 'react-spreadsheet-grid'
+
+class LazyLoadingGrid extends React.Component {
+
+  onScrollReachesBottom() {
+     this.loadNewPortionOfRows().then((newRows) => {
+        this.setState({
+          rows: this.state.rows.concat(newRows)
+        });
+     });
+  }
+  
+  loadNewPortionOfRows() {
+    /* an ajax request here */
+  }
+  
+  render() {
+    return (
+      <Grid 
+        columns={/* some columns here */}
+        row={/* the initial portion of the rows */}
+        getRowKey={row => row.id}
+        onScrollReachesBottom={this.onScrollReachesBottom.bind(this)}
+      />
+    )
+  }
+}
+```
