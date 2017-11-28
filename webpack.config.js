@@ -25,9 +25,7 @@ const config = {
                         loader: 'postcss-loader',
                         options: {
                             plugins: [
-                                autoprefixer({
-                                    browsers: ['last 2 versions', 'ie 8', 'ie 9', 'iOS 7', 'android 3', 'android 4']
-                                })
+                                autoprefixer()
                             ]
                         }
                     }
