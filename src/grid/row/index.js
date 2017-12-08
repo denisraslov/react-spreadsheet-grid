@@ -10,7 +10,8 @@ class SpreadsheetRow extends React.Component {
         const currentActiveCell = this.props.activeCell || this.props.focusedCell;
         const nextActiveCell = nextProps.activeCell || nextProps.focusedCell;
 
-        return this.props.x !== nextProps.x
+        return this.props.row !== nextProps.row
+            || this.props.x !== nextProps.x
             || (currentActiveCell && currentActiveCell.x === this.props.x)
             || (nextActiveCell && nextActiveCell.x === this.props.x)
             || this.props.disabledCells !== nextProps.disabledCells
@@ -46,6 +47,7 @@ class SpreadsheetRow extends React.Component {
                                 x={x}
                                 y={y}
                                 key={y}
+                                row={row}
                                 className={getCellClassName(column, row, x, y)}
                                 onClick={!disabled ? onCellClick.bind(this, x, y, row, column.id) : null}
                                 onDoubleClick={!disabled ? onCellDoubleClick.bind(this, x, y) : null}
@@ -74,7 +76,7 @@ class SpreadsheetRow extends React.Component {
 SpreadsheetRow.propTypes = {
     x: PropTypes.number.isRequired,
     columns: PropTypes.array.isRequired,
-    row: PropTypes.object.isRequired,
+    row: PropTypes.any.isRequired,
     onCellClick: PropTypes.func,
     onCellDoubleClick: PropTypes.func,
     activeCell: PropTypes.object,

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 class SpreadsheetCell extends React.Component {
 
     shouldComponentUpdate(nextProps) {
-        return this.props.isActive !== nextProps.isActive
+        return this.props.row !== nextProps.row
+            || this.props.isActive !== nextProps.isActive
             || this.props.isFocused !== nextProps.isFocused
             || this.props.x !== nextProps.x
             || this.props.disabledCells !== nextProps.disabledCells
@@ -42,6 +43,7 @@ class SpreadsheetCell extends React.Component {
 SpreadsheetCell.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    row: PropTypes.any.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string,
