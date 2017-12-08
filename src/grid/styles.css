@@ -8,9 +8,8 @@
 }
 
 .SpreadsheetGrid__header {
+    display: flex;
     white-space: nowrap;
-    border-left: 1px solid rgba(37, 33, 40, 0.12);
-    border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__headCell {
@@ -26,21 +25,20 @@
     text-align: left;
     background-color: #827789;
     align-items: center;
+    border-bottom: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__headCell:first-child {
     border-left: 1px solid rgba(37, 33, 40, 0.12);
 }
 
-.SpreadsheetGrid__headCell:not(last-child) {
+.SpreadsheetGrid__headCell {
     border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__row {
     background-color: white;
     border-bottom: 1px solid #E6E1E8;
-    border-left: 1px solid #E6E1E8;
-    border-right: 1px solid #E6E1E8;
     user-select: none;
     white-space: nowrap;
 }
@@ -63,7 +61,11 @@
     pointer-events: none;
 }
 
-.SpreadsheetGrid__cell:not(:last-child) {
+.SpreadsheetGrid__cell:first-child {
+    border-left: 1px solid #E6E1E8;
+}
+
+.SpreadsheetGrid__cell {
     border-right: 1px solid #E6E1E8;
 }
 

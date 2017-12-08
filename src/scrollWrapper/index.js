@@ -43,9 +43,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         window.addEventListener('resize', this.onResize, false);
 
-        this.setState({
-            last: this.calculateLast(this.state.first)
-        });
+        this.calculateScrollState(true);
     }
 
     componentWillUnmount() {
@@ -218,7 +216,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    calculateScrollState() {
+    calculateScrollState(isInitCall) {
         const scrollWrapperElement = this.scrollWrapperElement;
         const scrollTop = Math.max(
             scrollWrapperElement.scrollTop,
@@ -226,30 +224,41 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
-        if (first !== this.state.first || last !== this.state.last) {
+        if (isInitCall || first !== this.state.first || last !== this.state.last) {
             this.setState({
                 first,
                 last,
-                offset: first * this.props.rowHeight
+                offset: first * this.props.rowHeight,
+                hasScroll: scrollWrapperElement.scrollHeight > scrollWrapperElement.offsetHeight
             });
         }
 
-        if (this.props.onScroll) {
-            this.props.onScroll(scrollTop);
-        }
+        if (!isInitCall) {
+            if (this.props.onScroll) {
+                this.props.onScroll(scrollTop);
+            }
 
-        if (this.props.onScrollReachesBottom &&
-            scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
-            this.props.onScrollReachesBottom();
+            if (this.props.onScrollReachesBottom &&
+                scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
+                this.props.onScrollReachesBottom();
+            }
         }
     }
 
     onResize() {
-        this.calculateScrollState();
+        this.calculateScrollState(false);
     }
 
     onScroll() {
-        this.calculateScrollState();
+        this.calculateScrollState(false);
+    }
+
+    getHeaderStyle() {
+        if (this.state.hasScroll) {
+            return {
+                overflowY: 'scroll'
+            };
+        }
     }
 
     renderResizer() {
@@ -269,7 +278,10 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         const { columnWidthValues } = this.state;
 
         return (
-            <div className="SpreadsheetGrid__header">
+            <div
+                className="SpreadsheetGrid__header"
+                style={this.getHeaderStyle()}
+            >
                 {
                     columns.map((column, i) => {
                         return (

@@ -13,6 +13,5 @@
     overflow-x: hidden;
     overflow-y: auto;
     transition: height 0.3s;
-    border-top: 1px solid #E6E1E8;
     border-bottom: 1px solid #E6E1E8;
 }
