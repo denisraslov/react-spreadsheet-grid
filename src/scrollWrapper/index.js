@@ -20,7 +20,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         this.state = {
             first: 0,
-            last: this.props.rows.length,
+            last: this.calculateInitialLast(),
             offset: 0,
             columnWidthValues: {}
         };
@@ -42,8 +42,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         window.addEventListener('resize', this.onResize, false);
-
-        this.calculateScrollState(true);
     }
 
     componentWillReceiveProps(newProps) {
@@ -215,6 +213,10 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         this.currentCoords = e.pageX;
+    }
+
+    calculateInitialLast() {
+        return Math.ceil(window.outerHeight / this.props.rowHeight) + RESERVE_ROWS_COUNT;
     }
 
     calculateLast(first) {
