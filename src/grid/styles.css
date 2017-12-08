@@ -44,7 +44,8 @@
 }
 
 .SpreadsheetGrid__cell {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     position: relative;
     color: #565059;
     cursor: pointer;
