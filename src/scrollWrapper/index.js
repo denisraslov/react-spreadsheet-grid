@@ -46,6 +46,16 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         this.calculateScrollState(true);
     }
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.resetScroll) {
+            this.scrollWrapperElement.scrollTop = 0;
+            this.calculateScrollState(false);
+        }
+        if (newProps.rows !== this.state.rows) {
+            this.calculateScrollState(false);
+        }
+    }
+
     componentWillUnmount() {
         if (this.props.isColumnsResizable) {
             document.removeEventListener('mousemove', this.processColumnResize, false);
@@ -344,6 +354,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
 SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
     // scroll
+    resetScroll: PropTypes.bool,
     onScroll: PropTypes.func,
     onScrollReachesBottom: PropTypes.func,
     // resize
@@ -352,6 +363,7 @@ SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
 });
 
 SpreadsheetGridScrollWrapper.defaultProps = {
+    resetScroll: false,
     rows: [],
     isColumnsResizable: false,
     placeholder: 'There are no rows',
