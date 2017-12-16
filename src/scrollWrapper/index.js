@@ -51,6 +51,13 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        // If columns has been changed, recalculate their width values.
+        if (prevProps.columns !== this.props.columns) {
+            this.freezeTable(this.props.columnWidthValues);
+        }
+    }
+
     componentWillUnmount() {
         if (this.props.isColumnsResizable) {
             document.removeEventListener('mousemove', this.processColumnResize, false);
