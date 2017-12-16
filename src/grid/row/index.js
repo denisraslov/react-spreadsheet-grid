@@ -15,6 +15,7 @@ class SpreadsheetRow extends React.Component {
             || (currentActiveCell && currentActiveCell.x === this.props.x)
             || (nextActiveCell && nextActiveCell.x === this.props.x)
             || this.props.disabledCells !== nextProps.disabledCells
+            || this.props.columns !== nextProps.columns
             || this.props.columnWidthValues !== nextProps.columnWidthValues;
     }
 
