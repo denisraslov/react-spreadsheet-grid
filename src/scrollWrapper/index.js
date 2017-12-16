@@ -322,6 +322,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         );
     }
 
+    getScrollWrapperClassName() {
+        return 'SpreadsheetGridScrollWrapper' +
+            (this.props.isScrollable ? ' SpreadsheetGridScrollWrapper_scrollable' : '');
+    }
+
     render() {
         const rows = slice(
             this.props.rows,
@@ -336,7 +341,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             >
                 {this.renderHeader()}
                 <div
-                    className="SpreadsheetGridScrollWrapper"
+                    className={this.getScrollWrapperClassName()}
                     onScroll={this.onScroll}
                     ref={node => this.scrollWrapperElement = node}
                     style={{
@@ -364,6 +369,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
 SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
     // scroll
+    isScrollable: PropTypes.bool,
     onScroll: PropTypes.func,
     onScrollReachesBottom: PropTypes.func,
     // resize
@@ -376,7 +382,8 @@ SpreadsheetGridScrollWrapper.defaultProps = {
     isColumnsResizable: false,
     placeholder: 'There are no rows',
     headerHeight: 40,
-    rowHeight: 48
+    rowHeight: 48,
+    isScrollable: true
 };
 
 export default SpreadsheetGridScrollWrapper;
