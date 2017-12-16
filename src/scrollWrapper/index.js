@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '../grid';
 import ScrollDummy from './../scrollDummy';
+import slice from 'lodash.slice';
 import throttleWithRAF from './../kit/throttleWithRAF';
 import tablePropTypes from './../kit/tablePropTypes';
 import styles from './styles.css';
@@ -322,6 +323,12 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     render() {
+        const rows = slice(
+            this.props.rows,
+            this.state.first,
+            this.state.last
+        );
+
         return (
             <div
                 className="SpreadsheetGridContainer"
@@ -344,8 +351,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     {
                         <Grid
                             {...this.props}
-                            first={this.state.first}
-                            last={this.state.last}
+                            rows={rows}
                             offset={this.state.offset}
                             columnWidthValues={this.state.columnWidthValues}
                         />

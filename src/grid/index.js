@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'lodash.find';
 import findIndex from 'lodash.findindex';
-import slice from 'lodash.slice';
 import isEqual from 'lodash.isequal';
 import keys from './../kit/keymap';
 import tablePropTypes from './../kit/tablePropTypes';
@@ -270,11 +269,7 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     renderBody() {
-        const rows = [].concat(slice(
-            this.props.rows,
-            this.props.first,
-            this.props.last
-        ));
+        const rows = this.props.rows;
         const columns = this.props.columns;
         let body;
 
@@ -323,8 +318,6 @@ class SpreadsheetGrid extends React.PureComponent {
 }
 
 SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
-    first: PropTypes.number.isRequired,
-    last: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired
 });
 
