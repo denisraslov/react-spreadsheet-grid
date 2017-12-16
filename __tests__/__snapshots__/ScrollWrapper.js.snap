@@ -1,5 +1,329 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ScrollWrapper - not scrollable 1`] = `
+<div
+  className="SpreadsheetGridContainer"
+>
+  <div
+    className="SpreadsheetGrid__header"
+    style={undefined}
+  >
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={0}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Name
+      <div
+        className="SpreadsheetGrid__resizer"
+        onMouseDown={[Function]}
+        style={
+          Object {
+            "height": "40px",
+          }
+        }
+      />
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={1}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Second name
+      <div
+        className="SpreadsheetGrid__resizer"
+        onMouseDown={[Function]}
+        style={
+          Object {
+            "height": "40px",
+          }
+        }
+      />
+    </div>
+    <div
+      className="SpreadsheetGrid__headCell"
+      data-index={2}
+      style={
+        Object {
+          "height": "40px",
+          "width": "undefined%",
+        }
+      }
+    >
+      Position
+    </div>
+  </div>
+  <div
+    className="SpreadsheetGridScrollWrapper"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": "calc(100% - 40px)",
+      }
+    }
+  >
+    <div
+      className="SpreadsheetGridScrollDummy"
+      style={
+        Object {
+          "height": "144px",
+        }
+      }
+    />
+    <div
+      className="SpreadsheetGrid"
+      style={
+        Object {
+          "top": "0px",
+        }
+      }
+    >
+      <div
+        className="SpreadsheetGrid__row"
+      >
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          Name 1
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <div
+            className="SpreadsheetGridDropdown"
+          >
+            <div
+              className="SpreadsheetGridSelectHeader"
+              onClick={[Function]}
+            >
+              <div
+                className="SpreadsheetGridSelectValue"
+              />
+            </div>
+            <div
+              className="SpreadsheetGridDropdown__body"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <div>
+                <div
+                  className="SpreadsheetGridSelectItem"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <input
+            className="SpreadsheetGridInput"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder={undefined}
+            value="Position 1"
+          />
+        </div>
+      </div>
+      <div
+        className="SpreadsheetGrid__row"
+      >
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          Name 2
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <div
+            className="SpreadsheetGridDropdown"
+          >
+            <div
+              className="SpreadsheetGridSelectHeader"
+              onClick={[Function]}
+            >
+              <div
+                className="SpreadsheetGridSelectValue"
+              />
+            </div>
+            <div
+              className="SpreadsheetGridDropdown__body"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <div>
+                <div
+                  className="SpreadsheetGridSelectItem"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <input
+            className="SpreadsheetGridInput"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder={undefined}
+            value="Position 2"
+          />
+        </div>
+      </div>
+      <div
+        className="SpreadsheetGrid__row"
+      >
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          Name 3
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <div
+            className="SpreadsheetGridDropdown"
+          >
+            <div
+              className="SpreadsheetGridSelectHeader"
+              onClick={[Function]}
+            >
+              <div
+                className="SpreadsheetGridSelectValue"
+              />
+            </div>
+            <div
+              className="SpreadsheetGridDropdown__body"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <div>
+                <div
+                  className="SpreadsheetGridSelectItem"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="SpreadsheetGrid__cell"
+          onClick={[Function]}
+          onDoubleClick={[Function]}
+          style={
+            Object {
+              "height": "48px",
+              "width": "undefined%",
+            }
+          }
+        >
+          <input
+            className="SpreadsheetGridInput"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder={undefined}
+            value="Position 3"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`ScrollWrapper with columns with components 1`] = `
 <div
   className="SpreadsheetGridContainer"
@@ -46,7 +370,7 @@ exports[`ScrollWrapper with columns with components 1`] = `
     </div>
   </div>
   <div
-    className="SpreadsheetGridScrollWrapper"
+    className="SpreadsheetGridScrollWrapper SpreadsheetGridScrollWrapper_scrollable"
     onScroll={[Function]}
     style={
       Object {
@@ -352,7 +676,7 @@ exports[`ScrollWrapper with columns with text values 1`] = `
     </div>
   </div>
   <div
-    className="SpreadsheetGridScrollWrapper"
+    className="SpreadsheetGridScrollWrapper SpreadsheetGridScrollWrapper_scrollable"
     onScroll={[Function]}
     style={
       Object {
@@ -574,7 +898,7 @@ exports[`ScrollWrapper with resizable columns 1`] = `
     </div>
   </div>
   <div
-    className="SpreadsheetGridScrollWrapper"
+    className="SpreadsheetGridScrollWrapper SpreadsheetGridScrollWrapper_scrollable"
     onScroll={[Function]}
     style={
       Object {
@@ -880,7 +1204,7 @@ exports[`ScrollWrapper without rows 1`] = `
     </div>
   </div>
   <div
-    className="SpreadsheetGridScrollWrapper"
+    className="SpreadsheetGridScrollWrapper SpreadsheetGridScrollWrapper_scrollable"
     onScroll={[Function]}
     style={
       Object {

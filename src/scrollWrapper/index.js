@@ -221,7 +221,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     calculateInitialLast() {
-        return Math.ceil(window.outerHeight / this.props.rowHeight) + RESERVE_ROWS_COUNT;
+        return this.props.isScrollable
+            ? Math.ceil(window.outerHeight / this.props.rowHeight) + RESERVE_ROWS_COUNT
+            : this.props.rows.length;
     }
 
     calculateLast(first) {
