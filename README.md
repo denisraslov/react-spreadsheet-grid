@@ -109,7 +109,7 @@ Take a closer look at 2 main thing: **a definition of columns** and **work with 
 
 To get the correct behavior of the grid you should:
 
-* Store rows of the grid in the state of a high-order component.
+* Store rows and columns of the grid in the state of a high-order component.
 * Describe how the grid has render values of the cells. 
 * Have a callback that will change values of rows in the state.
 
@@ -131,7 +131,8 @@ class MyAwesomeGrid extends React.Component {
 
         // Rows are stored in the state.
         this.state = {
-            rows
+            rows,
+            columns: this.initColumns()
         };
     }
 
@@ -146,11 +147,9 @@ class MyAwesomeGrid extends React.Component {
             blurCurrentFocus: true
         });
     }
-
-  render() {
-    return (
-      <Grid 
-        columns={[
+    
+    initColumns() {
+        return [
           {
             title: () => 'Name', 
             value: (row, { focus }) => {
@@ -193,15 +192,21 @@ class MyAwesomeGrid extends React.Component {
               );
             }
           }
-        ]}
-        
-        getRowKey={row => row.id}
-        
-        // Don't forget to blur focused cell after a value has been changed.
-        blurCurrentFocus={this.state.blurCurrentFocus}
-      />
-    )
-  }
+        ]
+    }
+
+    render() {
+        return (
+            <Grid 
+                columns={this.state.columns}
+                rows={this.state.rows}
+                getRowKey={row => row.id}
+
+                // Don't forget to blur focused cell after a value has been changed.
+                blurCurrentFocus={this.state.blurCurrentFocus}
+            />
+        )
+    }
 }
 ```
 
