@@ -295,6 +295,13 @@ Pass this object if you want initialize width of columns. It should be a map of 
 
 Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
+### isScrollable
+> `boolean`
+
+> defaults to `true`
+
+This defines should a grid has a scrollable container inside of a DOM-element where it was rendered, or not. When it turned on (by default), only visible rows are rendered and that improves performance. If you pass `false`, all the rows will be rendered at once (that is not a good way to handle with a big amount of them), but you will have opportunity to set up a scroll area where you want it to be and have other components (before or after the grid) included in this area.
+
 ### onScroll
 > `func(scrollPosition: number)`
 
