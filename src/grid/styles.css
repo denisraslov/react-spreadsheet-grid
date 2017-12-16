@@ -96,7 +96,7 @@
 
 .SpreadsheetGrid__cell_disabled {
     cursor: default;
-    background: rgba(239, 236, 236, 0.67);
+    background: rgba(239, 236, 236, 0.3);
 }
 
 .SpreadsheetGrid__cell_disabled > * {
