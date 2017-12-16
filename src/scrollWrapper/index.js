@@ -47,7 +47,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     componentWillReceiveProps(newProps) {
         if (newProps.rows !== this.props.rows) {
             this.scrollWrapperElement.scrollTop = 0;
-            this.calculateScrollState(false);
+            this.calculateScrollState();
         }
     }
 
@@ -75,7 +75,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 sumOfWidth += columnWidthValues[id];
             });
 
-            if (sumOfWidth > 100) {
+            if (Math.round(sumOfWidth) > 100) {
                 console.error('react-spreadsheet-grid ERROR: The sum of column width values in ' +
                     'the "columnWidthValues" property is more then 100 percents! ' +
                     'The values are not being used in this condition!');
@@ -225,7 +225,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    calculateScrollState(isInitCall) {
+    calculateScrollState() {
         const scrollWrapperElement = this.scrollWrapperElement;
         const scrollTop = Math.max(
             scrollWrapperElement.scrollTop,
@@ -233,7 +233,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
-        if (isInitCall || first !== this.state.first || last !== this.state.last) {
+        if (first !== this.state.first || last !== this.state.last) {
             this.setState({
                 first,
                 last,
@@ -242,24 +242,22 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             });
         }
 
-        if (!isInitCall) {
-            if (this.props.onScroll) {
-                this.props.onScroll(scrollTop);
-            }
+        if (this.props.onScroll) {
+            this.props.onScroll(scrollTop);
+        }
 
-            if (this.props.onScrollReachesBottom &&
-                scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
-                this.props.onScrollReachesBottom();
-            }
+        if (this.props.onScrollReachesBottom &&
+            scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
+            this.props.onScrollReachesBottom();
         }
     }
 
     onResize() {
-        this.calculateScrollState(false);
+        this.calculateScrollState();
     }
 
     onScroll() {
-        this.calculateScrollState(false);
+        this.calculateScrollState();
     }
 
     getHeaderStyle() {
