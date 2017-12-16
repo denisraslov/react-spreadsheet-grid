@@ -45,16 +45,11 @@ class SpreadsheetRow extends React.Component {
 
                         return (
                             <SpreadsheetCell
-                                x={x}
                                 y={y}
                                 key={y}
-                                row={row}
                                 className={getCellClassName(column, row, x, y)}
                                 onClick={!disabled ? onCellClick.bind(this, x, y, row, column.id) : null}
                                 onDoubleClick={!disabled ? onCellDoubleClick.bind(this, x, y) : null}
-                                isActive={isEqual(activeCell, coords)}
-                                isFocused={isEqual(focusedCell, coords)}
-                                disabledCells={this.props.disabledCells}
                                 width={columnWidthValues[column.id]}
                                 height={this.props.height}
                             >
