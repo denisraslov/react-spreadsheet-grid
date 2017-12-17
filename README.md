@@ -227,7 +227,7 @@ key | Required | Mission
 --- | --- | ---
 `id` | yes | An identifier of a row.
 `title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
-`value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+`value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an output based on them.
 `getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
@@ -257,7 +257,7 @@ The cell with this `x, y` coordinates (starting from `0`) will be rendered as a 
 ### disabledCellChecker
 > `func(row, columnId): bool`
 
-Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a`columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
+Use this func to define what cells are disabled in the table. It gets `row` and `columnId` (defined as `column.id` in a `columns` array) as parameters and identifiers of a cell. It should return boolean `true / false`. A disabled cell gets special CSS-class and styles. Also, you can define a `column.value` output based on the `disabled` state parameter.
 
 ### onCellClick
 > `func(row, columnId)`
@@ -281,7 +281,7 @@ The height of a row of the table in pixels.
 ### isColumnsResizable
 > `bool` | defaults to `false`
 
-Switch this on if you want the table provides an oppotunity to resize column width.
+Switch this on if you want the table provides an opportunity to resize column width.
 
 ### onColumnResize
 > `func(widthValues: object)`
@@ -291,7 +291,7 @@ A callback called every time the width of a column was resized. Gets `widthValue
 ### columnWidthValues
 > `object`
 
-Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between upspecified columns.
+Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between unspecified columns.
 
 Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
@@ -326,7 +326,7 @@ You can customize content of titles and cells using `title` and `value` keys of 
 
 `title` could be a string or a func returning any React element. 
 
-`value` works the same way, but func receives current `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an outpur based on them.
+`value` works the same way, but func receives current `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an output based on them.
 
 For the basic usage, the library provide 2 default components that you can use out-of-the-box: `Input` and `Select`. Perhaps, they will be enough for you. However, you can use any other React components for that purpose: autocompletes, checkboxes, etc.
 
