@@ -90,6 +90,11 @@ exports[`ScrollWrapper - not scrollable 1`] = `
     >
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -97,7 +102,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -110,7 +114,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -151,7 +154,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -167,6 +169,11 @@ exports[`ScrollWrapper - not scrollable 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -174,7 +181,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -187,7 +193,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -228,7 +233,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -244,6 +248,11 @@ exports[`ScrollWrapper - not scrollable 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -251,7 +260,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -264,7 +272,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -305,7 +312,6 @@ exports[`ScrollWrapper - not scrollable 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -396,6 +402,11 @@ exports[`ScrollWrapper with columns with components 1`] = `
     >
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -403,7 +414,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -416,7 +426,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -457,7 +466,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -473,6 +481,11 @@ exports[`ScrollWrapper with columns with components 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -480,7 +493,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -493,7 +505,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -534,7 +545,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -550,6 +560,11 @@ exports[`ScrollWrapper with columns with components 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -557,7 +572,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -570,7 +584,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -611,7 +624,6 @@ exports[`ScrollWrapper with columns with components 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -702,6 +714,11 @@ exports[`ScrollWrapper with columns with text values 1`] = `
     >
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -709,7 +726,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -722,7 +738,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -735,7 +750,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -745,6 +759,11 @@ exports[`ScrollWrapper with columns with text values 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -752,7 +771,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -765,7 +783,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -778,7 +795,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -788,6 +804,11 @@ exports[`ScrollWrapper with columns with text values 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -795,7 +816,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -808,7 +828,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -821,7 +840,6 @@ exports[`ScrollWrapper with columns with text values 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -924,6 +942,11 @@ exports[`ScrollWrapper with resizable columns 1`] = `
     >
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -931,7 +954,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -944,7 +966,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -985,7 +1006,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1001,6 +1021,11 @@ exports[`ScrollWrapper with resizable columns 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -1008,7 +1033,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1021,7 +1045,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1062,7 +1085,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1078,6 +1100,11 @@ exports[`ScrollWrapper with resizable columns 1`] = `
       </div>
       <div
         className="SpreadsheetGrid__row"
+        style={
+          Object {
+            "height": "48px",
+          }
+        }
       >
         <div
           className="SpreadsheetGrid__cell"
@@ -1085,7 +1112,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1098,7 +1124,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
@@ -1139,7 +1164,6 @@ exports[`ScrollWrapper with resizable columns 1`] = `
           onDoubleClick={[Function]}
           style={
             Object {
-              "height": "48px",
               "width": "undefined%",
             }
           }
