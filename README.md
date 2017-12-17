@@ -317,6 +317,13 @@ A callback called every time the position of the scroll of the grid was changed.
 
 A callback called when the scroll of the grid reaches its bottom value. Usually, it could be used to implement the lazy loading feature in your grid (see the [Lazy loading support](#the-pattern-of-regular-usage) section for details).
 
+### resetScroll
+> `boolean`
+
+> defaults to `false`
+
+Pass `true` to reset the scroll to the top of the container. Usually, you may need this if you want to re-render a grid with a new array of `rows`.
+
 ### blurCurrentFocus
 > `boolean`
 
