@@ -22,6 +22,7 @@ class SpreadsheetRow extends React.Component {
     render() {
         const {
             x,
+            height,
             columns,
             row,
             onCellClick,
@@ -35,6 +36,9 @@ class SpreadsheetRow extends React.Component {
         return (
             <div
                 className="SpreadsheetGrid__row"
+                style={{
+                    height: height + 'px'
+                }}
             >
                 {
                     columns.map((column, y) => {
@@ -51,7 +55,6 @@ class SpreadsheetRow extends React.Component {
                                 onClick={!disabled ? onCellClick.bind(this, x, y, row, column.id) : null}
                                 onDoubleClick={!disabled ? onCellDoubleClick.bind(this, x, y) : null}
                                 width={columnWidthValues[column.id]}
-                                height={this.props.height}
                             >
                                 {
                                     column.value(row, {

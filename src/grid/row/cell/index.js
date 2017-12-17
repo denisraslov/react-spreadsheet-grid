@@ -8,8 +8,7 @@ const SpreadsheetCell = (props) => {
         onClick,
         onDoubleClick,
         children,
-        width,
-        height
+        width
     } = props;
 
     return (
@@ -19,8 +18,7 @@ const SpreadsheetCell = (props) => {
             onClick={onClick}
             onDoubleClick={onDoubleClick}
             style={{
-                width: width + '%',
-                height: height + 'px'
+                width: width + '%'
             }}
         >
             {children}
@@ -39,8 +37,7 @@ SpreadsheetCell.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
-    width: PropTypes.number,
-    height: PropTypes.number
+    width: PropTypes.number
 };
 
 export default SpreadsheetCell;
