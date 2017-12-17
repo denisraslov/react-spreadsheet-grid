@@ -11,7 +11,6 @@ class SpreadsheetGridSelect extends React.PureComponent {
         super(props);
 
         this.onGlobalKeyDown = this.onGlobalKeyDown.bind(this);
-        this.onGlobalKeyDown = this.onGlobalKeyDown.bind(this);
         this.onItemMouseLeave = this.onItemMouseLeave.bind(this);
 
         this.state = {
@@ -96,13 +95,14 @@ class SpreadsheetGridSelect extends React.PureComponent {
                     });
                 }
             }
-            if (e.keyCode === 13 || e.keyCode === 9) {
+            if (e.keyCode === keys.ENTER || e.keyCode === keys.TAB) {
                 if (this.state.selectedIndex || this.state.selectedIndex === 0) {
                     const selectedItem = this.props.items[this.state.selectedIndex];
                     this.onItemClick(selectedItem.id, selectedItem);
                 }
             }
-            e.stopPropagation();
+
+            e.preventDefault();
         }
     }
 

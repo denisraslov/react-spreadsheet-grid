@@ -184,7 +184,6 @@ class SpreadsheetGrid extends React.PureComponent {
             if (e.keyCode === keys.ENTER) {
                 if (this.state.focusedCell) {
                     moveDown({ x, y });
-                    e.target.blur();
                 } else {
                     newFocusedCell = this.state.activeCell;
                 }
@@ -193,12 +192,12 @@ class SpreadsheetGrid extends React.PureComponent {
             if (e.keyCode === keys.TAB) {
                 if (this.state.focusedCell) {
                     moveRight({ x, y });
-                    e.target.blur();
                 } else {
                     newFocusedCell = this.state.activeCell;
                 }
 
                 e.preventDefault();
+                e.stopPropagation();
             }
 
             if (e.keyCode === keys.ESC) {

@@ -53,7 +53,7 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.firstName}
                             focus={focus}
-                            onBlur={this.onFieldChange.bind(this, row.id, 'firstName')}
+                            onChange={this.onFieldChange.bind(this, row.id, 'firstName')}
                         />
                     );
                 },
@@ -66,7 +66,7 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.secondName}
                             focus={focus}
-                            onBlur={this.onFieldChange.bind(this, row.id, 'secondName')}
+                            onChange={this.onFieldChange.bind(this, row.id, 'secondName')}
                         />
                     );
                 },
@@ -93,7 +93,7 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.age}
                             focus={focus}
-                            onBlur={this.onFieldChange.bind(this, row.id, 'age')}
+                            onChange={this.onFieldChange.bind(this, row.id, 'age')}
                         />
                     );
                 },

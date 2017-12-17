@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import keys from './../kit/keymap';
 
 import styles from './styles.css';
 
@@ -8,11 +9,11 @@ class SpreadsheetGridInput extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.onBlur = this.onBlur.bind(this);
 
         this.state = {
-            value: this.props.value,
+            value: this.props.value
         };
     }
 
@@ -28,23 +29,21 @@ class SpreadsheetGridInput extends React.PureComponent {
         });
     }
 
+    onKeyDown(e) {
+        if (e.keyCode === keys.ENTER || e.keyCode === keys.TAB) {
+            if (this.props.onChange) {
+                this.props.onChange(this.input.value);
+            }
+
+            e.preventDefault();
+        }
+    }
+
     onChange(e) {
         const value = e.target.value;
 
         this.setState({
             value
-        });
-    }
-
-    onBlur(e) {
-        const value = e.target.value;
-
-        this.setState({
-            value
-        }, () => {
-            if (this.props.onBlur) {
-                this.props.onBlur(value);
-            }
         });
     }
 
@@ -61,11 +60,11 @@ class SpreadsheetGridInput extends React.PureComponent {
         return (
             <input
                 className="SpreadsheetGridInput"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
                 value={this.state.value}
                 placeholder={this.props.placeholder}
                 ref={input => this.input = input}
+                onKeyDown={this.onKeyDown}
+                onChange={this.onChange}
             />
         );
     }
@@ -76,7 +75,7 @@ SpreadsheetGridInput.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
-    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
     placeholder: PropTypes.string
 };
 
