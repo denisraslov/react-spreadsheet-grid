@@ -280,6 +280,28 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
     }
 
+    getDisabledCells(rows, startIndex) {
+        const disabledCells = [];
+        const disabledCellChecker = this.props.disabledCellChecker;
+
+        if (disabledCellChecker) {
+            rows.forEach((row, x) => {
+                this.props.columns.forEach((column, y) => {
+                    if (disabledCellChecker(row, column.id)) {
+                        disabledCells.push({ x: startIndex + x, y });
+                    }
+                });
+            });
+        }
+
+        return disabledCells;
+    }
+
+    getScrollWrapperClassName() {
+        return 'SpreadsheetGridScrollWrapper' +
+            (this.props.isScrollable ? ' SpreadsheetGridScrollWrapper_scrollable' : '');
+    }
+
     renderResizer() {
         return (
             <div
@@ -326,11 +348,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         );
     }
 
-    getScrollWrapperClassName() {
-        return 'SpreadsheetGridScrollWrapper' +
-            (this.props.isScrollable ? ' SpreadsheetGridScrollWrapper_scrollable' : '');
-    }
-
     render() {
         const rows = slice(
             this.props.rows,
@@ -366,6 +383,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                             startIndex={this.state.first}
                             offset={this.state.offset}
                             columnWidthValues={this.state.columnWidthValues}
+                            disabledCells={this.getDisabledCells(rows, this.state.first)}
                         />
                     }
                 </div>
