@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'lodash.find';
-import findIndex from 'lodash.findindex';
 import isEqual from 'lodash.isequal';
 import keys from './../kit/keymap';
 import tablePropTypes from './../kit/tablePropTypes';
@@ -268,15 +267,19 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     renderBody() {
-        const rows = this.props.rows;
-        const columns = this.props.columns;
+        const {
+            rows,
+            columns,
+            startIndex
+        } = this.props;
+
         let body;
 
         if (rows.length) {
-            body = rows.map((row) => {
+            body = rows.map((row, i) => {
                 return (
                     <Row
-                        x={findIndex(this.props.rows, row)}
+                        x={startIndex + i}
                         key={this.props.getRowKey(row)}
                         columns={columns}
                         row={row}
@@ -317,7 +320,8 @@ class SpreadsheetGrid extends React.PureComponent {
 }
 
 SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
-    offset: PropTypes.number.isRequired
+    offset: PropTypes.number.isRequired,
+    startIndex: PropTypes.number.isRequired
 });
 
 SpreadsheetGrid.defaultProps = {

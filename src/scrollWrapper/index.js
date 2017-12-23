@@ -359,6 +359,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                         <Grid
                             {...this.props}
                             rows={rows}
+                            startIndex={this.state.first}
                             offset={this.state.offset}
                             columnWidthValues={this.state.columnWidthValues}
                         />
