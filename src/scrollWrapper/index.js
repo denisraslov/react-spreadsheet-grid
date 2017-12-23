@@ -248,7 +248,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                 first,
                 last,
                 offset: first * this.props.rowHeight,
-                hasScroll: scrollWrapperElement.scrollHeight > scrollWrapperElement.offsetHeight
+                hasScroll: scrollWrapperElement.scrollHeight > scrollWrapperElement.offsetHeight &&
+                    // Check if the scroll has a width
+                    scrollWrapperElement.offsetWidth > this.scrollDummyEl.offsetWidth
             });
         }
 
@@ -354,6 +356,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                         rows={this.props.rows}
                         headerHeight={this.props.headerHeight}
                         rowHeight={this.props.rowHeight}
+                        refEl={el => this.scrollDummyEl = el}
                     />
                     {
                         <Grid
