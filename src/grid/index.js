@@ -256,9 +256,7 @@ class SpreadsheetGrid extends React.PureComponent {
         return 'SpreadsheetGrid__cell' +
             (isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
             (isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
-            (this.props.disabledCellChecker && this.props.disabledCellChecker(row, column.id)
-                ? ' SpreadsheetGrid__cell_disabled'
-                : '') +
+            (find(this.state.disabledCells, { x, y }) ? ' SpreadsheetGrid__cell_disabled' : '') +
             (column.getCellClassName ? ' ' + column.getCellClassName(row) : '');
     }
 
