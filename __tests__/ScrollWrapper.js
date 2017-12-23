@@ -53,4 +53,18 @@ test('ScrollWrapper with resizable columns', () => {
     expect(tree).toMatchSnapshot();
 });
 
+test('ScrollWrapper - not scrollable', () => {
+    const tree = renderer.create(
+        <ScrollWrapper
+            columns={columnsWithComponents}
+            rows={rows}
+            getRowKey={row => row.id}
+            isColumnsResizable
+            isScrollable={false}
+        />
+    ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+});
+
 

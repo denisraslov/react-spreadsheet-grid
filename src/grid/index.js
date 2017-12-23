@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import find from 'lodash.find';
-import findIndex from 'lodash.findindex';
-import slice from 'lodash.slice';
 import isEqual from 'lodash.isequal';
 import keys from './../kit/keymap';
 import tablePropTypes from './../kit/tablePropTypes';
@@ -20,9 +18,7 @@ class SpreadsheetGrid extends React.PureComponent {
         this.onCellDoubleClick = this.onCellDoubleClick.bind(this);
         this.getCellClassName = this.getCellClassName.bind(this);
 
-        this.state = {
-            disabledCells: this.getDisabledCells(this.props.rows, this.props.disabledCellChecker)
-        };
+        this.state = {};
 
         if (this.props.focusedCell) {
             this.state.activeCell = this.props.focusedCell;
@@ -38,21 +34,16 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.props.rows !== newProps.rows && newProps.disabledCellChecker) {
-            const disabledCells = this.getDisabledCells(newProps.rows, newProps.disabledCellChecker);
-            const newState = {
-                disabledCells
-            };
+        const disabledCells = this.props.disabledCells;
+        const newState = {};
 
-            if (find(disabledCells, this.state.activeCell)) {
-                newState.activeCell = null;
-            }
-            if (find(disabledCells, this.state.focusedCell)) {
-                newState.focusedCell = null;
-            }
-
-            this.setState(newState);
+        if (find(disabledCells, this.state.activeCell)) {
+            newState.activeCell = null;
         }
+        if (find(disabledCells, this.state.focusedCell)) {
+            newState.focusedCell = null;
+        }
+        this.setState(newState);
 
         if (newProps.focusedCell) {
             const newActiveCell = newProps.focusedCell;
@@ -81,26 +72,10 @@ class SpreadsheetGrid extends React.PureComponent {
         document.removeEventListener('click', this.onGlobalClick, false);
     }
 
-    getDisabledCells(rows, disabledCellChecker) {
-        const disabledCells = [];
-
-        if (disabledCellChecker) {
-            rows.forEach((row, x) => {
-                this.props.columns.forEach((column, y) => {
-                    if (disabledCellChecker(row, column.id)) {
-                        disabledCells.push({ x, y });
-                    }
-                });
-            });
-        }
-
-        return disabledCells;
-    }
-
     onGlobalKeyDown(e) {
         const block = this;
         const columnsCount = this.props.columns.length;
-        const rowsCount = this.props.rows.length;
+        const rowsCount = this.props.rowsCount;
 
         let newActiveCell = this.state.activeCell;
         let newFocusedCell = this.state.focusedCell;
@@ -118,7 +93,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.props.disabledCells, newActiveCell)) {
                     moveRight(newActiveCell);
                 }
             }
@@ -129,7 +104,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.props.disabledCells, newActiveCell)) {
                     moveDown(newActiveCell);
                 }
             }
@@ -140,7 +115,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.props.disabledCells, newActiveCell)) {
                     moveUp(newActiveCell);
                 }
             }
@@ -153,7 +128,7 @@ class SpreadsheetGrid extends React.PureComponent {
                 }
                 newFocusedCell = null;
 
-                if (find(block.state.disabledCells, newActiveCell)) {
+                if (find(block.props.disabledCells, newActiveCell)) {
                     moveLeft(newActiveCell);
                 }
             }
@@ -185,7 +160,6 @@ class SpreadsheetGrid extends React.PureComponent {
             if (e.keyCode === keys.ENTER) {
                 if (this.state.focusedCell) {
                     moveDown({ x, y });
-                    e.target.blur();
                 } else {
                     newFocusedCell = this.state.activeCell;
                 }
@@ -194,12 +168,12 @@ class SpreadsheetGrid extends React.PureComponent {
             if (e.keyCode === keys.TAB) {
                 if (this.state.focusedCell) {
                     moveRight({ x, y });
-                    e.target.blur();
                 } else {
                     newFocusedCell = this.state.activeCell;
                 }
 
                 e.preventDefault();
+                e.stopPropagation();
             }
 
             if (e.keyCode === keys.ESC) {
@@ -230,7 +204,7 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     onCellClick(x, y, row, columnId, e) {
-        if (!find(this.state.disabledCells, { x, y })) {
+        if (!find(this.props.disabledCells, { x, y })) {
             if (!e.skipCellClick && !isEqual(this.state.focusedCell, { x, y })) {
                 this.setState({
                     focusedCell: e.target !== e.currentTarget ? { x, y } : null,
@@ -247,7 +221,7 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     onCellDoubleClick(x, y) {
-        if (!find(this.state.disabledCells, { x, y })) {
+        if (!find(this.props.disabledCells, { x, y })) {
             this.setState({
                 activeCell: { x, y },
                 focusedCell: { x, y }
@@ -259,9 +233,7 @@ class SpreadsheetGrid extends React.PureComponent {
         return 'SpreadsheetGrid__cell' +
             (isEqual(this.state.activeCell, { x, y }) ? ' SpreadsheetGrid__cell_active' : '') +
             (isEqual(this.state.focusedCell, { x, y }) ? ' SpreadsheetGrid__cell_focused' : '') +
-            (this.props.disabledCellChecker && this.props.disabledCellChecker(row, column.id)
-                ? ' SpreadsheetGrid__cell_disabled'
-                : '') +
+            (find(this.props.disabledCells, { x, y }) ? ' SpreadsheetGrid__cell_disabled' : '') +
             (column.getCellClassName ? ' ' + column.getCellClassName(row) : '');
     }
 
@@ -270,19 +242,19 @@ class SpreadsheetGrid extends React.PureComponent {
     }
 
     renderBody() {
-        const rows = [].concat(slice(
-            this.props.rows,
-            this.props.first,
-            this.props.last
-        ));
-        const columns = this.props.columns;
+        const {
+            rows,
+            columns,
+            startIndex
+        } = this.props;
+
         let body;
 
         if (rows.length) {
-            body = rows.map((row) => {
+            body = rows.map((row, i) => {
                 return (
                     <Row
-                        x={findIndex(this.props.rows, row)}
+                        x={startIndex + i}
                         key={this.props.getRowKey(row)}
                         columns={columns}
                         row={row}
@@ -291,7 +263,7 @@ class SpreadsheetGrid extends React.PureComponent {
                         onCellDoubleClick={this.onCellDoubleClick}
                         activeCell={this.state.activeCell}
                         focusedCell={this.state.focusedCell}
-                        disabledCells={this.state.disabledCells}
+                        disabledCells={this.props.disabledCells}
                         height={this.props.rowHeight}
                         columnWidthValues={this.props.columnWidthValues}
                     />
@@ -323,9 +295,15 @@ class SpreadsheetGrid extends React.PureComponent {
 }
 
 SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
-    first: PropTypes.number.isRequired,
-    last: PropTypes.number.isRequired,
-    offset: PropTypes.number.isRequired
+    offset: PropTypes.number.isRequired,
+    startIndex: PropTypes.number.isRequired,
+    rowsCount: PropTypes.number.isRequired,
+    disabledCells: PropTypes.arrayOf(
+        PropTypes.shape({
+            x: PropTypes.number,
+            y: PropTypes.number
+        })
+    ).isRequired
 });
 
 SpreadsheetGrid.defaultProps = {

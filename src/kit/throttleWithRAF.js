@@ -1,15 +1,17 @@
 export default (fn) => {
-  let running = false;
+    let running = false;
 
-  return () => {
-    if (running) return;
+    // Seems like webpack compiles this in a way we can't use "arguments" here.
+    // So, three of args are enough for now.
+    return (arg1, arg2, arg3) => {
+        if (running) return;
 
-    running = true;
+        running = true;
 
-    window.requestAnimationFrame(() => {
-      fn.apply(this, arguments);
+        window.requestAnimationFrame(() => {
+            fn.call(this, arg1, arg2, arg3);
 
-      running = false;
-    });
-  };
+            running = false;
+        });
+    };
 };

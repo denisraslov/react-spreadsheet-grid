@@ -1,5 +1,5 @@
 # React Spreadsheet Grid
-> Excel-like grid component for React with custom cell editors, performant scroll & resizable columns
+> An Excel-like grid component for React with custom cell editors, performant scroll & resizable columns
 
 ![react-spreadsheet-grid in action](https://raw.githubusercontent.com/denisraslov/react-spreadsheet-grid/master/demo.gif)
 
@@ -109,7 +109,7 @@ Take a closer look at 2 main thing: **a definition of columns** and **work with 
 
 To get the correct behavior of the grid you should:
 
-* Store rows of the grid in the state of a high-order component.
+* Store rows and columns of the grid in the state of a high-order component.
 * Describe how the grid has render values of the cells. 
 * Have a callback that will change values of rows in the state.
 
@@ -131,7 +131,8 @@ class MyAwesomeGrid extends React.Component {
 
         // Rows are stored in the state.
         this.state = {
-            rows
+            rows,
+            columns: this.initColumns()
         };
     }
 
@@ -146,11 +147,9 @@ class MyAwesomeGrid extends React.Component {
             blurCurrentFocus: true
         });
     }
-
-  render() {
-    return (
-      <Grid 
-        columns={[
+    
+    initColumns() {
+        return [
           {
             title: () => 'Name', 
             value: (row, { focus }) => {
@@ -193,15 +192,21 @@ class MyAwesomeGrid extends React.Component {
               );
             }
           }
-        ]}
-        
-        getRowKey={row => row.id}
-        
-        // Don't forget to blur focused cell after a value has been changed.
-        blurCurrentFocus={this.state.blurCurrentFocus}
-      />
-    )
-  }
+        ]
+    }
+
+    render() {
+        return (
+            <Grid 
+                columns={this.state.columns}
+                rows={this.state.rows}
+                getRowKey={row => row.id}
+
+                // Don't forget to blur focused cell after a value has been changed.
+                blurCurrentFocus={this.state.blurCurrentFocus}
+            />
+        )
+    }
 }
 ```
 
@@ -294,6 +299,13 @@ A callback called every time the width of a column was resized. Gets `widthValue
 Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between unspecified columns.
 
 Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+
+### isScrollable
+> `boolean`
+
+> defaults to `true`
+
+This defines should a grid has a scrollable container inside of a DOM-element where it was rendered, or not. When it turned on (by default), only visible rows are rendered and that improves performance. If you pass `false`, all the rows will be rendered at once (that is not a good way to handle with a big amount of them), but you will have opportunity to set up a scroll area where you want it to be and have other components (before or after the grid) included in this area.
 
 ### onScroll
 > `func(scrollPosition: number)`

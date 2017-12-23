@@ -5,6 +5,7 @@ exports[`Input with a value 1`] = `
   className="SpreadsheetGridInput"
   onBlur={[Function]}
   onChange={[Function]}
+  onKeyDown={[Function]}
   placeholder={undefined}
   value="Value"
 />
@@ -15,6 +16,7 @@ exports[`Input without a value 1`] = `
   className="SpreadsheetGridInput"
   onBlur={[Function]}
   onChange={[Function]}
+  onKeyDown={[Function]}
   placeholder="Placeholder"
   value=""
 />

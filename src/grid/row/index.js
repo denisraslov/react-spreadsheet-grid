@@ -15,12 +15,14 @@ class SpreadsheetRow extends React.Component {
             || (currentActiveCell && currentActiveCell.x === this.props.x)
             || (nextActiveCell && nextActiveCell.x === this.props.x)
             || this.props.disabledCells !== nextProps.disabledCells
+            || this.props.columns !== nextProps.columns
             || this.props.columnWidthValues !== nextProps.columnWidthValues;
     }
 
     render() {
         const {
             x,
+            height,
             columns,
             row,
             onCellClick,
@@ -34,6 +36,9 @@ class SpreadsheetRow extends React.Component {
         return (
             <div
                 className="SpreadsheetGrid__row"
+                style={{
+                    height: height + 'px'
+                }}
             >
                 {
                     columns.map((column, y) => {
@@ -44,18 +49,12 @@ class SpreadsheetRow extends React.Component {
 
                         return (
                             <SpreadsheetCell
-                                x={x}
                                 y={y}
                                 key={y}
-                                row={row}
                                 className={getCellClassName(column, row, x, y)}
                                 onClick={!disabled ? onCellClick.bind(this, x, y, row, column.id) : null}
                                 onDoubleClick={!disabled ? onCellDoubleClick.bind(this, x, y) : null}
-                                isActive={isEqual(activeCell, coords)}
-                                isFocused={isEqual(focusedCell, coords)}
-                                disabledCells={this.props.disabledCells}
                                 width={columnWidthValues[column.id]}
-                                height={this.props.height}
                             >
                                 {
                                     column.value(row, {

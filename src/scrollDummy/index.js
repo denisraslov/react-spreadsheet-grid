@@ -30,6 +30,7 @@ class SpreadsheetGridScrollDummy extends React.Component {
             <div
                 className="SpreadsheetGridScrollDummy"
                 style={{ height: this.height }}
+                ref={this.props.refEl}
             >
             </div>
         );
@@ -39,7 +40,8 @@ class SpreadsheetGridScrollDummy extends React.Component {
 SpreadsheetGridScrollDummy.propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     headerHeight: PropTypes.number.isRequired,
-    rowHeight: PropTypes.number.isRequired
+    rowHeight: PropTypes.number.isRequired,
+    refEl: PropTypes.func.isRequired
 };
 
 export default SpreadsheetGridScrollDummy;

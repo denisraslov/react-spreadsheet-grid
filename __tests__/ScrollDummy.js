@@ -8,6 +8,7 @@ test('ScrollDummy with rows', () => {
             headerHeight={50}
             rowHeight={50}
             rows={[1, 2, 3]}
+            refEl={()=>{}}
         />
     ).toJSON();
 
@@ -20,6 +21,7 @@ test('ScrollDummy without rows', () => {
             headerHeight={50}
             rowHeight={50}
             rows={[]}
+            refEl={()=>{}}
         />
     ).toJSON();
 
