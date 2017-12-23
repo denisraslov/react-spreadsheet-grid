@@ -38,6 +38,9 @@ class SpreadsheetGrid extends React.PureComponent {
     componentWillReceiveProps(newProps) {
         if (this.props.rows !== newProps.rows && newProps.disabledCellChecker) {
             const disabledCells = this.getDisabledCells(newProps.rows, newProps.disabledCellChecker);
+
+            console.log(disabledCells)
+
             const newState = {
                 disabledCells
             };
@@ -81,12 +84,13 @@ class SpreadsheetGrid extends React.PureComponent {
 
     getDisabledCells(rows, disabledCellChecker) {
         const disabledCells = [];
+        const startIndex = this.props.startIndex;
 
         if (disabledCellChecker) {
             rows.forEach((row, x) => {
                 this.props.columns.forEach((column, y) => {
                     if (disabledCellChecker(row, column.id)) {
-                        disabledCells.push({ x, y });
+                        disabledCells.push({ x: startIndex + x, y });
                     }
                 });
             });
