@@ -98,7 +98,7 @@ class SpreadsheetGrid extends React.PureComponent {
     onGlobalKeyDown(e) {
         const block = this;
         const columnsCount = this.props.columns.length;
-        const rowsCount = this.props.rows.length;
+        const rowsCount = this.props.rowsCount;
 
         let newActiveCell = this.state.activeCell;
         let newFocusedCell = this.state.focusedCell;
@@ -321,7 +321,8 @@ class SpreadsheetGrid extends React.PureComponent {
 
 SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
     offset: PropTypes.number.isRequired,
-    startIndex: PropTypes.number.isRequired
+    startIndex: PropTypes.number.isRequired,
+    rowsCount: PropTypes.number.isRequired
 });
 
 SpreadsheetGrid.defaultProps = {
