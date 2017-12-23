@@ -160,6 +160,7 @@ exports[`ScrollWrapper - not scrollable 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -239,6 +240,7 @@ exports[`ScrollWrapper - not scrollable 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -318,6 +320,7 @@ exports[`ScrollWrapper - not scrollable 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -472,6 +475,7 @@ exports[`ScrollWrapper with columns with components 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -551,6 +555,7 @@ exports[`ScrollWrapper with columns with components 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -630,6 +635,7 @@ exports[`ScrollWrapper with columns with components 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -1012,6 +1018,7 @@ exports[`ScrollWrapper with resizable columns 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -1091,6 +1098,7 @@ exports[`ScrollWrapper with resizable columns 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
@@ -1170,6 +1178,7 @@ exports[`ScrollWrapper with resizable columns 1`] = `
         >
           <input
             className="SpreadsheetGridInput"
+            onBlur={[Function]}
             onChange={[Function]}
             onKeyDown={[Function]}
             placeholder={undefined}
