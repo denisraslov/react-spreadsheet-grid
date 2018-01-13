@@ -263,7 +263,10 @@ class SpreadsheetGrid extends React.PureComponent {
                         onCellDoubleClick={this.onCellDoubleClick}
                         activeCell={this.state.activeCell}
                         focusedCell={this.state.focusedCell}
-                        disabledCells={this.props.disabledCells}
+                        // Pass disabled cells for this row only.
+                        disabledCells={this.props.disabledCells.filter(({ x }) => {
+                            return x === startIndex + i;
+                        })}
                         height={this.props.rowHeight}
                         columnWidthValues={this.props.columnWidthValues}
                     />
