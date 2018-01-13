@@ -48,7 +48,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     componentWillReceiveProps(newProps) {
         if (newProps.resetScroll) {
             this.scrollWrapperElement.scrollTop = 0;
-            this.calculateScrollState();
+            this.calculateScrollState(newProps.rows);
+            return;
+        }
+        if (newProps.rows !== this.props.rows) {
+            this.calculateScrollState(newProps.rows);
         }
     }
 
@@ -235,13 +239,19 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    calculateScrollState() {
+    calculateScrollState(newRows) {
         const scrollWrapperElement = this.scrollWrapperElement;
+        const rows = newRows || this.props.rows;
+
+        if (!this.props.isScrollable) {
+            return;
+        }
+
         const scrollTop = Math.max(
             scrollWrapperElement.scrollTop,
             0);
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
-        const last = Math.min(this.props.rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
+        const last = Math.min(rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
 
         if (first !== this.state.first || last !== this.state.last) {
             this.setState({
@@ -366,7 +376,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     onScroll={this.onScroll}
                     ref={node => this.scrollWrapperElement = node}
                     style={{
-                        height: `calc(100% - ${this.props.headerHeight}px)`
+                        height: this.props.isScrollable
+                            ? `calc(100% - ${this.props.headerHeight}px)`
+                            : 'auto'
                     }}
                 >
                     <ScrollDummy

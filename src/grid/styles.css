@@ -106,6 +106,9 @@
 
 .SpreadsheetGrid__placeholder {
     text-align: center;
+    height: 53px;
+    background: #fff;
+    padding: 15px;
 }
 
 .SpreadsheetGrid__resizer {

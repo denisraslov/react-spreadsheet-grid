@@ -7,7 +7,7 @@ import { Grid, Input, Select } from './../index';
 const rows = [];
 const positions = [];
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 1000; i++) {
     rows.push({
         id: i,
         firstName: 'First name ' + i,
@@ -30,7 +30,7 @@ class DataTable extends React.PureComponent {
         super(props);
 
         this.state = {
-            rows,
+            rows: props.rows,
             columns: this.initColumns()
         };
     }
@@ -107,7 +107,7 @@ class DataTable extends React.PureComponent {
             <div className="DataTable">
                 <Grid
                     columns={this.state.columns}
-                    rows={rows}
+                    rows={this.state.rows}
                     blurCurrentFocus={this.state.blurFocus}
                     getRowKey={row => row.id}
                     rowHeight={50}
@@ -115,11 +115,17 @@ class DataTable extends React.PureComponent {
                     disabledCellChecker={(row, columnId) => {
                         return columnId === 'age';
                     }}
+                    isScrollable={this.props.isScrollable}
                 />
             </div>
         )
     }
 }
 
-storiesOf('Examples 1', module)
-    .add('Data grid', () => <DataTable />);
+DataTable.defaultProps = {
+    isScrollable: false
+};
+
+storiesOf('Examples', module)
+    .add('Scrollable grid', () => <DataTable rows={rows} isScrollable />)
+    .add('Empty scrollable grid', () => <DataTable rows={[]} isScrollable />);
