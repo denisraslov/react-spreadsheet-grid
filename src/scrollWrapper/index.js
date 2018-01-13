@@ -20,6 +20,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         this.processColumnResize = this.processColumnResize.bind(this);
 
         this.state = {
+            blurCurrentFocus: props.blurCurrentFocus,
             first: 0,
             last: this.calculateInitialLast(),
             offset: 0,
@@ -46,6 +47,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentWillReceiveProps(newProps) {
+        if (this.state.blurCurrentFocus !== newProps.blurCurrentFocus) {
+            this.setState({
+                blurCurrentFocus: newProps.blurCurrentFocus
+            });
+        }
         if (newProps.resetScroll) {
             this.scrollWrapperElement.scrollTop = 0;
             this.calculateScrollState(newProps.rows);
@@ -255,6 +261,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         if (first !== this.state.first || last !== this.state.last) {
             this.setState({
+                blurCurrentFocus: false,
                 first,
                 last,
                 offset: first * this.props.rowHeight,
@@ -390,6 +397,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     {
                         <Grid
                             {...this.props}
+                            blurCurrentFocus={this.state.blurCurrentFocus}
                             rows={rows}
                             rowsCount={this.props.rows.length}
                             startIndex={this.state.first}
