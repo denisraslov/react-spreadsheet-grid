@@ -7,16 +7,34 @@ import SpreadsheetCell from './cell';
 class SpreadsheetRow extends React.Component {
 
     shouldComponentUpdate(nextProps) {
-        const currentActiveCell = this.props.activeCell || this.props.focusedCell;
-        const nextActiveCell = nextProps.activeCell || nextProps.focusedCell;
+        const currentActiveCell = this.props.activeCell;
+        const nextActiveCell = nextProps.activeCell;
+        const currentFocusedCell = this.props.focusedCell;
+        const nextFocusedCell = nextProps.focusedCell;
+
+        const isActiveCellChanged =
+            (currentActiveCell && !nextActiveCell)
+            || (!currentActiveCell && nextActiveCell)
+            || (currentActiveCell && nextActiveCell
+                && (currentActiveCell.x !== nextActiveCell.x || currentActiveCell.y !== nextActiveCell.y));
+
+        const isFocusedCellChanged =
+            (currentFocusedCell && !nextFocusedCell)
+            || (!currentFocusedCell && nextFocusedCell)
+            || (currentFocusedCell && nextFocusedCell
+            && (currentFocusedCell.x !== nextFocusedCell.x || currentFocusedCell.y !== nextFocusedCell.y));
 
         return this.props.row !== nextProps.row
             || this.props.x !== nextProps.x
-            || (currentActiveCell && currentActiveCell.x === this.props.x)
-            || (nextActiveCell && nextActiveCell.x === this.props.x)
-            || this.props.disabledCells !== nextProps.disabledCells
+            || JSON.stringify(this.props.disabledCells) !== JSON.stringify(nextProps.disabledCells)
             || this.props.columns !== nextProps.columns
-            || this.props.columnWidthValues !== nextProps.columnWidthValues;
+            || this.props.columnWidthValues !== nextProps.columnWidthValues
+            || (isActiveCellChanged &&
+                ((currentActiveCell && currentActiveCell.x === this.props.x)
+                    || (nextActiveCell && nextActiveCell.x === this.props.x)))
+            || (isFocusedCellChanged &&
+                ((currentFocusedCell && currentFocusedCell.x === this.props.x)
+                    || (nextFocusedCell && nextFocusedCell.x === this.props.x)));
     }
 
     render() {
