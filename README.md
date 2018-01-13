@@ -159,7 +159,7 @@ class MyAwesomeGrid extends React.Component {
                 <Input  
                   value={row.name}
                   focus={focus}
-                  onBlur={this.onFieldChange.bind(this, row.id, 'name')}
+                  onChange={this.onFieldChange.bind(this, row.id, 'name')}
                 />
               );
             }
@@ -351,7 +351,7 @@ Prop | Type | Mission
 `value` | string | The value of the input
 `placeholder` | string | Placeholder displaying when there is no value
 `focus` | bool | Should the input has focus or not 
-`onBlur` | func | Blur callback. Use it to catch a changed value
+`onChange` | func | Blur callback. Use it to catch a changed value
 
 Usage:
 
@@ -370,7 +370,7 @@ import { Grid, Input } from 'react-spreadsheet-grid'
             <Input  
               value={row.name}
               focus={focus}
-              onBlur={this.onFieldChange.bind(this, 'name')}
+              onChange={this.onFieldChange.bind(this, 'name')}
             />
           );
         }
