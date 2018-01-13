@@ -285,7 +285,7 @@ class SpreadsheetGrid extends React.PureComponent {
             <div
                 className="SpreadsheetGrid"
                 style={{
-                    top: this.calculatePosition()
+                    transform: `translate3d(0, ${this.calculatePosition()}, 0)`
                 }}
             >
                 {this.renderBody()}

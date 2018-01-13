@@ -84,7 +84,7 @@ exports[`ScrollWrapper - not scrollable 1`] = `
       className="SpreadsheetGrid"
       style={
         Object {
-          "top": "0px",
+          "transform": "translate3d(0, 0px, 0)",
         }
       }
     >
@@ -399,7 +399,7 @@ exports[`ScrollWrapper with columns with components 1`] = `
       className="SpreadsheetGrid"
       style={
         Object {
-          "top": "0px",
+          "transform": "translate3d(0, 0px, 0)",
         }
       }
     >
@@ -714,7 +714,7 @@ exports[`ScrollWrapper with columns with text values 1`] = `
       className="SpreadsheetGrid"
       style={
         Object {
-          "top": "0px",
+          "transform": "translate3d(0, 0px, 0)",
         }
       }
     >
@@ -942,7 +942,7 @@ exports[`ScrollWrapper with resizable columns 1`] = `
       className="SpreadsheetGrid"
       style={
         Object {
-          "top": "0px",
+          "transform": "translate3d(0, 0px, 0)",
         }
       }
     >
@@ -1257,7 +1257,7 @@ exports[`ScrollWrapper without rows 1`] = `
       className="SpreadsheetGrid"
       style={
         Object {
-          "top": "0px",
+          "transform": "translate3d(0, 0px, 0)",
         }
       }
     >
