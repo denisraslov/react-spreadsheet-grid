@@ -68,7 +68,7 @@ exports[`ScrollWrapper - not scrollable 1`] = `
     onScroll={[Function]}
     style={
       Object {
-        "height": "calc(100% - 40px)",
+        "height": "auto",
       }
     }
   >
