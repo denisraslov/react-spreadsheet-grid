@@ -112,6 +112,7 @@ class DataTable extends React.PureComponent {
                     getRowKey={row => row.id}
                     rowHeight={50}
                     isColumnsResizable
+                    focusedOnClick={this.props.focusedOnClick}
                     disabledCellChecker={(row, columnId) => {
                         return columnId === 'age';
                     }}
@@ -123,9 +124,11 @@ class DataTable extends React.PureComponent {
 }
 
 DataTable.defaultProps = {
-    isScrollable: false
+    isScrollable: false,
+    focusedOnClick: false
 };
 
 storiesOf('Examples', module)
     .add('Scrollable grid', () => <DataTable rows={rows} isScrollable />)
-    .add('Empty scrollable grid', () => <DataTable rows={[]} isScrollable />);
+    .add('Empty scrollable grid', () => <DataTable rows={[]} isScrollable />)
+    .add('Focus on single click', () => <DataTable rows={rows} focusedOnClick={true} isScrollable />);
