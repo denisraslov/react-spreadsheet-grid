@@ -21,6 +21,7 @@ export const propTypes = {
     }),
     onCellClick: PropTypes.func,
     blurCurrentFocus: PropTypes.bool,
+    focusOnSingleClick: PropTypes.bool,
 
     // scroll
     headerHeight: PropTypes.number,

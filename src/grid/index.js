@@ -207,7 +207,7 @@ class SpreadsheetGrid extends React.PureComponent {
         if (!find(this.props.disabledCells, { x, y })) {
             if (!e.skipCellClick && !isEqual(this.state.focusedCell, { x, y })) {
                 this.setState({
-                    focusedCell: this.props.focusedOnClick
+                    focusedCell: this.props.focusOnSingleClick
                         ? { x, y } 
                         : e.target !== e.currentTarget ? { x, y } : null,
                     activeCell: { x, y }
@@ -312,8 +312,7 @@ SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
 });
 
 SpreadsheetGrid.defaultProps = {
-    blurCurrentFocus: false,
-    focusedOnClick: false
+    blurCurrentFocus: false
 };
 
 export default SpreadsheetGrid;
