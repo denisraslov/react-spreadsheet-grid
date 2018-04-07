@@ -430,7 +430,8 @@ SpreadsheetGridScrollWrapper.defaultProps = {
     headerHeight: 40,
     rowHeight: 48,
     isScrollable: true,
-    resetScroll: false
+    resetScroll: false,
+    focusOnSingleClick: false
 };
 
 export default SpreadsheetGridScrollWrapper;

@@ -331,6 +331,12 @@ Pass `true` to reset the scroll to the top of the container. Usually, you may ne
 
 ⚠️ **IMPORTANT!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-regular-usage).
 
+### focusOnSingleClick
+> `boolean`
+
+> defaults to `false`
+
+By default, double clicking a cell sets the focus on the cell's input. Pass `true` if you want to set the focus on the cell's input upon single clicking it.
 
 ## Customizing cells & header content
 
