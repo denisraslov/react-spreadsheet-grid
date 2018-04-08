@@ -6,6 +6,7 @@ understand what's going on and fix the issue.
 -->
 
 * `react-spreadsheet-grid` version:
+* `React` version:
 * `Operating System`:
 
 Relevant code or config
