@@ -29,10 +29,10 @@ class SpreadsheetRow extends React.Component {
             || JSON.stringify(this.props.disabledCells) !== JSON.stringify(nextProps.disabledCells)
             || this.props.columns !== nextProps.columns
             || this.props.columnWidthValues !== nextProps.columnWidthValues
-            || (isActiveCellChanged &&
+            || (!!isActiveCellChanged &&
                 ((currentActiveCell && currentActiveCell.x === this.props.x)
                     || (nextActiveCell && nextActiveCell.x === this.props.x)))
-            || (isFocusedCellChanged &&
+            || (!!isFocusedCellChanged &&
                 ((currentFocusedCell && currentFocusedCell.x === this.props.x)
                     || (nextFocusedCell && nextFocusedCell.x === this.props.x)));
     }
