@@ -139,7 +139,11 @@ class MyAwesomeGrid extends React.Component {
     // A callback called every time a value changed.
     // Every time it save a new value to the state.
     onFieldChange(rowId, field, value) {
-        rows[rowId][field] = value;
+        // Find a row that is being change
+        const row = rows.find({ id } => id === rowId);
+        
+        // Change a value of a field
+        row[field] = value;
 
         this.setState({
             rows: [].concat(rows),
