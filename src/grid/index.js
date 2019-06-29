@@ -62,9 +62,24 @@ class SpreadsheetGrid extends React.PureComponent {
         }
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         document.removeEventListener('keydown', this.onGlobalKeyDown, false);
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
+
+        if (this.props.onActiveChanged) {
+            const newCell = this.state.activeCell;
+            const prevCell = prevState.activeCell;
+            const columns = this.props.columns;
+            const next = newCell == null ?
+                { row: null, column: null } :
+                { row: newCell.x, column: columns[newCell.y].id };
+            const previous = prevCell == null ?
+                { row: null, column: null } :
+                { row: prevCell.x, column: columns[prevCell.y].id };
+            if (next.row !== previous.row || next.column !== previous.column) {
+                this.props.onActiveChanged(next, previous);
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -208,7 +223,7 @@ class SpreadsheetGrid extends React.PureComponent {
             if (!e.skipCellClick && !isEqual(this.state.focusedCell, { x, y })) {
                 this.setState({
                     focusedCell: this.props.focusOnSingleClick
-                        ? { x, y } 
+                        ? { x, y }
                         : e.target !== e.currentTarget ? { x, y } : null,
                     activeCell: { x, y }
                 });
