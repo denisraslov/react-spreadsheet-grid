@@ -222,7 +222,7 @@ class MyAwesomeGrid extends React.Component {
 arrayOf({ 
     id: string / number, 
     title: string / func, 
-    value: string / func(row, { active, focused, disabled }),
+    value: string / func(row, { active, focus, disabled }),
     getCellClassName: func(row)
 }) 
 ``` 
@@ -236,7 +236,7 @@ key | Required | Mission
 --- | --- | ---
 `id` | yes | An identifier of a row.
 `title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
-`value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an output based on them.
+`value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focus, disabled }`) as parameters, so you can create an output based on them.
 `getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
