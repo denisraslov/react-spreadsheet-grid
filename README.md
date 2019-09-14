@@ -96,6 +96,7 @@ class MyAwesomeGrid extends React.Component {
           }
         ]}
         
+        rows={rows}
         getRowKey={row => row.id}
       />
     )
