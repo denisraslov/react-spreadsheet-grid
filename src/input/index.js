@@ -18,16 +18,19 @@ class SpreadsheetGridInput extends React.PureComponent {
         };
     }
 
+    static getDerivedStateFromProps({ value }, prevState) {
+        return {
+            ...prevState,
+            value
+        };
+    }
+
     componentDidMount() {
         this.prepareFocus(this.props.focus);
     }
 
-    componentWillReceiveProps({ value, focus }) {
-        this.setState({
-            value
-        }, () => {
-            this.prepareFocus(focus);
-        });
+    componentDidUpdate() {
+        this.prepareFocus(this.props.focus);
     }
 
     onKeyDown(e) {

@@ -15,12 +15,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         this.onScroll = this.onScroll.bind(this);
         this.onResize = this.onResize.bind(this);
-        this.calculateScrollState = this.calculateScrollState.bind(this);
+        this.setScrollState = this.setScrollState.bind(this);
         this.startColumnResize = this.startColumnResize.bind(this);
         this.processColumnResize = this.processColumnResize.bind(this);
 
         this.state = {
-            blurCurrentFocus: props.blurCurrentFocus,
             first: 0,
             last: this.calculateInitialLast(),
             offset: 0,
@@ -29,7 +28,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         // if requestAnimationFrame is available, use it to throttle refreshState
         if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-            this.calculateScrollState = throttleWithRAF(this.calculateScrollState);
+            this.setScrollState = throttleWithRAF(this.setScrollState);
         }
     }
 
@@ -46,26 +45,21 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         window.addEventListener('resize', this.onResize, false);
     }
 
-    componentWillReceiveProps(newProps) {
-        if (this.state.blurCurrentFocus !== newProps.blurCurrentFocus) {
-            this.setState({
-                blurCurrentFocus: newProps.blurCurrentFocus
-            });
+    componentDidUpdate(prevProps) {
+        const { columns, columnWidthValues, resetScroll, rows } = this.props;
+
+        // If columns has been changed, recalculate their width values.
+        if (prevProps.columns !== columns) {
+            this.freezeTable(columnWidthValues);
         }
-        if (newProps.resetScroll) {
+        // TODO: Make resetScroll public method
+        if (resetScroll) {
             this.scrollWrapperElement.scrollTop = 0;
-            this.calculateScrollState(newProps.rows);
+            this.setScrollState();
             return;
         }
-        if (newProps.rows !== this.props.rows) {
-            this.calculateScrollState(newProps.rows);
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        // If columns has been changed, recalculate their width values.
-        if (prevProps.columns !== this.props.columns) {
-            this.freezeTable(this.props.columnWidthValues);
+        if (rows !== prevProps.rows) {
+            this.setScrollState();
         }
     }
 
@@ -245,9 +239,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    calculateScrollState(newRows) {
+    setScrollState() {
         const scrollWrapperElement = this.scrollWrapperElement;
-        const rows = newRows || this.props.rows;
+        const rows = this.props.rows;
 
         if (!this.props.isScrollable) {
             return;
@@ -261,7 +255,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         if (first !== this.state.first || last !== this.state.last) {
             this.setState({
-                blurCurrentFocus: false,
                 first,
                 last,
                 offset: first * this.props.rowHeight,
@@ -282,11 +275,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     onResize() {
-        this.calculateScrollState();
+        this.setScrollState();
     }
 
     onScroll() {
-        this.calculateScrollState();
+        this.setScrollState();
     }
 
     getHeaderStyle() {
@@ -397,8 +390,8 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                     {
                         <Grid
                             {...this.props}
-                            blurCurrentFocus={this.state.blurCurrentFocus}
                             rows={rows}
+                            allRows={this.props.rows}
                             rowsCount={this.props.rows.length}
                             startIndex={this.state.first}
                             offset={this.state.offset}

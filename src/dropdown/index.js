@@ -19,12 +19,14 @@ class SpreadsheetGridDropdown extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps({ isOpen }) {
+    static getDerivedStateFromProps({ isOpen }, prevState) {
         if (isOpen !== undefined) {
-            this.setState({
+            return {
+                ...prevState,
                 isOpen
-            });
+            };
         }
+        return prevState;
     }
 
     componentWillUnmount() {

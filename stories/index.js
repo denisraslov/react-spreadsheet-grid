@@ -108,7 +108,6 @@ class DataTable extends React.PureComponent {
                 <Grid
                     columns={this.state.columns}
                     rows={this.state.rows}
-                    blurCurrentFocus={this.state.blurFocus}
                     getRowKey={row => row.id}
                     rowHeight={50}
                     isColumnsResizable

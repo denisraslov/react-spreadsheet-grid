@@ -20,7 +20,6 @@ export const propTypes = {
         y: PropTypes.number.isRequired
     }),
     onCellClick: PropTypes.func,
-    blurCurrentFocus: PropTypes.bool,
     focusOnSingleClick: PropTypes.bool,
 
     // scroll

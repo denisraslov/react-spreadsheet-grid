@@ -19,19 +19,20 @@ class SpreadsheetGridSelect extends React.PureComponent {
         };
     }
 
+    static getDerivedStateFromProps({ isOpen, selectedId }, prevState) {
+        return {
+            ...prevState,
+            isOpen,
+            selectedId
+        };
+    }
+
     componentDidMount() {
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onGlobalKeyDown, false);
-    }
-
-    componentWillReceiveProps({ isOpen , selectedId }) {
-        this.setState({
-            isOpen,
-            selectedId
-        });
     }
 
     onItemClick(selectedId, item) {
