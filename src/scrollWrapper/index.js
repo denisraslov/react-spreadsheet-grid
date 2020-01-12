@@ -43,6 +43,8 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         window.addEventListener('resize', this.onResize, false);
+
+        this.setScrollState();
     }
 
     componentDidUpdate(prevProps) {
