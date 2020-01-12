@@ -46,17 +46,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        const { columns, columnWidthValues, resetScroll, rows } = this.props;
+        const { columns, columnWidthValues, rows } = this.props;
 
         // If columns has been changed, recalculate their width values.
         if (prevProps.columns !== columns) {
             this.freezeTable(columnWidthValues);
-        }
-        // TODO: Make resetScroll public method
-        if (resetScroll) {
-            this.scrollWrapperElement.scrollTop = 0;
-            this.setScrollState();
-            return;
         }
         if (rows !== prevProps.rows) {
             this.setScrollState();
@@ -72,6 +66,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         window.removeEventListener('resize', this.onResize, false);
+    }
+
+    resetScroll() {
+        this.scrollWrapperElement.scrollTop = 0;
+        this.setScrollState();
     }
 
     freezeTable(columnWidthValues = {}) {
@@ -410,7 +409,6 @@ SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
     isScrollable: PropTypes.bool,
     onScroll: PropTypes.func,
     onScrollReachesBottom: PropTypes.func,
-    resetScroll: PropTypes.bool,
     // resize
     isColumnsResizable: PropTypes.bool,
     onColumnResize: PropTypes.func
@@ -423,7 +421,6 @@ SpreadsheetGridScrollWrapper.defaultProps = {
     headerHeight: 40,
     rowHeight: 48,
     isScrollable: true,
-    resetScroll: false,
     focusOnSingleClick: false
 };
 

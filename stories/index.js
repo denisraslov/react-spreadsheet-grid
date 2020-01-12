@@ -39,8 +39,7 @@ class DataTable extends React.PureComponent {
         rows[rowId][field] = value;
 
         this.setState({
-            rows: [].concat(rows),
-            blurFocus: true
+            rows: [].concat(rows)
         });
     }
 
