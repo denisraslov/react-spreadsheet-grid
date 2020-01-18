@@ -14,15 +14,19 @@ class SpreadsheetGridInput extends React.PureComponent {
         this.onBlur = this.onBlur.bind(this);
 
         this.state = {
+            props,
             value: this.props.value
         };
     }
 
-    static getDerivedStateFromProps({ value }, prevState) {
-        return {
-            ...prevState,
-            value
-        };
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState.props) {
+            return {
+                ...prevState,
+                props: nextProps,
+                value: nextProps.value
+            };
+        }
     }
 
     componentDidMount() {

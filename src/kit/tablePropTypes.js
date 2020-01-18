@@ -8,7 +8,8 @@ export const propTypes = {
                 PropTypes.string,
                 PropTypes.func
             ]),
-            value: PropTypes.func.isRequired
+            value: PropTypes.func.isRequired,
+            width: PropTypes.number
         })
     ).isRequired,
     rows: PropTypes.arrayOf(PropTypes.any),
@@ -25,7 +26,4 @@ export const propTypes = {
     // scroll
     headerHeight: PropTypes.number,
     rowHeight: PropTypes.number,
-
-    // resize
-    columnWidthValues: PropTypes.object
 };

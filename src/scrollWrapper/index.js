@@ -33,7 +33,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.freezeTable(this.props.columnWidthValues);
+        this.freezeTable();
 
         if (this.props.isColumnsResizable) {
             document.addEventListener('mousemove', this.processColumnResize, false);
@@ -48,11 +48,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        const { columns, columnWidthValues, rows } = this.props;
+        const { columns, rows } = this.props;
 
         // If columns has been changed, recalculate their width values.
         if (prevProps.columns !== columns) {
-            this.freezeTable(columnWidthValues);
+            this.freezeTable();
         }
         if (rows !== prevProps.rows) {
             this.setScrollState();
@@ -75,13 +75,19 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         this.setScrollState();
     }
 
-    freezeTable(columnWidthValues = {}) {
+    freezeTable() {
         const table = this.tableElement;
 
         // There is no grid when Jest is running tests
         if (table) {
             const cells = table.querySelectorAll('.SpreadsheetGrid__headCell');
-            const preparedColumnWidthValues = {};
+            const { columns } = this.props;
+            let columnWidthValues = columns
+                .reduce(((widths, column) => {
+                    widths[column.id] = column.width;
+                    return widths;
+                }), {})
+
             let sumOfWidth = 0;
 
             Object.keys(columnWidthValues).forEach((id) => {
@@ -97,6 +103,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
             let restTableWidth = 100;
             let restColumnsCount = cells.length;
+            const preparedColumnWidthValues = {};
 
             cells.forEach((cell, i) => {
                 const id = this.props.columns[i].id;
