@@ -322,8 +322,8 @@ A callback called when the scroll of the grid reaches its bottom value. Usually,
 Use public methods via a grid's ref:
 
 ```jsx
-const GridWrapper = () =>
-  gridRef = React.createRef()
+const GridWrapper = () => {
+  const gridRef = React.createRef()
 
   React.useEffect(() => {
     gridRef.current.resetScroll()
