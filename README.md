@@ -237,7 +237,7 @@ key | Required | Mission
 `id` | yes | An identifier of a row.
 `title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
 `value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focus, disabled }`) as parameters, so you can create an output based on them.
-`width` | no | Pass this object if you want initialize width of a column. You can set width not for all the columns, then the rest of table width would be distributed between the columns with unspecified width. Also, you can width of columns from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
+`width` | no | Pass this property if you want initialize the width of a column. You can set width not for all the columns, then the rest of table width would be distributed between the columns with unspecified width. Also, you can width of columns from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 `getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
