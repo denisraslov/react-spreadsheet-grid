@@ -222,6 +222,7 @@ arrayOf({
     id: string / number,
     title: string / func,
     value: string / func(row, { active, focus, disabled }),
+    width: number,
     getCellClassName: func(row)
 })
 ```
@@ -236,6 +237,7 @@ key | Required | Mission
 `id` | yes | An identifier of a row.
 `title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
 `value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focus, disabled }`) as parameters, so you can create an output based on them.
+`width` | no | Pass this object if you want initialize width of a column. You can set width not for all the columns, then the rest of table width would be distributed between the columns with unspecified width. Also, you can width of columns from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 `getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
@@ -297,13 +299,6 @@ Switch this on if you want the table provides an opportunity to resize column wi
 > `func(widthValues: object)`
 
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` is a map of values of width for all the columns in percents (`columnId` - `value`).
-
-### columnWidthValues
-> `object`
-
-Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between unspecified columns.
-
-Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
 
 ### isScrollable
 > `boolean`
