@@ -16,10 +16,6 @@ export const propTypes = {
     getRowKey: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     disabledCellChecker: PropTypes.func,
-    focusedCell: PropTypes.shape({
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
-    }),
     onCellClick: PropTypes.func,
     focusOnSingleClick: PropTypes.bool,
 

@@ -21,21 +21,11 @@ class SpreadsheetGrid extends React.PureComponent {
         this.state = {
             allRows: this.props.allRows
         };
-
-        if (this.props.focusedCell) {
-            this.state.activeCell = this.props.focusedCell;
-            this.state.focusedCell = this.props.focusedCell;
-
-            this.skipGlobalClick = true;
-        }
     }
 
     componentDidMount() {
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
         document.addEventListener('click', this.onGlobalClick, false);
-        if (this.props.focusedCell) {
-            this.skipGlobalClick = true;
-        }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -51,21 +41,19 @@ class SpreadsheetGrid extends React.PureComponent {
             nextState.focusedCell = null;
         }
 
-        if (nextProps.focusedCell) {
-            const nextActiveCell = nextProps.focusedCell;
-
-            Object.assign(nextState, {
-                activeCell: nextActiveCell,
-                focusedCell: nextActiveCell
-            });
-            this.skipGlobalClick = true;
-        }
-
         if (prevState.allRows !== nextProps.allRows) {
             nextState.focusedCell = null;
         }
 
         return nextState;
+    }
+
+    focusCell(nextFocusedCell) {
+        this.setState({
+            activeCell: nextFocusedCell,
+            focusedCell: nextFocusedCell
+        });
+        this.skipGlobalClick = true;
     }
 
     componentDidUpdate() {
