@@ -344,7 +344,7 @@ Call to reset the scroll to the top of the container.
 
 ### focusCell({ x: number, y: number })
 
-Call to make the cell with this `x, y` coordinates (starting from `0`) will active and focused.
+Call to make the cell with this `x, y` coordinates (starting from `0`) active and focused.
 
 ## Customizing cells & header content
 
