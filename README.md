@@ -28,6 +28,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 -   [The primitive example](#the-primitive-example)
 -   [The pattern of regular usage](#the-pattern-of-regular-usage)
 -   [Props](#props)
+-   [Public methods](#public-methods)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
