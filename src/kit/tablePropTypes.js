@@ -17,6 +17,7 @@ export const propTypes = {
     placeholder: PropTypes.string,
     disabledCellChecker: PropTypes.func,
     onCellClick: PropTypes.func,
+    onActiveCellChanged: PropTypes.func,
     focusOnSingleClick: PropTypes.bool,
 
     // scroll

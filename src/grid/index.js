@@ -56,11 +56,22 @@ class SpreadsheetGrid extends React.PureComponent {
         this.skipGlobalClick = true;
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         document.removeEventListener('keydown', this.onGlobalKeyDown, false);
         document.addEventListener('keydown', this.onGlobalKeyDown, false);
+        this.onActiveCellChanged()
         if (this.props.focusedCell) {
             this.skipGlobalClick = true;
+        }
+    }
+
+    onActiveCellChanged() {
+        const { onActiveCellChanged } = this.props
+        const newCell = this.state.activeCell;
+        const prevCell = prevState.activeCell;
+
+        if (onActiveCellChanged && newCell !== prevCell) {
+            onActiveCellChanged(newCell);
         }
     }
 

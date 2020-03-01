@@ -269,6 +269,11 @@ Use this func to define what cells are disabled in the table. It gets `row` and 
 
 A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in the `columns` array) as parameters and identifiers of a cell.
 
+### onActiveCellChanged
+> `func({ x, y })`
+
+A callback called every time the active cell is changed. It gets `{ x, y }` coordinates of the new active cell as parameters.
+
 ### headerHeight
 > `number` | defaults to `40`
 
