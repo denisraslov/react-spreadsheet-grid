@@ -145,9 +145,7 @@ class MyAwesomeGrid extends React.Component {
         row[field] = value;
 
         this.setState({
-            rows: [].concat(rows),
-            // Blurring focus from the current cell is necessary for a correct behavior of the Grid.
-            blurCurrentFocus: true
+            rows: [].concat(rows)
         });
     }
 
@@ -204,9 +202,6 @@ class MyAwesomeGrid extends React.Component {
                 columns={this.state.columns}
                 rows={this.state.rows}
                 getRowKey={row => row.id}
-
-                // Don't forget to blur focused cell after a value has been changed.
-                blurCurrentFocus={this.state.blurCurrentFocus}
             />
         )
     }
