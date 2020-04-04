@@ -29,7 +29,9 @@ SpreadsheetGridScrollDummy.propTypes = {
     rows: PropTypes.arrayOf(PropTypes.any),
     headerHeight: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
-    refEl: PropTypes.func.isRequired
+    refEl: PropTypes.shape({
+        current: PropTypes.instanceOf(Element)
+    }).isRequired
 };
 
 export default SpreadsheetGridScrollDummy;

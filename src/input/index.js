@@ -33,8 +33,11 @@ class SpreadsheetGridInput extends React.PureComponent {
         this.prepareFocus(this.props.focus);
     }
 
-    componentDidUpdate() {
-        this.prepareFocus(this.props.focus);
+    componentDidUpdate(prevProps) {
+        // Don't touch focus if the state is updating
+        if (this.props !== prevProps) {
+            this.prepareFocus(this.props.focus);
+        }
     }
 
     onKeyDown(e) {
