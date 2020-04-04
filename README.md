@@ -21,6 +21,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Customizable CSS styling
 
+✅  Hooks compatible
+
 ## Table of contents
 
 -   [Live playground](#live-playground)
