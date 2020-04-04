@@ -27,6 +27,7 @@ class SpreadsheetGridInput extends React.PureComponent {
                 value: nextProps.value
             };
         }
+        return prevState
     }
 
     componentDidMount() {

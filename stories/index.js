@@ -91,10 +91,20 @@ function DataTable(props) {
         ];
     }
 
+    const [columns, setColumns] = useState(initColumns());
+
+    const onColumnResize = (widthValues) => {
+        const newColumns = [].concat(columns)
+        Object.keys(widthValues).forEach((columnId) => {
+            newColumns[columnId].width = widthValues[columnId]
+        })
+        setColumns(newColumns)
+    }
+
     return (
         <div className="DataTable">
             <Grid
-                columns={initColumns()}
+                columns={columns}
                 rows={rows}
                 getRowKey={row => row.id}
                 rowHeight={50}
