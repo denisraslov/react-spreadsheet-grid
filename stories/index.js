@@ -96,7 +96,8 @@ function DataTable(props) {
     const onColumnResize = (widthValues) => {
         const newColumns = [].concat(columns)
         Object.keys(widthValues).forEach((columnId) => {
-            newColumns[columnId].width = widthValues[columnId]
+            const column = columns.find(({ id }) => id === columnId);
+            column.width = widthValues[columnId]
         })
         setColumns(newColumns)
     }
@@ -109,6 +110,7 @@ function DataTable(props) {
                 getRowKey={row => row.id}
                 rowHeight={50}
                 isColumnsResizable
+                onColumnResize={onColumnResize}
                 focusOnSingleClick={props.focusOnSingleClick}
                 disabledCellChecker={(row, columnId) => {
                     return columnId === 'age';

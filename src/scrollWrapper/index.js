@@ -270,17 +270,28 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             0);
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
+        let newState = {
+            hasScroll: scrollWrapperEl.scrollHeight > scrollWrapperEl.offsetHeight &&
+                // Check if the scroll has a width
+                scrollWrapperEl.offsetWidth > scrollDummyEl.offsetWidth
+        }
 
         if (first !== this.state.first || last !== this.state.last) {
-            this.setState({
-                first,
-                last,
-                offset: first * this.props.rowHeight,
-                hasScroll: scrollWrapperEl.scrollHeight > scrollWrapperEl.offsetHeight &&
-                    // Check if the scroll has a width
-                    scrollWrapperEl.offsetWidth > scrollDummyEl.offsetWidth
-            });
+            newState = {
+                ...newState,
+                ...{
+                    first,
+                    last,
+                    offset: first * this.props.rowHeight
+                }
+            };
         }
+        this.setState(newState);
+
+        console.log(first !== this.state.first || last !== this.state.last)
+        console.log(scrollWrapperEl.scrollHeight > scrollWrapperEl.offsetHeight &&
+            // Check if the scroll has a width
+            scrollWrapperEl.offsetWidth > scrollDummyEl.offsetWidth)
 
         if (this.props.onScroll) {
             this.props.onScroll(scrollTop);
