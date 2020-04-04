@@ -27,7 +27,7 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 -   [Live playground](#live-playground)
 -   [Installation](#installation)
--   [The primitive example](#the-primitive-example)
+-   [A primitive example](#a-primitive-example)
 -   [The pattern of regular usage](#the-pattern-of-regular-usage)
 -   [Props](#props)
 -   [Public methods](#public-methods)
@@ -60,7 +60,7 @@ npm install --save react-spreadsheet-grid
 
 > ⚠️ **IMPORTANT!** This package also depends on `react`, `react-dom` and `prop-types`. Please make sure you have those installed as well.
 
-## The primitive example
+## A primitive example
 
 ```jsx
 import { Grid, Input, Select } from 'react-spreadsheet-grid'
@@ -112,8 +112,8 @@ Take a closer look at 2 main thing: **a declaration of columns** and **work with
 To get the correct behavior of the grid you should:
 
 * Store rows and columns of the grid in the state of the parent component.
-* Describe how the grid has render values of the cells.
-* Have a callback that changes values of rows in the state of the parent component.
+* Describe how the grid renders values of the cells.
+* Have a callback that changes values of the rows in the state of the parent component.
 
 Let's see how it works:
 
@@ -126,87 +126,71 @@ const rows = [
     // and so on...
 ];
 
-class MyAwesomeGrid extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // Rows are stored in the state.
-        this.state = {
-            rows,
-            columns: this.initColumns()
-        };
-    }
+const MyAwesomeGrid = () => {
+    // Rows and columns are stored in the state.
+    const [columns, setRows] = useState(initColumns());
+    const [rows, setRows] = useState(rows);
 
     // A callback called every time a value changed.
     // Every time it save a new value to the state.
-    onFieldChange(rowId, field, value) {
-        // Find a row that is being change
+    const onFieldChange = (rowId, field) => (value) => {
+        // Find the row that is being changed
         const row = rows.find({ id } => id === rowId);
-
+        
         // Change a value of a field
         row[field] = value;
-
-        this.setState({
-            rows: [].concat(rows)
-        });
+        setRows([].concat(rows))
     }
-
-    initColumns() {
-        return [
-          {
-            title: () => 'Name',
-            value: (row, { focus }) => {
-
-              // You can use the built-in Input.
-              return (
-                <Input
-                  value={row.name}
-                  focus={focus}
-                  onChange={this.onFieldChange.bind(this, row.id, 'name')}
-                />
-              );
-            }
-          }, {
-            title: () => 'Position',
-            value: (row, { focus }) => {
-
-                // You can use the built-in Select.
-                return (
-                    <Select
-                      value={row.positionId}
-                      isOpen={focus}
-                      items={somePositions}
-                      onChange={this.onFieldChange.bind(this, row.id, 'positionId')}
-                    />
-                );
-            }
-          }, {
-            title: () => 'Manager',
-            value: (row, { active, focus }) => {
-
-              // You can use whatever component you want to change a value.
-              return (
-                <AwesomeAutocomplete
-                  value={row.managerId}
-                  active={active}
-                  focus={focus}
-                  onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
-                />
-              );
-            }
-          }
-        ]
-    }
-
-    render() {
-        return (
-            <Grid
-                columns={this.state.columns}
-                rows={this.state.rows}
-                getRowKey={row => row.id}
+    
+    const initColumns = () => [
+      {
+        title: () => 'Name',
+        value: (row, { focus }) => {
+          // You can use the built-in Input.
+          return (
+            <Input
+              value={row.name}
+              focus={focus}
+              onChange={onFieldChange(row.id, 'name')}
             />
-        )
-    }
+          );
+        }
+      }, {
+        title: () => 'Position',
+        value: (row, { focus }) => {
+            // You can use the built-in Select.
+            return (
+                <Select
+                  value={row.positionId}
+                  isOpen={focus}
+                  items={somePositions}
+                  onChange={onFieldChange(row.id, 'positionId')}
+                />
+            );
+        }
+      }, {
+        title: () => 'Manager',
+        value: (row, { active, focus }) => {
+          // You can use whatever component you want to change a value.
+          return (
+            <AwesomeAutocomplete
+              value={row.managerId}
+              active={active}
+              focus={focus}
+              onSelectItem={onFieldChange(row.id, 'managerId')}
+            />
+          );
+        }
+      }
+    ]
+
+    return (
+        <Grid
+            columns={columns}
+            rows={rows}
+            getRowKey={row => row.id}
+        />
+    )
 }
 ```
 
@@ -386,7 +370,7 @@ import { Grid, Input } from 'react-spreadsheet-grid'
             <Input
               value={row.name}
               focus={focus}
-              onChange={this.onFieldChange.bind(this, 'name')}
+              onChange={onFieldChange(row.id, 'name')}
             />
           );
         }
@@ -433,7 +417,7 @@ const positions = [{
               items={positions}
               selectedId={row.positionId}
               isOpen={focus}
-              onChange={this.onFieldChange.bind(this, 'positionId')}
+              onChange={onFieldChange(row.id, 'positionId')}
             />
           );
         }
@@ -463,7 +447,7 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
             value={row.managerId}
             active={active}
             focus={focus}
-            onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
+            onSelectItem={onFieldChange(row.id, 'managerId')}
           />
         );
       }
@@ -507,29 +491,27 @@ This is how it could be done:
 ```jsx
 import { Grid } from 'react-spreadsheet-grid'
 
-class LazyLoadingGrid extends React.Component {
+const LazyLoadingGrid = () => {
+  /* Init the state with the initial portion of the rows */
+  const [rows, setRows] = useState(initialRows);
 
-  onScrollReachesBottom() {
-     this.loadNewPortionOfRows().then((newRows) => {
-        this.setState({
-          rows: this.state.rows.concat(newRows)
-        });
+  const onScrollReachesBottom = () => {
+     loadNewPortionOfRows().then((newRows) => {
+        setRows(rows.concat(newRows));
      });
   }
 
-  loadNewPortionOfRows() {
+  const loadNewPortionOfRows = () => {
     /* an ajax request here */
   }
 
-  render() {
-    return (
+  return (
       <Grid
         columns={/* some columns here */}
-        row={/* the initial portion of the rows */}
+        row={rows}
         getRowKey={row => row.id}
-        onScrollReachesBottom={this.onScrollReachesBottom.bind(this)}
+        onScrollReachesBottom={onScrollReachesBottom}
       />
     )
-  }
 }
 ```
