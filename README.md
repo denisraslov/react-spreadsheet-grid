@@ -63,6 +63,7 @@ npm install --save react-spreadsheet-grid
 ## A primitive example
 
 ```jsx
+import React, { useState } from 'react'
 import { Grid, Input, Select } from 'react-spreadsheet-grid'
 
 const rows = [
@@ -97,7 +98,6 @@ const MyAwesomeGrid = () => {
           }
         }
       ]}
-
       rows={rows}
       getRowKey={row => row.id}
     />
@@ -127,8 +127,7 @@ const rows = [
 ];
 
 const MyAwesomeGrid = () => {
-    // Rows and columns are stored in the state.
-    const [columns, setRows] = useState(initColumns());
+    // Rows are stored in the state.
     const [rows, setRows] = useState(rows);
 
     // A callback called every time a value changed.
@@ -186,8 +185,10 @@ const MyAwesomeGrid = () => {
 
     return (
         <Grid
-            columns={columns}
+            columns={initColumns()}
             rows={rows}
+            isColumnsResizable
+            onColumnResize={onColumnResize}
             getRowKey={row => row.id}
         />
     )
@@ -464,6 +465,37 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 
 `react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `columnWidthValues`, `isColumnsResizable` and `onColumnResize` properties for that purpose.
 
+This is how it could be done:
+
+```jsx
+import React, { useState } from 'react'
+import { Grid } from 'react-spreadsheet-grid'
+
+const ResizableGrid = () => {
+    // Put columns to the state to be able to store there their width values.
+    const [columns, setColumns] = useState(initColumns())
+
+    // Change columns width values in the state to not lose them.
+    const onColumnResize = (widthValues) => {
+        const newColumns = [].concat(columns)
+        Object.keys(widthValues).forEach((columnId) => {
+            newColumns[columnId].width = widthValues[columnId]
+        })
+        setColumns(newColumns)
+    }
+
+    return (
+        <Grid
+            columns={columns}
+            isColumnsResizable
+            onColumnResize={onColumnResize}
+            rows={/* some rows here */}
+            getRowKey={row => row.id}
+        />
+    )
+}
+```
+
 ## Control by mouse & from keyboard
 
 `react-spreadsheet-grid` could be controlled by a mouse and from keyboard (just like Excel-table could). When a mouse is used, single click make a cell `active`, double click make a cell `focused`. When a keyboard used, `←` `→` `↑` `↓` move `active` cell, `ENTER` and `TAB` make a cell `focused`.
@@ -489,6 +521,7 @@ This would override the color of borders for the table active cell.
 This is how it could be done:
 
 ```jsx
+import React, { useState } from 'react'
 import { Grid } from 'react-spreadsheet-grid'
 
 const LazyLoadingGrid = () => {
