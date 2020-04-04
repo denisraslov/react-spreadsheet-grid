@@ -186,8 +186,8 @@ const MyAwesomeGrid = () => {
 
     return (
         <Grid
-            columns={this.state.columns}
-            rows={this.state.rows}
+            columns={columns}
+            rows={rows}
             getRowKey={row => row.id}
         />
     )
