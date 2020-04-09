@@ -10,7 +10,7 @@ class SpreadsheetGridScrollDummy extends React.Component {
 
     getHeight() {
         const { rows, rowHeight } = this.props;
-        this.height = (rows.length * rowHeight) + 'px';
+        return (rows.length * rowHeight) + 'px';
     }
 
     render() {

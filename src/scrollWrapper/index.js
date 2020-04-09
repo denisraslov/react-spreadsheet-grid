@@ -19,6 +19,11 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         this.startColumnResize = this.startColumnResize.bind(this);
         this.processColumnResize = this.processColumnResize.bind(this);
 
+        this.tableEl = React.createRef()
+        this.scrollDummyEl = React.createRef()
+        this.scrollWrapperEl = React.createRef()
+        this.grid = React.createRef()
+
         this.state = {
             first: 0,
             last: this.calculateInitialLast(),
@@ -31,11 +36,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
             this.setScrollState = throttleWithRAF(this.setScrollState);
         }
     }
-
-    tableEl = React.createRef()
-    scrollDummyEl = React.createRef()
-    scrollWrapperEl = React.createRef()
-    grid = React.createRef()
 
     componentDidMount() {
         this.freezeTable();

@@ -3,12 +3,13 @@ import renderer from 'react-test-renderer';
 import ScrollDummy from './../src/scrollDummy';
 
 test('ScrollDummy with rows', () => {
+    const ref = React.createRef()
     const tree = renderer.create(
         <ScrollDummy
             headerHeight={50}
             rowHeight={50}
             rows={[1, 2, 3]}
-            refEl={()=>{}}
+            refEl={ref}
         />
     ).toJSON();
 
@@ -16,12 +17,13 @@ test('ScrollDummy with rows', () => {
 });
 
 test('ScrollDummy without rows', () => {
+    const ref = React.createRef()
     const tree = renderer.create(
         <ScrollDummy
             headerHeight={50}
             rowHeight={50}
             rows={[]}
-            refEl={()=>{}}
+            refEl={ref}
         />
     ).toJSON();
 
