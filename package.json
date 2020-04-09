@@ -1,6 +1,6 @@
 {
   "name": "react-spreadsheet-grid",
-  "version": "1.4.3",
+  "version": "2.0.0",
   "description": "An Excel-like grid component for React with custom cell editors, performant scroll & resizable columns",
   "main": "lib/bundle.js",
   "scripts": {
@@ -51,8 +51,8 @@
   },
   "peerDependencies": {
     "prop-types": ">=15",
-    "react": ">=15",
-    "react-dom": ">=15"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@storybook/react": "3.0.0-alpha.0",

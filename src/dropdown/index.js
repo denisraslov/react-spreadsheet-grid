@@ -12,19 +12,19 @@ class SpreadsheetGridDropdown extends React.PureComponent {
         this.onHeaderClick = this.onHeaderClick.bind(this);
         this.onGlobalClick = this.onGlobalClick.bind(this);
 
-        this.skipGlobalClick = false;
-
         this.state = {
             isOpen: this.props.isOpen
         };
     }
 
-    componentWillReceiveProps({ isOpen }) {
+    static getDerivedStateFromProps({ isOpen }, prevState) {
         if (isOpen !== undefined) {
-            this.setState({
+            return {
+                ...prevState,
                 isOpen
-            });
+            };
         }
+        return prevState;
     }
 
     componentWillUnmount() {
@@ -34,12 +34,10 @@ class SpreadsheetGridDropdown extends React.PureComponent {
     onGlobalClick(event) {
         const dropdownElement = findDOMNode(this);
 
-        if (!this.skipGlobalClick && !event.skipDropdownGlobalClick) {
+        if (!event.skipDropdownGlobalClick) {
             if (event.target !== dropdownElement && !dropdownElement.contains(event.target)) {
                 this.close();
             }
-        } else {
-            this.skipGlobalClick = false;
         }
     }
 

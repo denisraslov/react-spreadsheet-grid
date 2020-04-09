@@ -14,20 +14,31 @@ class SpreadsheetGridInput extends React.PureComponent {
         this.onBlur = this.onBlur.bind(this);
 
         this.state = {
+            props,
             value: this.props.value
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState.props) {
+            return {
+                ...prevState,
+                props: nextProps,
+                value: nextProps.value
+            };
+        }
+        return prevState
     }
 
     componentDidMount() {
         this.prepareFocus(this.props.focus);
     }
 
-    componentWillReceiveProps({ value, focus }) {
-        this.setState({
-            value
-        }, () => {
-            this.prepareFocus(focus);
-        });
+    componentDidUpdate(prevProps) {
+        // Don't touch focus if the state is updating
+        if (this.props !== prevProps) {
+            this.prepareFocus(this.props.focus);
+        }
     }
 
     onKeyDown(e) {

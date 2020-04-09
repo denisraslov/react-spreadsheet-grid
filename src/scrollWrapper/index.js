@@ -15,12 +15,16 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         this.onScroll = this.onScroll.bind(this);
         this.onResize = this.onResize.bind(this);
-        this.calculateScrollState = this.calculateScrollState.bind(this);
+        this.setScrollState = this.setScrollState.bind(this);
         this.startColumnResize = this.startColumnResize.bind(this);
         this.processColumnResize = this.processColumnResize.bind(this);
 
+        this.tableEl = React.createRef()
+        this.scrollDummyEl = React.createRef()
+        this.scrollWrapperEl = React.createRef()
+        this.grid = React.createRef()
+
         this.state = {
-            blurCurrentFocus: props.blurCurrentFocus,
             first: 0,
             last: this.calculateInitialLast(),
             offset: 0,
@@ -29,12 +33,12 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
         // if requestAnimationFrame is available, use it to throttle refreshState
         if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-            this.calculateScrollState = throttleWithRAF(this.calculateScrollState);
+            this.setScrollState = throttleWithRAF(this.setScrollState);
         }
     }
 
     componentDidMount() {
-        this.freezeTable(this.props.columnWidthValues);
+        this.freezeTable();
 
         if (this.props.isColumnsResizable) {
             document.addEventListener('mousemove', this.processColumnResize, false);
@@ -44,28 +48,19 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
 
         window.addEventListener('resize', this.onResize, false);
-    }
 
-    componentWillReceiveProps(newProps) {
-        if (this.state.blurCurrentFocus !== newProps.blurCurrentFocus) {
-            this.setState({
-                blurCurrentFocus: newProps.blurCurrentFocus
-            });
-        }
-        if (newProps.resetScroll) {
-            this.scrollWrapperElement.scrollTop = 0;
-            this.calculateScrollState(newProps.rows);
-            return;
-        }
-        if (newProps.rows !== this.props.rows) {
-            this.calculateScrollState(newProps.rows);
-        }
+        this.setScrollState();
     }
 
     componentDidUpdate(prevProps) {
+        const { columns, rows } = this.props;
+
         // If columns has been changed, recalculate their width values.
-        if (prevProps.columns !== this.props.columns) {
-            this.freezeTable(this.props.columnWidthValues);
+        if (prevProps.columns !== columns) {
+            this.freezeTable();
+        }
+        if (rows !== prevProps.rows) {
+            this.setScrollState();
         }
     }
 
@@ -80,13 +75,28 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         window.removeEventListener('resize', this.onResize, false);
     }
 
-    freezeTable(columnWidthValues = {}) {
-        const table = this.tableElement;
+    resetScroll() {
+        this.scrollWrapperEl.current.scrollTop = 0;
+        this.setScrollState();
+    }
+
+    focusCell(nextFocusedCell) {
+        this.grid.current.focusCell(nextFocusedCell);
+    }
+
+    freezeTable() {
+        const table = this.tableEl.current;
 
         // There is no grid when Jest is running tests
         if (table) {
             const cells = table.querySelectorAll('.SpreadsheetGrid__headCell');
-            const preparedColumnWidthValues = {};
+            const { columns } = this.props;
+            let columnWidthValues = columns
+                .reduce(((widths, column) => {
+                    widths[column.id] = column.width;
+                    return widths;
+                }), {})
+
             let sumOfWidth = 0;
 
             Object.keys(columnWidthValues).forEach((id) => {
@@ -102,6 +112,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
 
             let restTableWidth = 100;
             let restColumnsCount = cells.length;
+            const preparedColumnWidthValues = {};
 
             cells.forEach((cell, i) => {
                 const id = this.props.columns[i].id;
@@ -141,7 +152,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     processColumnResize(e, nextCell) {
         let direction;
         let sibling;
-        const table = this.tableElement;
+        const table = this.tableEl.current;
         const tableWidth = table.offsetWidth;
         const columns = this.props.columns;
 
@@ -237,7 +248,7 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
     }
 
     calculateLast(first) {
-        const wrapper = this.scrollWrapperElement;
+        const wrapper = this.scrollWrapperEl.current;
         const visibleHeight = wrapper
             ? wrapper.parentNode.offsetHeight + 200
             : 0;
@@ -245,48 +256,54 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return first + Math.ceil(visibleHeight / this.props.rowHeight);
     }
 
-    calculateScrollState(newRows) {
-        const scrollWrapperElement = this.scrollWrapperElement;
-        const rows = newRows || this.props.rows;
+    setScrollState() {
+        const scrollWrapperEl = this.scrollWrapperEl.current;
+        const scrollDummyEl = this.scrollDummyEl.current;
+        const rows = this.props.rows;
 
         if (!this.props.isScrollable) {
             return;
         }
 
         const scrollTop = Math.max(
-            scrollWrapperElement.scrollTop,
+            scrollWrapperEl.scrollTop,
             0);
         const first = Math.max(0, Math.floor(scrollTop / this.props.rowHeight) - RESERVE_ROWS_COUNT);
         const last = Math.min(rows.length, this.calculateLast(first) + RESERVE_ROWS_COUNT);
+        let newState = {
+            hasScroll: scrollWrapperEl.scrollHeight > scrollWrapperEl.offsetHeight &&
+                // Check if the scroll has a width
+                scrollWrapperEl.offsetWidth > scrollDummyEl.offsetWidth
+        }
 
         if (first !== this.state.first || last !== this.state.last) {
-            this.setState({
-                blurCurrentFocus: false,
-                first,
-                last,
-                offset: first * this.props.rowHeight,
-                hasScroll: scrollWrapperElement.scrollHeight > scrollWrapperElement.offsetHeight &&
-                    // Check if the scroll has a width
-                    scrollWrapperElement.offsetWidth > this.scrollDummyEl.offsetWidth
-            });
+            newState = {
+                ...newState,
+                ...{
+                    first,
+                    last,
+                    offset: first * this.props.rowHeight
+                }
+            };
         }
+        this.setState(newState);
 
         if (this.props.onScroll) {
             this.props.onScroll(scrollTop);
         }
 
         if (this.props.onScrollReachesBottom &&
-            scrollWrapperElement.offsetHeight + scrollWrapperElement.scrollTop >= scrollWrapperElement.scrollHeight) {
+            scrollWrapperEl.offsetHeight + scrollWrapperEl.scrollTop >= scrollWrapperEl.scrollHeight) {
             this.props.onScrollReachesBottom();
         }
     }
 
     onResize() {
-        this.calculateScrollState();
+        this.setScrollState();
     }
 
     onScroll() {
-        this.calculateScrollState();
+        this.setScrollState();
     }
 
     getHeaderStyle() {
@@ -375,13 +392,13 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         return (
             <div
                 className="SpreadsheetGridContainer"
-                ref={(tableElement) => { this.tableElement = tableElement; }}
+                ref={this.tableEl}
             >
                 {this.renderHeader()}
                 <div
                     className={this.getScrollWrapperClassName()}
                     onScroll={this.onScroll}
-                    ref={node => this.scrollWrapperElement = node}
+                    ref={this.scrollWrapperEl}
                     style={{
                         height: this.props.isScrollable
                             ? `calc(100% - ${this.props.headerHeight}px)`
@@ -392,13 +409,14 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
                         rows={this.props.rows}
                         headerHeight={this.props.headerHeight}
                         rowHeight={this.props.rowHeight}
-                        refEl={el => this.scrollDummyEl = el}
+                        refEl={this.scrollDummyEl}
                     />
                     {
                         <Grid
                             {...this.props}
-                            blurCurrentFocus={this.state.blurCurrentFocus}
+                            ref={this.grid}
                             rows={rows}
+                            allRows={this.props.rows}
                             rowsCount={this.props.rows.length}
                             startIndex={this.state.first}
                             offset={this.state.offset}
@@ -417,7 +435,6 @@ SpreadsheetGridScrollWrapper.propTypes = Object.assign({}, tablePropTypes, {
     isScrollable: PropTypes.bool,
     onScroll: PropTypes.func,
     onScrollReachesBottom: PropTypes.func,
-    resetScroll: PropTypes.bool,
     // resize
     isColumnsResizable: PropTypes.bool,
     onColumnResize: PropTypes.func
@@ -430,7 +447,6 @@ SpreadsheetGridScrollWrapper.defaultProps = {
     headerHeight: 40,
     rowHeight: 48,
     isScrollable: true,
-    resetScroll: false,
     focusOnSingleClick: false
 };
 

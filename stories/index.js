@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
 
@@ -24,27 +24,15 @@ for (let i = 1; i < 6; i++) {
     });
 }
 
-class DataTable extends React.PureComponent {
+function DataTable(props) {
+    const [rows, setRows] = useState(props.rows);
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            rows: props.rows,
-            columns: this.initColumns()
-        };
-    }
-
-    onFieldChange(rowId, field, value) {
+    const onFieldChange = (rowId, field) => (value) => {
         rows[rowId][field] = value;
-
-        this.setState({
-            rows: [].concat(rows),
-            blurFocus: true
-        });
+        setRows([].concat(rows))
     }
 
-    initColumns() {
+    const initColumns = () => {
         return [
             {
                 title: 'First name',
@@ -53,7 +41,7 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.firstName}
                             focus={focus}
-                            onChange={this.onFieldChange.bind(this, row.id, 'firstName')}
+                            onChange={onFieldChange(row.id, 'firstName')}
                         />
                     );
                 },
@@ -66,7 +54,7 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.secondName}
                             focus={focus}
-                            onChange={this.onFieldChange.bind(this, row.id, 'secondName')}
+                            onChange={onFieldChange(row.id, 'secondName')}
                         />
                     );
                 },
@@ -80,7 +68,7 @@ class DataTable extends React.PureComponent {
                             selectedId={row.positionId}
                             isOpen={focus}
                             items={positions}
-                            onChange={this.onFieldChange.bind(this, row.id, 'positionId')}
+                            onChange={onFieldChange(row.id, 'positionId')}
                         />
                     );
                 },
@@ -93,34 +81,44 @@ class DataTable extends React.PureComponent {
                         <Input
                             value={row.age}
                             focus={focus}
-                            onChange={this.onFieldChange.bind(this, row.id, 'age')}
+                            onChange={onFieldChange(row.id, 'age')}
                         />
                     );
                 },
-                id: 'age'
+                id: 'age',
+                width: 10
             }
         ];
     }
 
-    render() {
-        return (
-            <div className="DataTable">
-                <Grid
-                    columns={this.state.columns}
-                    rows={this.state.rows}
-                    blurCurrentFocus={this.state.blurFocus}
-                    getRowKey={row => row.id}
-                    rowHeight={50}
-                    isColumnsResizable
-                    focusOnSingleClick={this.props.focusOnSingleClick}
-                    disabledCellChecker={(row, columnId) => {
-                        return columnId === 'age';
-                    }}
-                    isScrollable={this.props.isScrollable}
-                />
-            </div>
-        )
+    const [columns, setColumns] = useState(initColumns());
+
+    const onColumnResize = (widthValues) => {
+        const newColumns = [].concat(columns)
+        Object.keys(widthValues).forEach((columnId) => {
+            const column = columns.find(({ id }) => id === columnId);
+            column.width = widthValues[columnId]
+        })
+        setColumns(newColumns)
     }
+
+    return (
+        <div className="DataTable">
+            <Grid
+                columns={columns}
+                rows={rows}
+                getRowKey={row => row.id}
+                rowHeight={50}
+                isColumnsResizable
+                onColumnResize={onColumnResize}
+                focusOnSingleClick={props.focusOnSingleClick}
+                disabledCellChecker={(row, columnId) => {
+                    return columnId === 'age';
+                }}
+                isScrollable={props.isScrollable}
+            />
+        </div>
+    )
 }
 
 DataTable.defaultProps = {

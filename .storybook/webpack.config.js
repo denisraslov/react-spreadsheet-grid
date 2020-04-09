@@ -14,7 +14,6 @@ const config = {
                     }
                 }]
             },
-            // [\\\/] - as the "/" delimiter to make the RegExp work in Unix and Windows
             {
                 test: /\.css$/,
                 exclude: /node_modules/,

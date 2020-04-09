@@ -8,25 +8,19 @@ export const propTypes = {
                 PropTypes.string,
                 PropTypes.func
             ]),
-            value: PropTypes.func.isRequired
+            value: PropTypes.func.isRequired,
+            width: PropTypes.number
         })
     ).isRequired,
     rows: PropTypes.arrayOf(PropTypes.any),
     getRowKey: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     disabledCellChecker: PropTypes.func,
-    focusedCell: PropTypes.shape({
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
-    }),
     onCellClick: PropTypes.func,
-    blurCurrentFocus: PropTypes.bool,
+    onActiveCellChanged: PropTypes.func,
     focusOnSingleClick: PropTypes.bool,
 
     // scroll
     headerHeight: PropTypes.number,
     rowHeight: PropTypes.number,
-
-    // resize
-    columnWidthValues: PropTypes.object
 };

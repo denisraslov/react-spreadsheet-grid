@@ -18,14 +18,9 @@ class SpreadsheetGrid extends React.PureComponent {
         this.onCellDoubleClick = this.onCellDoubleClick.bind(this);
         this.getCellClassName = this.getCellClassName.bind(this);
 
-        this.state = {};
-
-        if (this.props.focusedCell) {
-            this.state.activeCell = this.props.focusedCell;
-            this.state.focusedCell = this.props.focusedCell;
-
-            this.skipGlobalClick = true;
-        }
+        this.state = {
+            allRows: this.props.allRows
+        };
     }
 
     componentDidMount() {
@@ -33,38 +28,50 @@ class SpreadsheetGrid extends React.PureComponent {
         document.addEventListener('click', this.onGlobalClick, false);
     }
 
-    componentWillReceiveProps(newProps) {
-        const disabledCells = this.props.disabledCells;
-        const newState = {};
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const disabledCells = nextProps.disabledCells;
+        const nextState = {
+            allRows: nextProps.allRows
+        };
 
-        if (find(disabledCells, this.state.activeCell)) {
-            newState.activeCell = null;
+        if (find(disabledCells, prevState.activeCell)) {
+            nextState.activeCell = null;
         }
-        if (find(disabledCells, this.state.focusedCell)) {
-            newState.focusedCell = null;
+        if (find(disabledCells, prevState.focusedCell)) {
+            nextState.focusedCell = null;
         }
-        this.setState(newState);
 
-        if (newProps.focusedCell) {
-            const newActiveCell = newProps.focusedCell;
+        if (prevState.allRows !== nextProps.allRows) {
+            nextState.focusedCell = null;
+        }
 
-            this.setState({
-                activeCell: newActiveCell,
-                focusedCell: newActiveCell
-            });
+        return nextState;
+    }
+
+    focusCell(nextFocusedCell) {
+        this.setState({
+            activeCell: nextFocusedCell,
+            focusedCell: nextFocusedCell
+        });
+        this.skipGlobalClick = true;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
+        document.addEventListener('keydown', this.onGlobalKeyDown, false);
+        this.onActiveCellChanged(prevState.activeCell)
+        if (this.props.focusedCell) {
             this.skipGlobalClick = true;
-        }
-
-        if (newProps.blurCurrentFocus) {
-            this.setState({
-                focusedCell: null
-            });
         }
     }
 
-    componentDidUpdate() {
-        document.removeEventListener('keydown', this.onGlobalKeyDown, false);
-        document.addEventListener('keydown', this.onGlobalKeyDown, false);
+    onActiveCellChanged(prevCell) {
+        const { onActiveCellChanged } = this.props
+        const newCell = this.state.activeCell;
+
+        if (onActiveCellChanged && newCell !== prevCell) {
+            onActiveCellChanged(newCell);
+        }
     }
 
     componentWillUnmount() {
@@ -208,7 +215,7 @@ class SpreadsheetGrid extends React.PureComponent {
             if (!e.skipCellClick && !isEqual(this.state.focusedCell, { x, y })) {
                 this.setState({
                     focusedCell: this.props.focusOnSingleClick
-                        ? { x, y } 
+                        ? { x, y }
                         : e.target !== e.currentTarget ? { x, y } : null,
                     activeCell: { x, y }
                 });
@@ -310,9 +317,5 @@ SpreadsheetGrid.propTypes = Object.assign({}, tablePropTypes, {
         })
     ).isRequired
 });
-
-SpreadsheetGrid.defaultProps = {
-    blurCurrentFocus: false
-};
 
 export default SpreadsheetGrid;

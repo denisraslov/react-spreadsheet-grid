@@ -7,7 +7,7 @@
 
 This is an Excel-like Spreadsheet Grid component that supports:
 
-✅  Custom cell editors (use built-in Input and Select, or any other components) & header content 
+✅  Custom cell editors (use built-in Input and Select, or any other components) & header content
 
 ✅  Performant scroll for as many rows as you need
 
@@ -21,13 +21,16 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Customizable CSS styling
 
+✅  Hooks compatible
+
 ## Table of contents
 
 -   [Live playground](#live-playground)
 -   [Installation](#installation)
--   [The primitive example](#the-primitive-example)
+-   [A primitive example](#a-primitive-example)
 -   [The pattern of regular usage](#the-pattern-of-regular-usage)
 -   [Props](#props)
+-   [Public methods](#public-methods)
 -   [Customizing cells & header content](#customizing-cells--header-content)
     -   [Built-in Input](#built-in-input)
     -   [Built-in Select](#built-in-select)
@@ -57,62 +60,60 @@ npm install --save react-spreadsheet-grid
 
 > ⚠️ **IMPORTANT!** This package also depends on `react`, `react-dom` and `prop-types`. Please make sure you have those installed as well.
 
-## The primitive example
+## A primitive example
 
 ```jsx
+import React, { useState } from 'react'
 import { Grid, Input, Select } from 'react-spreadsheet-grid'
 
-const rows=[
+const rows = [
     { id: 'user1', name: 'John Doe', positionId: 'position1' },
     // and so on...
 ];
 
-class MyAwesomeGrid extends React.Component {
-  render() {
-    return (
-      <Grid 
-        columns={[
-          {
-            title: () => 'Name', 
-            value: (row, { focus }) => {
-                return (
-                    <Input  
-                      value={row.name}
-                      focus={focus}
-                    />
-                );
-            }
-          }, {
-            title: () => 'Position',
-            value: (row, { focus }) => {
-                return (
-                    <Select  
-                      value={row.positionId}
-                      isOpen={focus}
-                      items={somePositions}
-                    />
-                );
-            }
+const MyAwesomeGrid = () => {
+  return (
+    <Grid
+      columns={[
+        {
+          title: () => 'Name',
+          value: (row, { focus }) => {
+              return (
+                  <Input
+                    value={row.name}
+                    focus={focus}
+                  />
+              );
           }
-        ]}
-        
-        rows={rows}
-        getRowKey={row => row.id}
-      />
-    )
-  }
+        }, {
+          title: () => 'Position',
+          value: (row, { focus }) => {
+              return (
+                  <Select
+                    value={row.positionId}
+                    isOpen={focus}
+                    items={somePositions}
+                  />
+              );
+          }
+        }
+      ]}
+      rows={rows}
+      getRowKey={row => row.id}
+    />
+  )
 }
 ```
 
 ## The pattern of regular usage
 
-Take a closer look at 2 main thing: **a definition of columns** and **work with the state of a high-order component**.
+Take a closer look at 2 main thing: **a declaration of columns** and **work with the state of the parent component**.
 
 To get the correct behavior of the grid you should:
 
-* Store rows and columns of the grid in the state of a high-order component.
-* Describe how the grid has render values of the cells. 
-* Have a callback that will change values of rows in the state.
+* Store rows and columns of the grid in the state of the parent component.
+* Describe how the grid renders values of the cells.
+* Have a callback that changes values of the rows in the state of the parent component.
 
 Let's see how it works:
 
@@ -120,98 +121,77 @@ Let's see how it works:
 import { Grid, Input, Select } from 'react-spreadsheet-grid'
 import AwesomeAutocomplete from 'awesome-autocomplete'
 
-const rows=[
+const rows = [
     { id: 'user1', name: 'John Doe', positionId: 'position1', managerId: 'manager1' },
     // and so on...
 ];
 
-class MyAwesomeGrid extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        // Rows are stored in the state.
-        this.state = {
-            rows,
-            columns: this.initColumns()
-        };
-    }
+const MyAwesomeGrid = () => {
+    // Rows are stored in the state.
+    const [rows, setRows] = useState(rows);
 
     // A callback called every time a value changed.
     // Every time it save a new value to the state.
-    onFieldChange(rowId, field, value) {
-        // Find a row that is being change
+    const onFieldChange = (rowId, field) => (value) => {
+        // Find the row that is being changed
         const row = rows.find({ id } => id === rowId);
         
         // Change a value of a field
         row[field] = value;
-
-        this.setState({
-            rows: [].concat(rows),
-            // Blurring focus from the current cell is necessary for a correct behavior of the Grid.
-            blurCurrentFocus: true
-        });
+        setRows([].concat(rows))
     }
     
-    initColumns() {
-        return [
-          {
-            title: () => 'Name', 
-            value: (row, { focus }) => {
-            
-              // You can use the built-in Input.
-              return (
-                <Input  
-                  value={row.name}
-                  focus={focus}
-                  onChange={this.onFieldChange.bind(this, row.id, 'name')}
-                />
-              );
-            }
-          }, {
-            title: () => 'Position',
-            value: (row, { focus }) => {
-            
-                // You can use the built-in Select.
-                return (
-                    <Select  
-                      value={row.positionId}
-                      isOpen={focus}
-                      items={somePositions}
-                      onChange={this.onFieldChange.bind(this, row.id, 'positionId')}
-                    />
-                );
-            }
-          }, {
-            title: () => 'Manager',
-            value: (row, { active, focus }) => {
-            
-              // You can use whatever component you want to change a value.
-              return (
-                <AwesomeAutocomplete  
-                  value={row.managerId}
-                  active={active}
-                  focus={focus}
-                  onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
-                />
-              );
-            }
-          }
-        ]
-    }
-
-    render() {
-        return (
-            <Grid 
-                columns={this.state.columns}
-                rows={this.state.rows}
-                getRowKey={row => row.id}
-
-                // Don't forget to blur focused cell after a value has been changed.
-                blurCurrentFocus={this.state.blurCurrentFocus}
+    const initColumns = () => [
+      {
+        title: () => 'Name',
+        value: (row, { focus }) => {
+          // You can use the built-in Input.
+          return (
+            <Input
+              value={row.name}
+              focus={focus}
+              onChange={onFieldChange(row.id, 'name')}
             />
-        )
-    }
+          );
+        }
+      }, {
+        title: () => 'Position',
+        value: (row, { focus }) => {
+            // You can use the built-in Select.
+            return (
+                <Select
+                  value={row.positionId}
+                  isOpen={focus}
+                  items={somePositions}
+                  onChange={onFieldChange(row.id, 'positionId')}
+                />
+            );
+        }
+      }, {
+        title: () => 'Manager',
+        value: (row, { active, focus }) => {
+          // You can use whatever component you want to change a value.
+          return (
+            <AwesomeAutocomplete
+              value={row.managerId}
+              active={active}
+              focus={focus}
+              onSelectItem={onFieldChange(row.id, 'managerId')}
+            />
+          );
+        }
+      }
+    ]
+
+    return (
+        <Grid
+            columns={initColumns()}
+            rows={rows}
+            isColumnsResizable
+            onColumnResize={onColumnResize}
+            getRowKey={row => row.id}
+        />
+    )
 }
 ```
 
@@ -220,24 +200,26 @@ class MyAwesomeGrid extends React.Component {
 ### columns
 
 ```jsx
-arrayOf({ 
-    id: string / number, 
-    title: string / func, 
+arrayOf({
+    id: string / number,
+    title: string / func,
     value: string / func(row, { active, focus, disabled }),
+    width: number,
     getCellClassName: func(row)
-}) 
-``` 
+})
+```
 > defaults to `[]`
 
 > `required`
 
-This is the most important prop that defines columns of the table. Every item of the array is responsible for the corresponding column. 
+This is the most important prop that defines columns of the table. Every item of the array is responsible for the corresponding column.
 
-key | Required | Mission 
+key | Required | Mission
 --- | --- | ---
 `id` | yes | An identifier of a row.
 `title` | yes | This is what you want to put in the header of the column, it could be passed as a string or as a func returning a React element.
 `value` | yes | This is content of the cell. Works the same way as `title`, but func receives `row` and current state of the cell (`{ active, focus, disabled }`) as parameters, so you can create an output based on them.
+`width` | no | Pass this property if you want to initialize the width of a column. You can set width not for all the columns, then the rest of the table width would be distributed between the columns with unspecified width. Also, you can get width of the columns from `onColumnResize` callback to store somewhere and use for the next render to make columns stay the same width.
 `getCellClassName` | no | An additional class name getter for a row.
 
 ### rows
@@ -259,11 +241,6 @@ This is a func that must return *unique* key for a row based on this row in a pa
 
 Used as a placeholder text when the `rows` array is empty.
 
-### focusedCell
-> `{ x: number, y: number }` | defaults to `null`
-
-The cell with this `x, y` coordinates (starting from `0`) will be rendered as a focused cell initially.
-
 ### disabledCellChecker
 > `func(row, columnId): bool`
 
@@ -274,10 +251,15 @@ Use this func to define what cells are disabled in the table. It gets `row` and 
 
 A click handler function for a cell. It gets `row` and `columnId` (defined as `column.id` in the `columns` array) as parameters and identifiers of a cell.
 
+### onActiveCellChanged
+> `func({ x, y })`
+
+A callback called every time the active cell is changed. It gets `{ x, y }` coordinates of the new active cell as parameters.
+
 ### headerHeight
 > `number` | defaults to `40`
 
-The height of the header of the table in pixels. 
+The height of the header of the table in pixels.
 
 ⚠️ Define it as a prop, not in CSS styles to not broke the scroll of the table. ⚠️
 
@@ -305,13 +287,6 @@ Switch this on if you want the table provides an opportunity to resize column wi
 
 A callback called every time the width of a column was resized. Gets `widthValues` object as a parameter. `widthValues` is a map of values of width for all the columns in percents (`columnId` - `value`).
 
-### columnWidthValues
-> `object`
-
-Pass this object if you want initialize width of columns. It should be a map of values of width for all the columns in percents (`columnId` - `value`). For example, it could be `{ firstName: 50, secondName: 25, age: 25 }`. You can set width not for all of the columns, then the rest of table width would be distributed between unspecified columns.
-
-Also, you can get it from `onColumnResize` callback to store somewhere and use for the next render to make columns stay with the same width.
-
 ### isScrollable
 > `boolean`
 
@@ -325,29 +300,44 @@ This defines should a grid has a scrollable container inside of a DOM-element wh
 A callback called every time the position of the scroll of the grid was changed.
 
 ### onScrollReachesBottom
-> `func()` 
+> `func()`
 
 A callback called when the scroll of the grid reaches its bottom value. Usually, it could be used to implement the lazy loading feature in your grid (see the [Lazy loading support](#the-pattern-of-regular-usage) section for details).
 
-### resetScroll
-> `boolean`
+## Public methods
 
-> defaults to `false`
+Use public methods via a grid's ref:
 
-Pass `true` to reset the scroll to the top of the container. Usually, you may need this if you want to re-render a grid with a new array of `rows`.
+```jsx
+const GridWrapper = () => {
+  const gridRef = React.createRef()
 
-### blurCurrentFocus
-> `boolean`
+  React.useEffect(() => {
+    gridRef.current.resetScroll()
+  })
 
-> defaults to `false`
+  return (
+    <Grid
+      ref={gridRef}
+      // other props
+    />
+  )
+}
+```
 
-⚠️ **IMPORTANT!** You have to pass here `true` to blur the focused cell of the table after a value of any of cells has been changed. This will ensure the correct behaviour for the table. Usually it should be passed after the `onFieldChange` callback if we are talking about [the regular pattern of usage](#the-pattern-of-regular-usage).
+### resetScroll()
+
+Call to reset the scroll to the top of the container.
+
+### focusCell({ x: number, y: number })
+
+Call to make the cell with this `x, y` coordinates (starting from `0`) active and focused.
 
 ## Customizing cells & header content
 
-You can customize content of titles and cells using `title` and `value` keys of elements of the `columns` property. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions. 
+You can customize content of titles and cells using `title` and `value` keys of elements of the `columns` property. Setting these components using `row` and `{ active, focus, disabled }` parameters of the functions.
 
-`title` could be a string or a func returning any React element. 
+`title` could be a string or a func returning any React element.
 
 `value` works the same way, but func receives current `row` and current state of the cell (`{ active, focused, disabled }`) as parameters, so you can create an output based on them.
 
@@ -355,13 +345,13 @@ For the basic usage, the library provide 2 default components that you can use o
 
 ### Built-in Input
 
-`Input` prop types: 
+`Input` prop types:
 
 Prop | Type | Mission
 --- | --- | ---
 `value` | string | The value of the input
 `placeholder` | string | Placeholder displaying when there is no value
-`focus` | bool | Should the input has focus or not 
+`focus` | bool | Should the input has focus or not
 `onChange` | func | Blur callback. Use it to catch a changed value
 
 Usage:
@@ -369,19 +359,19 @@ Usage:
 ```jsx
 import { Grid, Input } from 'react-spreadsheet-grid'
 
- <Grid 
+ <Grid
     columns={[
       {
         id: 'name',
         title: () => {
             return <span>Name</span>
-        }, 
+        },
         value: (row, { focus }) => {
           return (
-            <Input  
+            <Input
               value={row.name}
               focus={focus}
-              onChange={this.onFieldChange.bind(this, 'name')}
+              onChange={onFieldChange(row.id, 'name')}
             />
           );
         }
@@ -392,7 +382,7 @@ import { Grid, Input } from 'react-spreadsheet-grid'
 
 ### Built-in Select
 
-`Select` prop types: 
+`Select` prop types:
 
 Prop | Type | Mission
 --- | --- | ---
@@ -415,20 +405,20 @@ const positions = [{
     name: 'Backend developer'
 }];
 
- <Grid 
+ <Grid
     columns={[
       {
         id: 'position',
         title: () => {
             return <span>Position</span>
-        }, 
+        },
         value: (row, { focus }) => {
           return (
             <Select
               items={positions}
               selectedId={row.positionId}
               isOpen={focus}
-              onChange={this.onFieldChange.bind(this, 'positionId')}
+              onChange={onFieldChange(row.id, 'positionId')}
             />
           );
         }
@@ -445,35 +435,66 @@ Let's suggest you need to use an autocomplete as a content of a cell. This is ho
 import { Grid } from 'react-spreadsheet-grid'
 import AwesomeAutocomplete from 'awesome-autocomplete'
 
- <Grid 
-    columns={[
-      {
-        id: 'manager',
-        title: () => {
-            return <span>Manager</span>
-        }, 
-        value: (row, { focus, active }) => {
-          return (
-            <AwesomeAutocomplete
-              value={row.managerId}
-              active={active}
-              focus={focus}
-              onSelectItem={this.onFieldChange.bind(this, row.id, 'managerId')}
-            />
-          );
-        }
+<Grid
+  columns={[
+    {
+      id: 'manager',
+      title: () => {
+        return <span>Manager</span>
+      },
+      value: (row, { focus, active }) => {
+        return (
+          <AwesomeAutocomplete
+            value={row.managerId}
+            active={active}
+            focus={focus}
+            onSelectItem={onFieldChange(row.id, 'managerId')}
+          />
+        );
       }
-   ]}
+    }
+  ]}
 />
 ```
 
 ## Performant scroll
-  
+
 `react-spreadsheet-grid` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
 
 ## Resizable columns
 
 `react-spreadsheet-grid` provides the opportunity to set initial width values for columns, to resize them from the UI and to react on these changes. Use relevant `columnWidthValues`, `isColumnsResizable` and `onColumnResize` properties for that purpose.
+
+This is how it could be done:
+
+```jsx
+import React, { useState } from 'react'
+import { Grid } from 'react-spreadsheet-grid'
+
+const ResizableGrid = () => {
+    // Put columns to the state to be able to store there their width values.
+    const [columns, setColumns] = useState(initColumns())
+
+    // Change columns width values in the state to not lose them.
+    const onColumnResize = (widthValues) => {
+        const newColumns = [].concat(columns)
+        Object.keys(widthValues).forEach((columnId) => {
+            newColumns[columnId].width = widthValues[columnId]
+        })
+        setColumns(newColumns)
+    }
+
+    return (
+        <Grid
+            columns={columns}
+            isColumnsResizable
+            onColumnResize={onColumnResize}
+            rows={/* some rows here */}
+            getRowKey={row => row.id}
+        />
+    )
+}
+```
 
 ## Control by mouse & from keyboard
 
@@ -487,7 +508,7 @@ Right now, the easiest way to tweak `react-spreadsheet-grid` is to create anothe
 .SpreadsheetGrid__cell_active {
     box-shadow: inset 0 0 0 2px green;
 }
-``` 
+```
 
 This would override the color of borders for the table active cell.
 
@@ -500,31 +521,30 @@ This would override the color of borders for the table active cell.
 This is how it could be done:
 
 ```jsx
+import React, { useState } from 'react'
 import { Grid } from 'react-spreadsheet-grid'
 
-class LazyLoadingGrid extends React.Component {
+const LazyLoadingGrid = () => {
+  /* Init the state with the initial portion of the rows */
+  const [rows, setRows] = useState(initialRows);
 
-  onScrollReachesBottom() {
-     this.loadNewPortionOfRows().then((newRows) => {
-        this.setState({
-          rows: this.state.rows.concat(newRows)
-        });
+  const onScrollReachesBottom = () => {
+     loadNewPortionOfRows().then((newRows) => {
+        setRows(rows.concat(newRows));
      });
   }
-  
-  loadNewPortionOfRows() {
+
+  const loadNewPortionOfRows = () => {
     /* an ajax request here */
   }
-  
-  render() {
-    return (
-      <Grid 
+
+  return (
+      <Grid
         columns={/* some columns here */}
-        row={/* the initial portion of the rows */}
+        row={rows}
         getRowKey={row => row.id}
-        onScrollReachesBottom={this.onScrollReachesBottom.bind(this)}
+        onScrollReachesBottom={onScrollReachesBottom}
       />
     )
-  }
 }
 ```
