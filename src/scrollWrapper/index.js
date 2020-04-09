@@ -288,11 +288,6 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
         }
         this.setState(newState);
 
-        console.log(first !== this.state.first || last !== this.state.last)
-        console.log(scrollWrapperEl.scrollHeight > scrollWrapperEl.offsetHeight &&
-            // Check if the scroll has a width
-            scrollWrapperEl.offsetWidth > scrollDummyEl.offsetWidth)
-
         if (this.props.onScroll) {
             this.props.onScroll(scrollTop);
         }
