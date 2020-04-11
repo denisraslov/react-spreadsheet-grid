@@ -459,7 +459,22 @@ import AwesomeAutocomplete from 'awesome-autocomplete'
 
 ## Performant scroll
 
-`react-spreadsheet-grid` always renders only the rows that are visible for the user. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll.
+A behavior of scroll depends on the `isScrollable` prop.
+
+If `isScrollable` is `false`, the grid renders all the passed rows without a scroll. Probably, this would be useful for small amount of the rows.
+
+If `isScrollable` is `true`, the height of the grid is equal to the height of its container, it has a scroll and renders only the rows that are visible. Therefore, you can pass to it as many rows as you want - it will work fine without any problems with rendering and scroll. This would be useful for big amount of the rows.
+
+This is an example, how we could make a 500px height scrollable grid:
+
+```jsx
+<div style={{ height: '500px' }}>
+    <Grid
+        isScrollable
+        /* other props */
+    />
+</div>
+```
 
 ## Resizable columns
 
