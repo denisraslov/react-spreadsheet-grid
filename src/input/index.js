@@ -65,7 +65,11 @@ class SpreadsheetGridInput extends React.PureComponent {
     prepareFocus(focus) {
         if (focus) {
             this.input.focus();
-            this.input.selectionStart = this.input.value.length;
+            if (this.props.selectOnFocus) {
+                this.input.select();
+            } else {
+                this.input.selectionStart = this.input.value.length;
+            }
         } else if (this.input === document.activeElement) {
             this.input.blur();
         }
@@ -92,11 +96,13 @@ SpreadsheetGridInput.propTypes = {
         PropTypes.number
     ]),
     onChange: PropTypes.func,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    selectOnFocus: PropTypes.bool
 };
 
 SpreadsheetGridInput.defaultProps = {
-    value: ''
+    value: '',
+    selectOnFocus: false
 };
 
 export default SpreadsheetGridInput;
