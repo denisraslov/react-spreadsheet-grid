@@ -1,6 +1,6 @@
 {
   "name": "react-spreadsheet-grid",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "An Excel-like grid component for React with custom cell editors, performant scroll & resizable columns",
   "main": "lib/bundle.js",
   "scripts": {
