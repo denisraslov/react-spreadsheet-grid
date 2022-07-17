@@ -44,6 +44,9 @@
       "^.+\\.css$": "<rootDir>/jestCSSStub.js"
     }
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "dependencies": {
     "lodash.find": "^4.6.0",
     "lodash.isequal": "^4.5.0",
@@ -63,7 +66,9 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.11",
+    "husky": "^8.0.1",
     "jest": "^21.2.1",
+    "lint-staged": "^13.0.3",
     "path": "^0.12.7",
     "postcss-loader": "^2.1.4",
     "prettier": "2.7.1",
