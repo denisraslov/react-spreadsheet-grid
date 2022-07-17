@@ -1,50 +1,50 @@
 .SpreadsheetGridSelectHeader {
-    position: relative;
-    font-size: 13px;
-    line-height: 15px;
-    font-family: Arial;
-    color: #000;
-    vertical-align: middle;
-    height: 100%;
-    display: flex;
-    align-items: center;
+  position: relative;
+  font-size: 13px;
+  line-height: 15px;
+  font-family: Arial;
+  color: #000;
+  vertical-align: middle;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .SpreadsheetGridSelectValue {
-    width: calc(100% - 20px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  width: calc(100% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .SpreadsheetGridSelectHeader:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #000;
-    top: calc(50% - 3px);
-    right: 5px;
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #000;
+  top: calc(50% - 3px);
+  right: 5px;
 }
 
 .SpreadsheetGridSelectHeader_open:after {
-    border-top-color: #ff5d00;
+  border-top-color: #ff5d00;
 }
 
 .SpreadsheetGridSelectItem {
-    font-weight: 400;
-    font-size: 14px;
-    padding: 7px 14px;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 7px 14px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .SpreadsheetGridSelectItem_selected {
-    background-color: #F0EEF3;
-    color: #ff5d00;
-    border-radius: 3px;
+  background-color: #f0eef3;
+  color: #ff5d00;
+  border-radius: 3px;
 }

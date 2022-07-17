@@ -1,121 +1,121 @@
 .SpreadsheetGrid {
-    width: 100%;
-    border-collapse: collapse;
-    position: absolute;
-    top: 0;
-    background-color: #827789;
-    box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+  position: absolute;
+  top: 0;
+  background-color: #827789;
+  box-sizing: border-box;
 }
 
 .SpreadsheetGrid__header {
-    display: flex;
-    white-space: nowrap;
+  display: flex;
+  white-space: nowrap;
 }
 
 .SpreadsheetGrid__headCell {
-    display: inline-flex;
-    position: relative;
-    color: white;
-    font-size: 12px;
-    line-height: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-    border-bottom: none;
-    padding: 10px 8px 8px 8px;
-    text-align: left;
-    background-color: #827789;
-    align-items: center;
-    border-bottom: 1px solid rgba(37, 33, 40, 0.12);
+  display: inline-flex;
+  position: relative;
+  color: white;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: none;
+  padding: 10px 8px 8px 8px;
+  text-align: left;
+  background-color: #827789;
+  align-items: center;
+  border-bottom: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__headCell:first-child {
-    border-left: 1px solid rgba(37, 33, 40, 0.12);
+  border-left: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__headCell {
-    border-right: 1px solid rgba(37, 33, 40, 0.12);
+  border-right: 1px solid rgba(37, 33, 40, 0.12);
 }
 
 .SpreadsheetGrid__row {
-    background-color: white;
-    border-bottom: 1px solid #E6E1E8;
-    user-select: none;
-    white-space: nowrap;
+  background-color: white;
+  border-bottom: 1px solid #e6e1e8;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .SpreadsheetGrid__cell {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    color: #565059;
-    cursor: pointer;
-    border-top: none;
-    vertical-align: middle;
-    white-space: normal;
-    font-size: 13px;
-    line-height: 15px;
-    text-overflow: ellipsis;
-    padding: 10px;
-    height: 100%;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  color: #565059;
+  cursor: pointer;
+  border-top: none;
+  vertical-align: middle;
+  white-space: normal;
+  font-size: 13px;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  padding: 10px;
+  height: 100%;
 }
 
 .SpreadsheetGrid__cell > * {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .SpreadsheetGrid__cell:first-child {
-    border-left: 1px solid #E6E1E8;
+  border-left: 1px solid #e6e1e8;
 }
 
 .SpreadsheetGrid__cell {
-    border-right: 1px solid #E6E1E8;
+  border-right: 1px solid #e6e1e8;
 }
 
 .SpreadsheetGrid__cell:last-child {
-    text-align: right;
+  text-align: right;
 }
 
 .SpreadsheetGrid__cell_active {
-    box-shadow: inset 0 0 0 2px #ff7a00;
-    z-index: 2;
+  box-shadow: inset 0 0 0 2px #ff7a00;
+  z-index: 2;
 }
 
 .SpreadsheetGrid__cell_focused > * {
-    pointer-events: auto;
-    position: relative;
+  pointer-events: auto;
+  position: relative;
 }
 
 .SpreadsheetGrid__cell_focused::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .SpreadsheetGrid__cell_disabled {
-    cursor: default;
-    background: rgba(239, 236, 236, 0.3);
+  cursor: default;
+  background: rgba(239, 236, 236, 0.3);
 }
 
 .SpreadsheetGrid__cell_disabled > * {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 .SpreadsheetGrid__placeholder {
-    text-align: center;
-    height: 53px;
-    background: #fff;
-    padding: 15px;
+  text-align: center;
+  height: 53px;
+  background: #fff;
+  padding: 15px;
 }
 
 .SpreadsheetGrid__resizer {
-    width: 20px;
-    position: absolute;
-    top: 0;
-    right: -10px;
-    cursor: col-resize;
-    z-index: 2;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  cursor: col-resize;
+  z-index: 2;
 }

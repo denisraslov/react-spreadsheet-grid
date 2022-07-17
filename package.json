@@ -66,6 +66,7 @@
     "jest": "^21.2.1",
     "path": "^0.12.7",
     "postcss-loader": "^2.1.4",
+    "prettier": "2.7.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
