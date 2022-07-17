@@ -352,6 +352,7 @@ Prop | Type | Mission
 `value` | string | The value of the input
 `placeholder` | string | Placeholder displaying when there is no value
 `focus` | bool | Should the input has focus or not
+`selectTextOnFocus` | bool | Should the input content be selected when focused or not
 `onChange` | func | Blur callback. Use it to catch a changed value
 
 Usage:
