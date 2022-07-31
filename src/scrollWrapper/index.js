@@ -409,7 +409,9 @@ class SpreadsheetGridScrollWrapper extends React.PureComponent {
   }
 
   render() {
-    const rows = slice(this.props.rows, this.state.first, this.state.last)
+    const rows = this.props.isScrollable
+      ? slice(this.props.rows, this.state.first, this.state.last)
+      : this.props.rows
 
     return (
       <div className='SpreadsheetGridContainer' ref={this.tableEl}>

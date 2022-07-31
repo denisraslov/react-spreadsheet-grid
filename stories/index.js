@@ -7,7 +7,7 @@ import { Grid, Input, Select } from './../index'
 const rows = []
 const positions = []
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 10; i++) {
   rows.push({
     id: i,
     firstName: 'First name ' + i,
@@ -30,6 +30,18 @@ function DataTable(props) {
   const onFieldChange = (rowId, field) => (value) => {
     rows[rowId][field] = value
     setRows([].concat(rows))
+  }
+
+  const addRow = () => {
+    const id = [...rows][rows.length - 1].id + 1
+    const newRow = {
+      id: id,
+      firstName: 'First name ' + i,
+      secondName: 'Second name ' + i,
+      positionId: 3,
+    }
+
+    setRows(rows.concat(newRow))
   }
 
   const initColumns = () => {
@@ -103,20 +115,23 @@ function DataTable(props) {
   }
 
   return (
-    <div className='DataTable'>
-      <Grid
-        columns={columns}
-        rows={rows}
-        getRowKey={(row) => row.id}
-        rowHeight={50}
-        isColumnsResizable
-        onColumnResize={onColumnResize}
-        focusOnSingleClick={props.focusOnSingleClick}
-        disabledCellChecker={(row, columnId) => {
-          return columnId === 'age'
-        }}
-        isScrollable={props.isScrollable}
-      />
+    <div>
+      <button onClick={addRow}>Add row</button>
+      <div className='DataTable'>
+        <Grid
+          columns={columns}
+          rows={rows}
+          getRowKey={(row) => row.id}
+          rowHeight={50}
+          isColumnsResizable
+          onColumnResize={onColumnResize}
+          focusOnSingleClick={props.focusOnSingleClick}
+          disabledCellChecker={(row, columnId) => {
+            return columnId === 'age'
+          }}
+          isScrollable={props.isScrollable}
+        />
+      </div>
     </div>
   )
 }
