@@ -23,6 +23,8 @@ This is an Excel-like Spreadsheet Grid component that supports:
 
 ✅  Hooks compatible
 
+✅  TypeScript compatible
+
 ## Table of contents
 
 -   [Live playground](#live-playground)
